@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<title>tall2x.html</title>
+<style type="text/css">
+:root {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    width: 500px;
+    margin: 0px;
+}
+p {
+    margin: 0px; /* if omit, margin-top will equal to font-size */
+}
+.myspan {
+    font-size: 24px; 
+    line-height: 120px; /* same as line-height:5 */
+    border: 6px solid #8f8; 
+}
+.feeder {
+    vertical-align: baseline;
+}
+.alignmark { /* as inlinebox */
+	position: fixed;
+	border-top: 1px solid #80c0ff;
+	border-bottom: 1px solid #80c0ff;
+	left: 0px; 
+	width: 500px;
+	top: 188px; /* 120+68 */
+	height: 120px;
+}
+.linebox {
+	border-top: 1px dashed #ff40c0;
+	border-bottom: 1px dashed #ff80e0;
+	top: 120px;    /* 1st linebox's height */
+	height: 189px; /* 140(tall2x)+48 + casual 1 */
+}
+.baseline {
+	top: 260px; /* 120+140 */
+	border-top: 1px solid #ccc;
+	border-bottom: 0px;
+}
+</style>
+</head>
+<body>
+
+<p>
+<span class="myspan">This paragraph, as you can see quite clearly, contains 
+a <img class="feeder" src="tall2x.png" width="30" height="140" /> image and 
+a <img style="vertical-align:top" src="short.png" width="31" height="11" />
+<img style="vertical-align:bottom" src="short.png" width="31" height="11" /> pic, 
+and then some text which is not tall.</span>
+</p>
+
+<div class="alignmark"></div>
+<div class="alignmark linebox"></div>
+<div class="alignmark baseline"></div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<title>Figure 6-17</title>
+<style type="text/css">
+:root {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+	width: 500px;
+	margin: 0px;
+}
+p {
+	margin: 0px; /* if omit, margin-top will equal to font-size */
+}
+.myspan {
+	font-size: 24px; 
+	line-height: 120px; /* same as line-height:5 */
+	border: 6px solid #8f8; 
+}
+.feeder {
+	vertical-align: bottom;
+}
+.intexttop {
+	line-height: initial;
+	vertical-align: text-top;
+	border: 1px dashed blue;
+}
+.alignmark {
+	position: fixed;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	left: 0px; 
+	width: 500px;
+	top: 120px;
+	height: 0px;
+}
+.alignmark2 {
+	top: 240px;
+}
+.nestblue { 
+	line-height: 3; /* NOTE HERE */
+	color: blue;
+	border: 1px dashed blue;
+	vertical-align: baseline;
+}
+.nestshort { 
+	line-height: initial; 
+	vertical-align: baseline;
+}
+</style>
+</head>
+<body>
+
+<p class="mypara">
+<span class="myspan">This paragraph, as you can see quite clearly, contains 
+a <img class="feeder" src="tall.png" width="30" height="60" /> image and 
+a <span class="nestblue">(H3L)<img class="nestshort" src="short.png" />(H3R)</span> pic, 
+and then some text which is not tall.</span>
+</p>
+
+
+<div class="alignmark"></div>
+<div class="alignmark alignmark2"></div>
+</body>
+</html>
