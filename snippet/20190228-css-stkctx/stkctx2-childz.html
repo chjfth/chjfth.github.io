@@ -1,0 +1,48 @@
+<!doctype html>
+<head>
+<style>
+#A1 {
+    border: 1px dashed #888;
+    border-radius: 10px;
+    background: linear-gradient(45deg, yellow, #f0f080);
+    width:180px; height:180px;
+}
+#A2 {
+    position: absolute;
+    z-index: 0;
+   
+    background: linear-gradient(45deg, blue, cyan);
+    width: 100px; height:100px;
+    top: 55px; left: 55px;
+}
+#B1 {
+    margin-left: 20px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, red, magenta);
+    width: 100px; height:100px;
+    top: 30px; left: 20px;
+}
+#B2 {
+    position: absolute;
+    z-index: 1;
+   
+    border-radius: 10px;
+    background: linear-gradient(45deg, green, lime);
+    width: 120px; height:120px;
+    top: 80px; left: 80px;
+}
+body { margin: 0px; }
+</style>
+</head>
+<body>
+    <div id="div0">
+        <div id="A1">
+            A1
+            <div id="B1">B1</div>
+            <div id="B2">B2</div>
+            <div id="B3">B3</div>
+        </div>
+        <p id="p1"></p>
+        <div id="A2">A2</div>
+    </div>
+</body>
