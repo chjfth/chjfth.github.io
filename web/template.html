@@ -2,6 +2,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="chj.css" rel="stylesheet">
+<script src="chj.js"></script>
 <style>
 /* Best practices from CSSID book: */
 :root {
@@ -12,13 +14,19 @@
     box-sizing: inherit;
 }
 
-/* My preference: */
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: " ";
+}
+
+/* My preferences: */
 body { 
 	margin: 0px; 
-	}
+}
 
 </style>
 <script>
+	"use strict"
 </script>
 </head>
 
