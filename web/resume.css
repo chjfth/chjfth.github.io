@@ -1,0 +1,146 @@
+/* Best practices from CSSID book: */
+:root {
+    box-sizing: border-box;
+}
+
+*, 
+::before, 
+::after {
+    box-sizing: inherit;
+}
+
+.clearfix::before, .clearfix::after {
+	/* Suppress margin-top/bottom merging  */
+	display: table;
+	content: " ";
+}
+
+/* CSS variables  */
+
+:root {
+	--sidebar-fontsize: 0.85em;
+	--sidebar-width: 16em;
+}
+
+
+body { 
+	/* outer frame of double container pattern. */
+	margin: 0px; 
+}
+
+.globalframe {
+	/* inner frame of double container pattern. */
+	margin: auto;
+	max-width: 800px;
+
+	border: 1px dashed cyan;
+	background-color: #fffff0;
+	border-radius: 1em;
+}
+
+.maincol {
+	clear: both;
+	border: 1px solid #888;
+
+	background-color: #f0f0f0;
+	border-radius: 1em;
+}
+
+/* Mobile first side-column styles */
+.sidebar {
+	background-color: #57b;
+	border-radius: 0.5em;
+	font-size: var(--sidebar-fontsize);
+}
+
+.sidebar button {
+	padding: 0.5em;
+	color: #ccc;
+	border: 1px solid #57b;
+	background-image: linear-gradient(to bottom, #222, #888);
+	cursor: pointer;
+}
+
+.sidebar .button_on {
+	color: white;
+	border: 1px solid #57b;
+	background-image: linear-gradient(to bottom, #57b, #012);
+	box-shadow: 0.1em 0.1em 0.5em #124;
+}
+/*.button:active {
+    box-shadow: inset 0 0 0.5em #124, inset 0 0.5em 1em rgba(0,0,0,0.4);
+}
+*/
+.langsel {
+	display: flex;
+}
+.langbtn {
+	flex: 1;
+	text-align: center;
+}
+.langbtn__left {
+	border: 1px solid;
+	border-radius: 0.5em 0 0 0.5em
+}
+.langbtn__right {
+	border: 1px solid;
+	border-radius: 0 0.5em 0.5em 0 
+}
+
+.portrait {
+	float: right;
+
+/*	margin: 1em;
+*/	max-width: 120px;
+	width: 120px;
+	height: 180px;
+	background: linear-gradient(15deg, green, cyan);
+}
+
+.brief {
+}
+
+.brief__item {
+	display: flex;
+}
+
+.item__name {
+	flex-basis: 6em;
+}
+.item__value {
+	flex-grow: 1
+}
+
+[class^="lang-"] {
+	overflow: hidden;
+	transition: height 500ms;
+}
+
+@media (min-width: 799.1px) 
+{
+	/* Desktop layout side-column styles. Whole side-column is fixed at viewport right-side. */
+	
+	.globalframe {
+		position: relative; /* as base frame */
+	}
+	
+	.maincol {
+		margin-right: var(--sidebar-width);
+	}
+
+	.sidebar {
+		position: absolute;
+		top: 0em;
+		right: 0em;
+		
+		width: var(--sidebar-width);
+	}
+
+	.portrait {
+		float: none;
+		margin: auto;
+		
+	}
+
+}
+
