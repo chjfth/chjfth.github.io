@@ -14,7 +14,9 @@
 	display: table;
 	content: " ";
 }
-
+.clearfix::after {
+	clear: both;
+}
 /* CSS variables  */
 
 :root {
@@ -39,7 +41,6 @@ body {
 }
 
 .maincol {
-	clear: both;
 	border: 1px solid #888;
 
 	background-color: #f0f0f0;
