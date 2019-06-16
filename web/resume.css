@@ -22,8 +22,10 @@
 :root {
 	--sidebar-fontsize: 0.85em;
 	--sidebar-width: 16em;
+	--maincol-bgcolor: #f0f0f0;
 }
 
+/*****************************************************************/
 
 body { 
 	/* outer frame of double container pattern. */
@@ -33,22 +35,41 @@ body {
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
-	max-width: 800px;
+	max-width: 900px;
 
 	border: 1px dashed cyan;
 	background-color: #fffff0;
 	border-radius: 1em;
 }
 
+.titlebar__head {
+	text-align: center;
+	font-size: 2em;
+    letter-spacing: 0.5em;
+    font-family: 楷体;
+}
+
+.titlebar__myname .chenjun {
+    font-family: 楷体;
+	font-size: 3em;
+}
+
+.titlebar__myname .career {
+	font-size: 0.6em;
+}
+
 .maincol {
+	margin: 0.8rem 1rem;
 	border: 1px solid #888;
 
-	background-color: #f0f0f0;
+	background-color: var(--maincol-bgcolor);
 	border-radius: 1em;
 }
 
+
 /* Mobile first side-column styles */
 .sidebar {
+	margin: 0.8rem 1rem;
 	background-color: #57b;
 	border-radius: 0.5em;
 	font-size: var(--sidebar-fontsize);
@@ -112,9 +133,36 @@ body {
 	flex-grow: 1
 }
 
+.infohead {
+	display: inline-block;
+/*	padding-bottom: 0.2em;
+	margin-bottom: 0.3em;
+*/
+}
+
+.infohead .stripe {
+	width: 100%;
+	height: 0.5rem;
+	background-image: repeating-linear-gradient(45deg, #57b 0px, #249 20px, #57b 40px);
+}
+
+.infohead [class^="lang-"] {
+	background-color: var(--maincol-bgcolor);
+/*	border-bottom: 5px solid;
+*/
+}
+
 [class^="lang-"] {
 	overflow: hidden;
-	transition: height 500ms;
+	transition: height 1500ms;
+}
+
+.maincol > .infohead {
+	margin: 0.6rem;
+}
+
+.maincol > .infotext {
+	margin: 1.2rem 0.4rem;
 }
 
 @media (min-width: 799.1px) 

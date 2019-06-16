@@ -76,7 +76,15 @@ function prepare_langbtn_callback() {
 	btn_en.addEventListener('click', on_langbtn_click);
 }
 
-function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main) {
+function hide_if_zeroheight(ele) {
+	// "hide" here means "display:none"
+	if(ele.style.height=="0px")
+		ele.style.display = "none";
+	else 
+		ele.style.display = "block";
+}
+
+function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=true) {
 	
 	// If is_cn_on && is_en_on are both true, lang-cn0 and lang-en0 will compete
 	// according to is_cn_main.
@@ -96,7 +104,15 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main) {
 	function batch_cn_en_text(prefix, suffix, is_display) {
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
 		for(var ele of eles) {
+			if(is_display) {
+				// Checking is_display should be done first, otherwise, 
+				// ele.scrollHeight will report 0px for a "display:none" element.
+				ele.style.display = "block";
+			}
 			ele.style.height = is_display ? ele.scrollHeight+"px" : "0px";
+			
+			if(!is_delay_hide)
+				hide_if_zeroheight(ele);
 		}
 	}
 
@@ -105,6 +121,87 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main) {
 	batch_cn_en_text("lang-en", "0", !is_cn_on || (both_on&&!is_cn_main));
 	batch_cn_en_text("lang-cn", "2", is_cn_on);
 	batch_cn_en_text("lang-en", "2", is_en_on);
+}
+
+function setup_transitionend() {  // TODO: try register event on their parent, register only once
+	
+	// For each dual-lang text blocks, when css transition ends, I need to call hide_if_zeroheight().
+	
+	var langs = document.querySelectorAll('[class^="lang-"]');
+	langs.forEach(function(ele, idx) {
+		ele.addEventListener('transitionend', function(event){
+			// console.log(event.target); // debug
+			hide_if_zeroheight(event.target);
+		});
+	});
+}
+
+function setup_fixed_position_sidebar() {
+	
+	// Purpose: I hope to have the side bar stick on screen when user scrolls down.
+	// So I'll change that .sidebar DIV to 'position:fixed' once I have acquired 
+	// initial positioning parameters for it.
+	// We assume that sidebar's width keeps constant all the time.
+	
+	var gframe = document.querySelector(".globalframe");
+	var sidebar = document.querySelector(".sidebar");
+	var portrait = document.querySelector('.portrait');
+	
+	var sidebar_neg_offset = undefined;
+	var sidebar_top_margin_px = undefined;
+	var sidebar_left_margin_px = undefined;
+	
+	function try_init_sidebar_fixed_pos() {
+		
+		// Only when the first time we see the .sidebar is 'position:absolute',
+		// will we be able to calculate sidebar_neg_offset.
+		// In other word, if user stays in mobile layout, we will not calculate it.
+		// By this way, user can adjust .sidebar margin and width solely from CSS.
+		
+		var cs_sidebar = getComputedStyle(sidebar);
+		if(cs_sidebar.position!="absolute")
+			return; // already init-ed.
+		
+		sidebar_neg_offset = sidebar.offsetLeft - gframe.offsetWidth; // typical: -236
+		
+		sidebar_top_margin_px = cs_sidebar.marginTop;
+		sidebar_left_margin_px = cs_sidebar.marginLeft;
+	}
+	
+	// console.log("sidebar_neg_offset="+sidebar_neg_offset);
+	
+	function fix_sidebar_position() {
+		
+		try_init_sidebar_fixed_pos(); // we need to get `sidebar_neg_offset` ready
+		
+		if(sidebar_neg_offset===undefined)
+			return; // Don't ruin the "position:absolute" state yet.
+		
+		var csp = getComputedStyle(portrait); // caution: these code may be fragile
+		if(csp.float=='none') { // a real sidebar, desktop layout
+			
+			sidebar.style.position = "fixed";
+			
+			var abs_x = gframe.offsetLeft + gframe.offsetWidth + sidebar_neg_offset;
+			
+			// [2019-06-16] Weird! 'left' and 'top' value for a "fixed" DIV determines
+			// the left-top *margin" position, NOT left-top border.
+			sidebar.style.left = 'calc({0}px - {1})'.format(abs_x, sidebar_left_margin_px);
+			// sidebar.style.top = sidebar_top_margin_px; // no need this
+		
+		} else { // should be 'right', mobile layout
+			sidebar.style.position = "static"; 
+		}
+	}
+	
+	fix_sidebar_position(); 
+	
+	window.addEventListener("resize", function(){
+		// Making viewport wider can cause .globalframe to move, 
+		// so we need to fix the fixed sidebar position.
+
+		fix_sidebar_position();
+	});
 }
 
 // Initialization code:
@@ -116,7 +213,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	prepare_langbtn_callback();
 	
-	refresh_cn_en_display(true, true, true);
+	refresh_cn_en_display(true, true, true, false); // TODO: Select one lang according to usr browser lang setting
+
+	setup_transitionend();
+
+	setup_fixed_position_sidebar();
 });
 
 
