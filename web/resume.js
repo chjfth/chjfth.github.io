@@ -102,6 +102,9 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 	btn_set_state(btn_en, is_en_on);
 
 	function batch_cn_en_text(prefix, suffix, is_display) {
+		
+		// Enable/Disable cn/en text display according to input-params.
+		
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
 		for(var ele of eles) {
 			if(is_display) {
@@ -121,6 +124,19 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 	batch_cn_en_text("lang-en", "0", !is_cn_on || (both_on&&!is_cn_main));
 	batch_cn_en_text("lang-cn", "2", is_cn_on);
 	batch_cn_en_text("lang-en", "2", is_en_on);
+	
+	// Add/Remove bounding to all .duallang with .lang-cn2 and .lang-en2 .
+	var eles = document.querySelectorAll(".duallang");
+	for(var ele of eles) {
+		if(ele.firstElementChild.classList.contains("lang-cn2") &&
+			ele.firstElementChild.nextElementSibling.classList.contains("lang-en2")) 
+		{
+			if(both_on)
+				ele.classList.add("bounding");
+			else
+				ele.classList.remove("bounding");
+		}
+	}
 }
 
 function setup_transitionend() {

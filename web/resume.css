@@ -17,12 +17,18 @@
 .clearfix::after {
 	clear: both;
 }
+
+* { 
+	margin-top: 0px;
+}
+
 /* CSS variables  */
 
 :root {
 	--sidebar-fontsize: 0.85em;
 	--sidebar-width: 16em;
 	--maincol-bgcolor: #f0f0f0;
+	--date-period-ems: 10em;  /* enough width for "2002.07 ~ 2018.06" */ 
 }
 
 /*****************************************************************/
@@ -133,20 +139,20 @@ body {
 	flex-grow: 1
 }
 
-.infohead {
+.h1title {
 	display: inline-block;
 /*	padding-bottom: 0.2em;
 	margin-bottom: 0.3em;
 */
 }
 
-.infohead .stripe {
+.h1title .stripe {
 	width: 100%;
 	height: 0.5rem;
 	background-image: repeating-linear-gradient(45deg, #57b 0px, #249 20px, #57b 40px);
 }
 
-.infohead [class^="lang-"] {
+.h1title [class^="lang-"] {
 	background-color: var(--maincol-bgcolor);
 /*	border-bottom: 5px solid;
 */
@@ -157,13 +163,112 @@ body {
 	transition: height 1500ms;
 }
 
-.maincol > .infohead {
+.maincol > * {
+	margin: 1.2rem 0.4rem;
+}
+
+.maincol > .h1title {
 	margin: 0.6rem;
 }
 
-.maincol > .infotext {
-	margin: 1.2rem 0.4rem;
+.careerbanner {
+/*	width: 100%;
+	// would cause right-side stick out.
+*/	
+	display: flex;
 }
+
+
+.careerb__orgname {
+	margin-right: auto;
+	text-align: left;
+	padding-right: 0.46em;
+}
+.careerb__jobtitle {
+	margin-left: auto;
+	text-align: right;
+	padding-left: 0.46em;
+}
+.careerb__date {
+	flex: var(--date-period-ems) 0;
+	text-align: right;
+	padding-left: 0.46em;
+}
+
+.careertable {
+	/* As container of careertable__rows. */
+}
+
+.careertable__row {
+	display: flex;
+	margin-top: 0.8rem;
+	margin-bottom: 0.8rem;
+}
+
+.careertable__date {
+	font-size: 0.7rem;
+	flex: 118px 0;
+}
+
+.careertable__achievement {
+	font-size: 0.9rem;
+	flex: 1;
+}
+
+.careertable__skill {
+	font-size: 0.7rem;
+	flex: 20% 0 1;
+}
+
+.careertable__skill ul {
+	padding-inline-start: 0px;
+}
+.careertable__skill li {
+	padding-bottom: 0.43rem;
+	list-style-type: none;
+}
+
+.careertable__row.careertable__headrow > * {
+	font-weight: bold;
+	font-size: 1rem
+}
+/* <= verbose way:
+.careertable__headrow .careertable__date , 
+.careertable__headrow .careertable__achievement , 
+.careertable__headrow .careertable__skill {
+	font-weight: bold;
+	font-size: 1em
+}
+*/
+.careertable__row .duallang + .duallang { /* margin-top from second .duallang */
+	margin-top: 0.6em;
+	margin-bottom: 0.6em;
+}
+
+.duallang {
+	padding: 0.31em;
+}
+.duallang > *:first-child {
+	margin-bottom: 0.2em;
+}
+.duallang.bounding {
+	border: 1px solid transparent;
+	/* Use a *transparent* border as placeholder, otherwise, when 1px border is added by :hover,
+	the layout inside will go for a subtle re-flow, not visually friendly. */
+}
+.duallang.bounding:hover {
+	border: 1px dashed gray;
+}
+.duallang.bounding:hover .lang-cn2 {
+	background-color: rgb(240, 240, 224);
+}
+.duallang.bounding:hover .lang-en2 {
+	background-color: rgb(234, 248, 255);
+}
+
+/************************ Desktop Web Layout Override  ************************/
+
+
 
 @media (min-width: 799.1px) 
 {
@@ -189,6 +294,10 @@ body {
 		float: none;
 		margin: auto;
 		
+	}
+
+	.careertable {
+		padding-left: 1em; /* to make an indent effect*/
 	}
 
 }
