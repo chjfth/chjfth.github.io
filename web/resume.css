@@ -172,27 +172,15 @@ body {
 }
 
 .careerbanner {
-/*	width: 100%;
-	// would cause right-side stick out.
-*/	
-	display: flex;
+	display: block;
 }
-
 
 .careerb__orgname {
-	margin-right: auto;
 	text-align: left;
-	padding-right: 0.46em;
 }
 .careerb__jobtitle {
-	margin-left: auto;
-	text-align: right;
-	padding-left: 0.46em;
 }
 .careerb__date {
-	flex: var(--date-period-ems) 0;
-	text-align: right;
-	padding-left: 0.46em;
 }
 
 .careertable {
@@ -200,7 +188,7 @@ body {
 }
 
 .careertable__row {
-	display: flex;
+	display: block;
 	margin-top: 0.8rem;
 	margin-bottom: 0.8rem;
 }
@@ -210,46 +198,69 @@ body {
 	flex: 118px 0;
 }
 
+.careertable__date::before {
+	display: block;
+	content: "Timeline";  /* TODO: 用一个 svg 图形 */
+	font-weight: bold;
+}
+
 .careertable__achievement {
 	font-size: 0.9rem;
 	flex: 1;
+}
+.careertable__achievement::before {
+	display: block;
+	font-weight: bold;
+}
+.mainlang-cn .careertable__achievement::before {
+	content: "成就";
+}
+.mainlang-en .careertable__achievement::before {
+	content: "Achievement";
 }
 
 .careertable__skill {
 	font-size: 0.7rem;
 	flex: 20% 0 1;
 }
+.careertable__skill::before {
+	display: block;
+	font-weight: bold;
+}
+.mainlang-cn .careertable__skill::before {
+	content: "技能与知识";
+}
+.mainlang-en .careertable__skill::before {
+	content: "Skill and Knowledge"
+}
 
 .careertable__skill ul {
 	padding-inline-start: 0px;
 }
 .careertable__skill li {
-	padding-bottom: 0.43rem;
 	list-style-type: none;
+	
+	display: inline-block;
+	padding: 0.2em;
+	line-height: 1.2;
+	border: 1px grey solid;
+	border-radius: 0.5em;
+	margin: 0.2em;
 }
 
-.careertable__row.careertable__headrow > * {
-	font-weight: bold;
-	font-size: 1rem
+.careertable__row.careertable__headrow {
+	display: none;
 }
-/* <= verbose way:
-.careertable__headrow .careertable__date , 
-.careertable__headrow .careertable__achievement , 
-.careertable__headrow .careertable__skill {
-	font-weight: bold;
-	font-size: 1em
-}
-*/
+
 .careertable__row .duallang + .duallang { /* margin-top from second .duallang */
 	margin-top: 0.6em;
 	margin-bottom: 0.6em;
 }
 
 .duallang {
-	padding: 0.31em;
 }
 .duallang > *:first-child {
-	margin-bottom: 0.2em;
+	xxx-margin-bottom: 0.2em;
 }
 .duallang.bounding {
 	border: 1px solid transparent;
@@ -297,7 +308,103 @@ body {
 	}
 
 	.careertable {
+		/* As container of careertable__rows. */
 		padding-left: 1em; /* to make an indent effect*/
+	}
+
+	.careerbanner {
+	/*	width: 100%;
+		// would cause right-side stick out.
+	*/	
+		display: flex;
+	}
+
+
+	.careerb__orgname {
+		margin-right: auto;
+		text-align: left;
+		padding-right: 0.46em;
+	}
+	.careerb__jobtitle {
+		margin-left: auto;
+		text-align: right;
+		padding-left: 0.46em;
+	}
+	.careerb__date {
+		flex: var(--date-period-ems) 0;
+		text-align: right;
+		padding-left: 0.46em;
+	}
+
+	.careertable__row {
+		display: flex;
+		margin-top: 0.8rem;
+		margin-bottom: 0.8rem;
+	}
+
+	.careertable__date {
+		font-size: 0.7rem;
+		flex: 118px 0;
+	}
+	.careertable__date::before {
+		display: none;
+	}
+
+	.careertable__achievement {
+		font-size: 0.9rem;
+		flex: 1;
+	}
+	.careertable__achievement::before {
+		display: none;
+	}
+
+	.careertable__skill {
+		font-size: 0.7rem;
+		flex: 20% 0 1;
+	}
+	.careertable__skill::before {
+		display: none;
+	}
+
+	.careertable__row.careertable__headrow {
+		display: flex;
+	}
+
+	.careertable__row.careertable__headrow > * {
+		font-weight: bold;
+		font-size: 1rem
+	}
+
+	.careertable__row .duallang + .duallang { /* margin-top from second .duallang */
+		margin-top: 0.6em;
+		margin-bottom: 0.6em;
+	}
+
+	.duallang {
+/*		padding: 0.31em;
+*/	}
+	.duallang > *:first-child {
+		xxx-margin-bottom: 3.2em;
+	}
+	.duallang [class^=lang-] {
+	/* NOTE: duallang padding/border/margin will cause transitionend FLICKER! Dont use it! */
+		xxx-padding: 3.32em;  
+	}
+	.duallang.bounding {
+		border: 1px solid transparent;
+		/* Use a *transparent* border as placeholder, otherwise, when 1px border is added by :hover,
+		the layout inside will go for a subtle re-flow, not visually friendly. 
+		[2019-06-17 23:20] This border width does not cause transitionend flicker.
+		*/
+	}
+	.duallang.bounding:hover {
+		border: 1px dashed gray;
+	}
+	.duallang.bounding:hover .lang-cn2 {
+		background-color: rgb(240, 240, 224);
+	}
+	.duallang.bounding:hover .lang-en2 {
+		background-color: rgb(234, 248, 255);
 	}
 
 }

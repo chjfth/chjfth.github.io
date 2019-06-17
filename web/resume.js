@@ -89,7 +89,19 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 	// If is_cn_on && is_en_on are both true, lang-cn0 and lang-en0 will compete
 	// according to is_cn_main.
 	
+	var both_on = is_cn_on && is_en_on;
 	AssertIt(is_cn_on||is_en_on, "Program Error: None of lang-cn and lang-en is ON!");
+	if(both_on) {
+		if(!is_cn_on)
+			AssertIt(!is_cn_main, "!is_cn_on, is_cn_main error.");
+		if(!is_en_on)
+			AssertIt( is_cn_main, "!is_en_on, is_cn_main error.");
+	}
+	else {
+		is_cn_main = is_cn_on ? true : false;
+	}
+	
+//	AssertIt( (!is_cn_on && !is_cn_main) || (!is_en_on && is_cn_main), "is_cn_main error!" ); // wrong
 	
 	var btn_cn = document.getElementById('btn-cn');
 	var btn_en = document.getElementById('btn-en');
@@ -119,7 +131,6 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 		}
 	}
 
-	var both_on = is_cn_on && is_en_on;
 	batch_cn_en_text("lang-cn", "0", !is_en_on || (both_on&& is_cn_main));
 	batch_cn_en_text("lang-en", "0", !is_cn_on || (both_on&&!is_cn_main));
 	batch_cn_en_text("lang-cn", "2", is_cn_on);
@@ -128,14 +139,26 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 	// Add/Remove bounding to all .duallang with .lang-cn2 and .lang-en2 .
 	var eles = document.querySelectorAll(".duallang");
 	for(var ele of eles) {
-		if(ele.firstElementChild.classList.contains("lang-cn2") &&
-			ele.firstElementChild.nextElementSibling.classList.contains("lang-en2")) 
+		if(ele.firstElementChild 
+			&& ele.firstElementChild.classList.contains("lang-cn2") 
+			&& ele.firstElementChild.nextElementSibling
+			&& ele.firstElementChild.nextElementSibling.classList.contains("lang-en2")) 
 		{
 			if(both_on)
 				ele.classList.add("bounding");
 			else
 				ele.classList.remove("bounding");
 		}
+	}
+	
+	// Add .mainlang-cn or .mainlang-en class to <body>, so that CSS and determine 
+	// cn or en to display on lang0 elements.
+	if(is_cn_main) {
+		document.body.classList.add("mainlang-cn");
+		document.body.classList.remove("mainlang-en");
+	} else {
+		document.body.classList.add("mainlang-en");
+		document.body.classList.remove("mainlang-cn");
 	}
 }
 
@@ -216,7 +239,23 @@ function setup_fixed_position_sidebar() {
 	});
 }
 
+function assert_langtext_0edge() {
+	var eles = document.querySelectorAll('.lang-cn2 , .lang-cn0');
+	for(var ele of eles)
+	{
+		var cs = getComputedStyle(ele);
+		if(cs["border-top-width"]!="0px" || cs["border-bottom-width"]!="0px" 
+			|| cs["padding-top"]!="0px" || cs["padding-bottom"]!="0px"
+			|| cs["margin-top"]!="0px" || cs["margin-bottom"]!="0px"
+			)
+			AssertIt(0, ".lang-* elements should not have top/bottom border or padding, otherwise, transitionend will flicker!");
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
 // Initialization code:
+//////////////////////////////////////////////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function(){
    
 	chj_check_strict_mode();
@@ -230,6 +269,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	setup_transitionend();
 
 	setup_fixed_position_sidebar();
+	
+	assert_langtext_0edge();
 });
 
 
