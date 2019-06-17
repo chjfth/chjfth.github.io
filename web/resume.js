@@ -123,16 +123,12 @@ function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=tru
 	batch_cn_en_text("lang-en", "2", is_en_on);
 }
 
-function setup_transitionend() {  // TODO: try register event on their parent, register only once
+function setup_transitionend() {
 	
-	// For each dual-lang text blocks, when css transition ends, I need to call hide_if_zeroheight().
-	
-	var langs = document.querySelectorAll('[class^="lang-"]');
-	langs.forEach(function(ele, idx) {
-		ele.addEventListener('transitionend', function(event){
-			// console.log(event.target); // debug
+	document.addEventListener('transitionend', function(event) {
+		var is_langtext = event.target.matches('[class^="lang-"]');
+		if(is_langtext)
 			hide_if_zeroheight(event.target);
-		});
 	});
 }
 
