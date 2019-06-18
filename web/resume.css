@@ -58,11 +58,19 @@ a:hover {
 	border-radius: 1em;
 }
 
-.mainlang-cn [class^="lang-cn"] , .mainlang-en [class^="lang-en"] {
+.mainlang-cn [class^="lang-cn"] , 
+.mainlang-en [class^="lang-en"] {
 	color: black; 
 } 
-.mainlang-cn [class^="lang-en"] , .mainlang-en [class^="lang-cn"] {
+.mainlang-cn [class^="lang-en"] , 
+.mainlang-en [class^="lang-cn"] {
 	color: #999; /* For non-main language, I use a pale color for text. */
+} 
+
+.mainlang-cn .langsel #btn-cn::before ,
+.mainlang-en .langsel #btn-en::before  {
+	content: "*"; 
+	display: inline;
 } 
 
 .titlebar__head {
