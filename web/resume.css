@@ -38,6 +38,15 @@ body {
 	margin: 0px; 
 }
 
+a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #6767b4;
+}
+a:hover {
+	color: #252590;
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -181,6 +190,12 @@ body {
 .careerb__jobtitle {
 }
 .careerb__date {
+}
+
+.companyinfo {
+	border: 1px solid grey;
+	border-radius: 0.5em;
+	padding: 1em;
 }
 
 .careertable {
