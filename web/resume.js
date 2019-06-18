@@ -1,5 +1,46 @@
 "use strict"
 
+var LangState = 
+{
+	// lang-cn & lang-en can be both "on", but not both "off"
+	is_cn_on : true,
+	is_en_on : true,
+	is_cn_main : true,
+	
+	toggle : function (is_toggle_cn) {
+	
+		var is_toggle_en = !is_toggle_cn;
+		if(is_toggle_cn)
+			this.is_cn_on = !this.is_cn_on;
+		if(is_toggle_en)
+			this.is_en_on = !this.is_en_on;
+		
+		if(!this.is_cn_on && !this.is_en_on) {
+			// do not allow both off, so we pretend the other lang is clicked
+			if(is_toggle_cn) 
+				this.is_en_on = true;
+			else
+				this.is_cn_on = true;
+			
+			// assume a reverse toggle
+			is_toggle_cn = !is_toggle_cn; 
+			is_toggle_en = !is_toggle_en;
+		}
+		
+		// determine the selected main-language (true: cn, false: en)
+		if(this.is_cn_on && this.is_en_on)
+			this.is_cn_main = is_toggle_cn ? true : false;
+		else
+			this.is_cn_main = this.is_cn_on ? true : false;
+		
+		this.refresh_ui();
+	},
+	
+	refresh_ui : function (is_delay_hide=true) {
+		refresh_cn_en_display(this.is_cn_on, this.is_en_on, this.is_cn_main, is_delay_hide);
+	}
+}
+
 function check_cn_en_pairing() {
 
 	// For all .lang-cn0 and .lang-cn2 tag, there should be a succeeding -en0 and -en2 tag,
@@ -34,7 +75,6 @@ function check_cn_en_pairing() {
 	console.log("check_cn_en_pairing() ok.");
 }
 
-
 function prepare_langbtn_callback() {
 
 	var btn_cn = document.getElementById('btn-cn');
@@ -50,26 +90,7 @@ function prepare_langbtn_callback() {
 		
 		var ele_clicked = event.target;
 		
-		var is_cn_on = btn_cn.classList.contains("button_on");
-		var is_en_on = btn_en.classList.contains("button_on");
-		
-		if(ele_clicked==btn_cn)
-			is_cn_on = !is_cn_on;
-		if(ele_clicked==btn_en)
-			is_en_on = !is_en_on;
-		
-		if(!is_cn_on && !is_en_on) {
-			// but I do not allow both off, so wo pretend the other lang is clicked
-			if(ele_clicked==btn_cn) {
-				is_en_on = true;
-				ele_clicked = btn_en;
-			} else {
-				is_cn_on = true;
-				ele_clicked = btn_cn;
-			}
-		}
-		
-		refresh_cn_en_display(is_cn_on, is_en_on, ele_clicked==btn_cn?true:false);
+		LangState.toggle(ele_clicked==btn_cn?true:false);
 	}
 	
 	btn_cn.addEventListener('click', on_langbtn_click);
@@ -252,6 +273,16 @@ function assert_langtext_0edge() {
 	}
 }
 
+function setup_keypress_switch_lang() {
+	window.addEventListener("keypress", function(event) {
+		if(event.key=="c") {
+			LangState.toggle(true);
+		} 
+		else if (event.key=='e') {
+			LangState.toggle(false);
+		}
+	});
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
@@ -264,11 +295,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	prepare_langbtn_callback();
 	
-	refresh_cn_en_display(true, true, true, false); // TODO: Select one lang according to usr browser lang setting
+	LangState.refresh_ui(false); // TODO: Select one lang according to usr browser lang setting
 
 	setup_transitionend();
 
 	setup_fixed_position_sidebar();
+	
+	setup_keypress_switch_lang();
 	
 	assert_langtext_0edge();
 });
