@@ -315,7 +315,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	
 	// check an error case first:
 	if( fixed_spec.match(/[0-9]+px$/) && (typeof(curtain_spec)=="number"||curtain_spec.match(/[0-9]+$/)) ) {
-		AssertIt(0, "prepare_expandable_block() param error: fixed_spec use px but curtain_spec use child-count!");
+		AssertIt(0, "prepare_expandable_block() param error: fixed_spec use px unit but curtain_spec use child-count!");
 		return;
 	}
 	
@@ -342,13 +342,13 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 		}
 		
 		var prev_y_offset = (prev_childs>=children.length 
-			? parent_ele.offsetHeight
+			? parent_ele.getBoundingClientRect().bottom
 			: children[prev_childs].getBoundingClientRect().top);
 		
 		if(childs>=0) { // spec by child-elements
 			var both_childs = prev_childs + childs;
 			var both_y_offset = (both_childs>=children.length
-				? parent_ele.offsetHeight
+				? parent_ele.getBoundingClientRect().bottom
 				: children[both_childs].getBoundingClientRect().top);
 			return both_y_offset - prev_y_offset; // may be 0 if prev_y_offset has exceeded parent's height
 		}
