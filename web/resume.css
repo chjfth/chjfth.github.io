@@ -150,10 +150,10 @@ a:hover {
 	background: linear-gradient(15deg, green, cyan);
 }
 
-.brief {
+.profile {
 }
 
-.brief__item {
+.profile__item {
 	display: flex;
 }
 
@@ -185,11 +185,12 @@ a:hover {
 
 [class^="lang-"] {
 	overflow: hidden;
-	transition: height 1500ms;
+	transition: height 1500ms, color 1500ms;
 }
 
 .maincol > * {
-	margin: 1.2rem 0.4rem;
+	margin-left: 0.4rem;
+	margin-right: 0.4rem;
 }
 
 .maincol > .h1title {
@@ -259,6 +260,10 @@ a:hover {
 }
 .mainlang-en .careertable__skill::before {
 	content: "Skill and Knowledge"
+}
+
+.careertable__skill {
+	font-size: 0.81rem;
 }
 
 .careertable__skill ul {

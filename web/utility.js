@@ -75,3 +75,41 @@ function AssertIt(value, errormsg) {
 function AssertFail(errormsg) {
 	AssertIt(0, errormsg);
 }
+
+// cs: get computed (css) style 
+function cs(element, csspropname, pseudoElt) {
+	var s = window.getComputedStyle(element, pseudoElt);
+	return s[csspropname];
+}
+
+function get_background_parent(ele) {
+	
+	// Return the ancestor node providing a solid background
+	
+	var start_ele = ele;
+	while(ele.parentElement) {
+		var p = ele.parentElement;
+		var bgc = cs(p, 'background-color');
+		if(bgc=="rgba(0, 0, 0, 0)") { // transparent, skip it
+			ele = p;
+			continue;
+		}
+		else {
+			// cs(p, 'background-color') will be sth like "rgb(85, 119, 187)"
+			return p; 
+		}
+	}
+	return ele; // ele is the <html>, document.documentElement
+}
+
+function has_ancestor(child, ancestor) {
+	// Check if child-element has given ancestor-element.
+	var ele = child;
+	while(ele) {
+		if(ele==ancestor)
+			return true;
+		ele = ele.parentElement;
+	}
+	return false;
+}
+

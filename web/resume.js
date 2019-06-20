@@ -284,6 +284,172 @@ function setup_keypress_switch_lang() {
 	});
 }
 
+function create_curtain_mask(parent_ele, idx_child) {
+	
+	if(cs(parent_ele, 'position')=='static')
+		parent_ele.style['position'] = 'relative'; // must?
+	
+	
+}
+
+function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
+	
+	// [ fixed region ]                                       |
+	// [ ............ ]                                       | visible
+	// [ fixed region ]                                       | region
+	// [curtain region]   masked with gradient white curtain  |
+	// ( dropdown nob )  clicked to expand(reveal) hidden region
+	// [ hidden region ]   initially hidden
+	
+	// fixed_spec & curtain_spec: how many height to show initially.
+	// * If a pure number(3 or "3"), tells how many child-elements to account for.
+	// * If in a form of "30px", it's the px height to account for.
+	//
+	// Note: If fixed_spec is in px, curtain_spec must also be in px, bcz there will
+	// be no guarantee that curtain region starts from a child-element boundary.
+	
+	var children = parent_ele.children;
+	
+	var visible_height_px = undefined; // set later
+	var curtain_height_px = undefined; // set later
+	
+	// check an error case first:
+	if( fixed_spec.match(/[0-9]+px$/) && (typeof(curtain_spec)=="number"||curtain_spec.match(/[0-9]+$/)) ) {
+		AssertIt(0, "prepare_expandable_block() param error: fixed_spec use px but curtain_spec use child-count!");
+		return;
+	}
+	
+	function spec_to_height_px(spec, prev_childs) {
+		prev_childs = parseInt(prev_childs);
+		
+		var childs = -1; // set later
+		var height_px = -1; // set later
+		if(typeof(spec)=="number")
+			childs = spec;
+		else if(spec.match(/[0-9]+$/))
+			childs = parseInt(spec);
+		else if(spec.match(/[0-9]+px$/))
+			height_px = parseInt(spec);
+		
+		if(childs==-1 && height_px==-1) {
+			AssertIt(0, "prepare_expandable_block() parameter error.");
+			return;
+		}
+		
+		if(childs!=-1 && height_px!=-1) {
+			AssertIt(0, "prepare_expandable_block() programmer error detected!");
+			return;
+		}
+		
+		var prev_y_offset = (prev_childs>=children.length 
+			? parent_ele.offsetHeight
+			: children[prev_childs].getBoundingClientRect().top);
+		
+		if(childs>=0) { // spec by child-elements
+			var both_childs = prev_childs + childs;
+			var both_y_offset = (both_childs>=children.length
+				? parent_ele.offsetHeight
+				: children[both_childs].getBoundingClientRect().top);
+			return both_y_offset - prev_y_offset; // may be 0 if prev_y_offset has exceeded parent's height
+		}
+		else { // spec by explicit height_px
+			return height_px;
+		}
+	}
+	
+	var fixed_height_px   = spec_to_height_px(fixed_spec, 0);
+	var curtain_height_px = spec_to_height_px(curtain_spec, fixed_spec); 
+		// 2nd param: No problem if fixed_spec is "20px" or "30px", it will not be used as child-count.
+	var visible_height_px = fixed_height_px + curtain_height_px;
+	
+	if(visible_height_px >= parent_ele.offsetHeight)
+		return; // no requirement for expand feature.
+
+	console.log("prepare_expandable_block(#{0}): visible height {1}px -> {2}px"
+		.format(parent_ele.id, parent_ele.offsetHeight, visible_height_px));
+	
+	// create_curtain_mask():
+	
+	if(cs(parent_ele, 'position')=='static')
+		parent_ele.style['position'] = 'relative'; // must?
+	
+	var curtain = document.createElement('div');
+	curtain.style.position = 'absolute';
+//	curtain.style.backgroundColor = 'red';
+	curtain.style.left = '0px';
+	var top = fixed_height_px; // children[nfixed].getBoundingClientRect().top - parent_ele.getBoundingClientRect().top;
+	curtain.style.top =  top+'px';
+	curtain.style.width = "100%";
+	curtain.style.height = curtain_height_px+'px';
+//	curtain.style.background = 'transparent';
+	var bgc_parent = get_background_parent(parent_ele); 
+	AssertIt(bgc_parent!=document.documentElement, "Hmm, not right, element(#{0}) does not lie on a colored background".format(parent_ele.id));
+	var bgc = cs(bgc_parent, 'background-color'); // bgc sample: "rgb(85, 119, 187)", todo: check for undesired format like "rgb(x,x,x,0.2)"
+	curtain.style['background-image'] = 
+		"linear-gradient(to bottom, {0} ,0.5), {0}))".format(bgc.slice(0,-1)); // add 0.5 transparent value.
+	
+	parent_ele.appendChild(curtain);
+	
+	// Append nob element
+	
+	var nob_height_em = 2, svg_ems = 1.6;
+	var nob = document.createElement('div');
+	nob.style.position = 'absolute';
+	nob.style.left = '0px';
+	var top = visible_height_px; // children[nvisibles-xxx].getBoundingClientRect().top - parent_ele.getBoundingClientRect().top;
+	nob.style.top =  top+'px';
+	nob.style.width = "100%";
+	nob.style.height = nob_height_em+'em';
+	nob.style.backgroundColor = bgc;
+	nob.style.padding = '2px';
+	nob.style['border-radius'] = cs(bgc_parent, 'border-radius'); // copy parent's border-radius
+	nob.style['text-align'] = 'center';
+	// Add a down-arrow svg
+	nob.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" \
+		class="svg-inline--fa fa-chevron-circle-down fa-w-16" \
+		role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\
+		<path fill="currentColor" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg>';
+	var svg_ele = nob.firstElementChild;
+	svg_ele.style.height = svg_ems+'em';
+	svg_ele.style.cursor = 'pointer'; // show a hand-shaped cursor on mouse hovering
+	
+	parent_ele.appendChild(nob);
+	
+	// Truncate parent_ele's visible height.
+	parent_ele.style.height = "calc({0}px + {1}em".format(visible_height_px, nob_height_em);
+	parent_ele.style.overflow = "hidden";
+
+	// Add mouse-click event 
+	document.addEventListener("click", function(event) {
+		// event.target can be <path> or <svg>
+		// console.log(">>> "+event.target.tagName);
+		if( has_ancestor(event.target, nob) ) {
+			// Restore parent_ele's natural height, and remove curtain.
+			parent_ele.style.height = "auto";
+			curtain.style.display = "none";
+			nob.style.display = "none";
+		}
+	});
+	
+	return;
+}
+
+function setup_expandable_blocks() {
+	
+	// Scan for (block) elements with attribute "expandable_fixed_childs=5" etc, 
+	// trim their initial height to contain only 5 children. On the other hand,
+	// a down-arrow is displayed and the user can click it to expand to full height.
+	
+	var eles = document.querySelectorAll("*");
+	for(var ele of eles) {
+		var fixed_childs_spec = ele.getAttribute("expandable_fixed_childs");
+		var curtain_childs_spec = ele.getAttribute("expandable_curtain_childs");
+		if(fixed_childs_spec && curtain_childs_spec) {
+			prepare_expandable_block(ele, fixed_childs_spec, curtain_childs_spec);
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -302,6 +468,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	setup_fixed_position_sidebar();
 	
 	setup_keypress_switch_lang();
+	
+	setup_expandable_blocks();
 	
 	assert_langtext_0edge();
 });
