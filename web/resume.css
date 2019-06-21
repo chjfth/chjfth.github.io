@@ -48,6 +48,13 @@ a:hover {
 	color: #252590;
 }
 
+pre {
+	border: 1px solid #bde;
+	border-radius: 0.34em;
+	padding: 0.5em;
+	line-height: 1.37;
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -309,6 +316,18 @@ a:hover {
 	background-color: rgb(234, 248, 255);
 }
 
+.imagerow {
+	display: flex;
+	width: 100%;
+}
+.imagerow > * {
+	flex: 1;
+	padding: 0.1em;
+	width: 14.444%; /* casual, to prevent width bloat*/
+	object-fit: contain;
+	height: 100%; /* [2019-06-21] Without this, Chrome 74 will use image's orignal height, but Firefox 67 does not have such problem. */
+}
+
 /************************ Desktop Web Layout Override  ************************/
 
 
@@ -411,12 +430,12 @@ a:hover {
 /*		padding: 0.31em;
 */	}
 	.duallang > *:first-child {
-		xxx-margin-bottom: 3.2em;
-	}
+/*		margin-bottom: 3.2em;
+*/	}
 	.duallang [class^=lang-] {
-	/* NOTE: duallang padding/border/margin will cause transitionend FLICKER! Dont use it! */
-		xxx-padding: 3.32em;  
-	}
+	/* NOTE: duallang padding/border/margin will cause cn/en transitionend FLICKER! Don't use it! */
+/*		padding: 3.32em;
+*/	}
 	.duallang.bounding {
 		border: 1px solid transparent;
 		/* Use a *transparent* border as placeholder, otherwise, when 1px border is added by :hover,
