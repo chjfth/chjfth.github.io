@@ -467,6 +467,10 @@
 					<div class="lang-en2">The best is its concise working model, presenter don't have to buy any services, and the attenders don't have to install extra Apps on their devices. It works as long as you have a LAN.
 					</div>
 				</div>
+				<div class="imagerow">
+					<img src="res/pyscreencast2016-server-side.png"/>
+					<img src="res/pyscreencast2016-client-side.jpg"/>
+				</div>
 			</div>
 			<div class="careertable__skill">
 				<ul>
@@ -516,13 +520,101 @@
 					</div>
 				</div>
 				<div class="imagerow">
-					<img src="mpchc-end1.jpg"/>
-					<img src="mpchc-start2.jpg"/>
+					<img src="res/mpchc-end1.jpg"/>
+					<img src="res/mpchc-start2.jpg"/>
 				</div>
 			</div>
 			<div class="careertable__skill">
 				<ul>
-					<li>Python </li>
+					<li>Python</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="careertable__row">
+			<div class="careertable__year">
+				<div class="duallang">
+					<div class="lang-cn2">2015 ~ <br>提高日常效率的 Autohotkey 脚本集</div>
+					<div class="lang-en2">2015 ~ <br>Autohotkey scripts for daily efficiency</div>
+				</div>
+			</div>
+			<div class="careertable__achievement">
+				<div class="duallang">
+					<div class="lang-cn2">对于每天都要在电脑面前探索世界、学习新知的我来说，使用电脑的效率让我觉得很重要，包括：高效地使用快捷键，高效地记录与组织信息等。我发现 Autohotkey(简称 AHK) 是个非常厉害的工具，它的可编程特性以及和 Windows API 的深度绑定使得我能够用简短的脚本来达成原本得费力写 C++ 程序才能达成的目的。上一节介绍的，用 ahk 来抓取视频播放器当前时间点就是个好例子。
+					</div>
+					<div class="lang-en2">As a guy exploring the world and learning new things everyday in front of a computer, I have a strong trend for efficiency. I find that Autohotkey(AHK as abbreviation) is a great tool. Its programmability feature and deep Windows API binding enables me to attain many goals that would otherwise require verbose C++ programming. In previous section, using ahk to grab time point from a video player is a good example.</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">使用 ahk 的方法可以很简单，比如用 PrintScreen/ScrollLock 两个键盘按键来代替鼠标左键/右键点击，Ctrl+V 来粘贴文本到 CMD 窗口（在 Win10 内置该支持以前），强行抓取文本控件和列表框中文字（因为你没法 Ctrl+C 将它们拷出），还有很多很多。</div>
+					<div class="lang-en2">Usage of ahk can be very simple, such as Using PrintScreen/ScrollLock keys for mouse left/right click, Ctrl+V to paste into Windows CMD box(before Win10 supports it natively), grabbing text from Windows static text labels and list boxs(because you just can't Ctrl+C to get them), and lots and lots.</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">Autohotkey 脚本也可以强大到让人吃惊。比如，我这些年就写了很多 ahk 脚本来增强 Evernote 的使用体验，因为 Windows 版的 Evernote 客户端是我日常记录与整理知识的工具。举两个例子吧。
+					</div>
+					<div class="lang-en2">Autohotkey script can be astonishingly powerful as well. Recent years, I wrote many scripts to enhance Evernote's using experience. I did it because I use Evernote Windows desktop client app daily(currently using version 6.5.4) to record and organize my learning. Let me show you two examples.</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">【例子一: EverTable】 插入色彩丰富的表格。你见过下面这种色彩的 Evernote 表格吗？Evernote 客户端自带的功能可做不到，用我的 ahk 脚本就可以做到，这也多亏了 Evernote 的内容引擎实际上是和 HTML 查看器/编辑器，我们只要往里头粘贴合规的 CF_HTML 内容，即可让 Evernote 呈现。我太需要这个上色功能了，因为我的结构化的知识都是用表格来组织的，使用丰富的颜色可以让我更快地找到目标帖子。</div>
+					<div class="lang-en2">【Example One: EverTable】 Insert colorful table. Have you ever seen an Evernote table in such color? Evernote official client app does not give you that benefit. But with the help of my ahk script, it comes to true. Thanks to Evernote content engine actually being a HTML viewer/editor, so, we can paste into CF_HTML content then Evernote shows it as desired. I need this coloring feature so much, because I tends to organize structural knowledges with table, so abundant color scheme helps me pinpoint my saved clips much more faster.</div>
+				</div>
+				<div class="imagerow">
+					<img src="res/EverTable-GUI.png"/>
+					<img src="res/EverTable-dualcolor-sample.png"/>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">【例子二: Everpic】 将尺寸最适合的图片格式插入 Evernote。不知你是否注意到，使用 Windows Evernote 客户端，将一张剪贴板中的图片粘贴入 Evernote 帖子时，Evernote 是用什么格式来存储它的。事实上，Evernote 总会用 32-bit png 来存储，好处是不失真，坏处嘛，就是当我们不需要留存很多图片细节时（比如一幅风景画），使用 jpg 能够比 png 节省几倍到十几倍的空间。我觉得我有权力选择最空间利用率最佳的格式来存储我的信息。Evernote 官方客户端本身无此功能，好在 ahk 脚本能够帮我达成。Everpic 是这么工作的，当我有图片需要粘贴时，我不是直接 Ctrl+V 粘贴，而是先用一个热键启动 Everpic UI，Everpic 用多种编码格式来压缩当前剪贴板中的图形，我可以预览每一种格式的显示质量和尺寸，然后选择最佳的那个进行粘贴。哈，做一个明白人真好。
+					</div>
+					<div class="lang-en2">【Example Two: Everpic】 Pick the best image format to store. Have you ever wonder, when pasting an image into Evernote clip, what image-storing format is used? Actually, Evernote always use 32-bit png, which has the advantage of non-lossy encoding. However, sometimes we prefer lossy encoding in favor of smaller storage size. For example, storing a outdoor scenery picture with jpg format can result in several times or even ten more times storage saving. I think I should have the right to choose the most storage-effective format. Again, Evernote official client app does not provide this facility, and luckily Autohotkey scripts again comes to help. Everpic works like this: When I want to paste a new picture, instead of doing Ctrl+V instantly, I use my hotkey to bring up Everpic UI, who encodes the image with multiple formats, then I can preview the image quality and their respective sizes, picking the best one to paste. Ha, it's a breeze to be a bright person.
+					</div>
+				</div>
+				<div class="imagerow">
+					<img src="res/Everpic-preview.jpg"/>
+					<img src="res/Everpic-inserted-into-Evernote.jpg"/>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">从上方的 Everpic 预览界面可以看出，对于猴子 SPA 这个风景画，60% 质量的 jpg 所用空间要比 32-bit png 小了十倍以上，而画面细节并无明显损失。Everpic 还带来一个额外好处，它帮我自动给图片添加了一段脚注文本，告知此图片的存储格式以及存储大小，还有该图片粘入的日期。
+					</div>
+					<div class="lang-en2">You see from above Everpic preview UI, for the monkey SPA picture, jpg with 60% quality is over ten times storage effective than 32-bit png, without much detail lost. With Everpic, I get an extra bonus, a footnote text is appended to indicate the image format and its storage size, as well as its pasting date.
+					</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">最后我还想补充一点：我写了很多的 ahk 脚本，有条理地组织它们成为一个需要考虑的问题。还好，我找到了模块化的方法，意思是，我将不同功能的脚本归类到不同的 ahk 文件中成为不同的模块，并且可以用一个配置文件来指示 Autohotkey 程序启动时需要装载哪些模块。这样一来，ahk 脚本就可以在团队间共享了，团队成员不用太担心自己的模块会和其他成员的冲突，会导致冲突的，不要去装载即可。
+					</div>
+					<div class="lang-en2">
+					Final point deserved to say: I have written quite a lot ahk scripts, so organizing them becomes an issue. Luckily, I have found a way to modulize them. I place different-purpose scripts into different .ahk files as different modules, and a configuration files tells what modules to load on Autohotkey startup. In this way, ahk scripts can be shared among team members, not much worry about script conflicts, because, end-user can set-aside those conflicting ones on his own.
+					</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">下方，左图是配置文件的样子，它告知应该装载哪些 ahk 模块。右图是 Autohotkey 程序启动时的反馈，，告知哪些模块已经被装载了。</div>
+					<div class="lang-en2">Below: Left image is the configuration file determine what ahk "modules" to load. Right image is the feedback info on Autohotkey program startup, telling what modules have been loaded.</div>
+				</div>
+				<div class="imagerow">
+					<img src="res/ahk-includes-cfg.png"/>
+					<img src="res/ahk-includes-loaded.png"/>
+				</div>
+			</div>
+			<div class="careertable__skill">
+				<ul>
+					<li>Autohotkey</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="careertable__row">
+			<div class="careertable__year">
+				<div class="duallang">
+					2015 ~ <br>Easytmux
+				</div>
+			</div>
+			<div class="careertable__achievement">
+				<div class="duallang">
+					<div class="lang-cn2">～～～</div>
+					<div class="lang-en2">~~~</div>
+				</div>
+			</div>
+			<div class="careertable__skill">
+				<ul>
+					<li>Linux</li>
 				</ul>
 			</div>
 		</div>
