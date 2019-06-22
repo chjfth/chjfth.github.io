@@ -359,7 +359,7 @@
 				</div>
 				<div class="duallang">
 					<div class="lang-cn2">2009-2015: 设法让各个服务器平台集成 Windows 活动目录身份验证功能——包括所有上头提及的服务器软件。如此一来，员工只需要记住一套用户名和密码即可访问那些服务。客观地说，这对于我的好处是，不用经常帮忘记密码的员工去重设密码了，节省出大量时间。</div>
-					<div class="lang-en2">2009-2015: Enable Windows Active Directory authentication integration for various server software -- including all those mentioned above, so that the staffs can use one set of username/password to login those services. Sure, it relieves me from constantly being requested to reset their forgotten password, a big timer saver.</div>
+					<div class="lang-en2">2009-2015: Enable Windows Active Directory authentication integration for various server software -- including all those mentioned above, so that the staffs can use one set of username/password to login to those services. Sure, it relieves me from constantly being requested to reset their forgotten password, a big timer saver.</div>
 				</div>
 			</div>
 			<div class="careertable__skill">
@@ -540,7 +540,7 @@
 			</div>
 			<div class="careertable__achievement">
 				<div class="duallang">
-					<div class="lang-cn2">对于每天都要在电脑面前探索世界、学习新知的我来说，使用电脑的效率让我觉得很重要，包括：高效地使用快捷键，高效地记录与组织信息等。我发现 Autohotkey(简称 AHK) 是个非常厉害的工具，它的可编程特性以及和 Windows API 的深度绑定使得我能够用简短的脚本来达成原本得费力写 C++ 程序才能达成的目的。上一节介绍的，用 ahk 来抓取视频播放器当前时间点就是个好例子。
+					<div class="lang-cn2">对于每天都要在电脑面前探索世界、学习新知的我来说，使用电脑的效率让我觉得很重要，包括：高效地使用快捷键，高效地记录与组织信息等。我发现 <a href="https://www.autohotkey.com/">Autohotkey</a>(简称 AHK) 是个非常厉害的工具，它的可编程特性以及和 Windows API 的深度绑定使得我能够用简短的脚本来达成原本得费力写 C++ 程序才能达成的目的。上一节介绍的，用 ahk 来抓取视频播放器当前时间点就是个好例子。
 					</div>
 					<div class="lang-en2">As a guy exploring the world and learning new things everyday in front of a computer, I have a strong trend for efficiency. I find that Autohotkey(AHK as abbreviation) is a great tool. Its programmability feature and deep Windows API binding enables me to attain many goals that would otherwise require verbose C++ programming. In previous section, using ahk to grab time point from a video player is a good example.</div>
 				</div>
@@ -608,8 +608,57 @@
 			</div>
 			<div class="careertable__achievement">
 				<div class="duallang">
-					<div class="lang-cn2">～～～</div>
-					<div class="lang-en2">~~~</div>
+					<div class="lang-cn2">Easytmux 这个名字暗示，它是让 <a href="https://github.com/tmux/tmux">tmux</a> 变得十分易用的一个小工具。Tmux 称它自己是“终端复用器”，从技术角度讲确实如此。不过呢，tmux 对于用户的最大价值并不在于终端复用，而在于登录会话保持能力。</div>
+					<div class="lang-en2">The name Easytmux implies that, it make using <a href="https://github.com/tmux/tmux">tmux</a> easy. Tmux calls himself a terminal multiplexer. That is correct from technical perspective. But, tmux's greatest value to users does not lie in its multiplexer feature, but login session preserving ability.</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">在 GUI 桌面的时代，让终端能够复用已经不是用户的需求痛点了，因为用户这端多开几个终端模拟程序(PuTTY, Xterm 之类)就能够达到复用功能。痛点在于默认的 Linux 终端登录无法在网络状况异常时继续保持会话，意思是，如果远程登录 Linux 主机后 TCP 连接异常断开，那么基于该连接的整个会话将被终结，会话中的所有进程都会被杀死（这是普遍现象）。想象一下，倘若你登录后启动一个需要一小时才能完成的源码编译动作，而中途你的客户机突然断线、睡眠、或是不小心关闭了终端窗口，那么，你在服务端的编译动作就会异常停止，多么让人沮丧。反观 Windows 的远程桌面登录就很体贴。不管客户机何时断线，客户机重连上来后，都能够自动接回原先的会话，原先的桌面状态全部都在。
+					</div>
+					<div class="lang-en2">In GUI desktop era, multiplexing a terminal has never been a pain to the user, because user can launch multiple terminal programs connecting to the same server to achieve multiplexing. The pain in the throat is that Linux default login server will not preserve user's login session when the underlying network connection is broken. In other word, if user's TCP connection is lost, then the whole session is destroy by the server, all processes in that session get killed(the most commonly case). Imagine, in case you have started a compiler command that would finish its work in one hour, and halfway your client machine inadvertently loses network connection, sleeps, or has the terminal window closed, then, your server-side compiling action will almost be certain to cease. How frustrating! In contrast, let's see how Windows remote desktop service reacts to this. No matter how the network connection gets lost, Windows server preserves user's login-session; when the user connects again, the server side automatically re-attach the new connection to the existing user session, and user feels like he has never experienced any network problem. Cheers! 
+					</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">如果 Linux 服务器的默认登录行为也像 Windows 那样该多好。Easytmux 恰恰就是为了这个目的而开发的，甚至体验比 Windows 还要好。Easytmux 依赖 tmux 实现核心功能（即会话保持），它在 tmux 的外围巧妙地加了一些脚本封装，来达成自动会话恢复的体验。</div>
+					<div class="lang-en2">If only Linux login server could act as that of Windows! Well, Easytmux is right for that, even better than Windows way. Easytmux relies on tmux to do the core work(session preserving), and with some peripheral scripts, it achieves automatic session restore.</div>
+				</div>
+				<div class="duallang">
+					<div class="lang-cn2">如何部署 Easytmux 呢？容易，三步即可：
+						<ol>
+							<li>在 Linux server 上安装 tmux 软件包。</li>
+							<li>将 Easytmux 脚本拷贝到服务端自己能够访问的任意目录中，比如拷贝到 <tt> ~/qlbox/bash/</tt> .</li>
+							<li>在 <tt>~/.bashrc</tt> 中加入 Easytmux 启动脚本，比如 <tt>source ~/qlbox/bash/bash.rc.qlbox</tt> .</li>
+						</ol>
+					</div>
+					<div class="lang-en2">How to deploy Easytmux ? Easy, three steps:
+						<ol>
+							<li>Install tmux package on your Linux server.</li>
+							<li>Copy Easytmux scripts onto server-side directory, such as <tt> ~/qlbox/bash/</tt> .</li>
+							<li>In <tt>~/.bashrc</tt> , add Easytmux startup script, e.g., <tt>source ~/qlbox/bash/bash.rc.qlbox</tt> .</li>
+						</ol>
+					</div>
+				</div>
+				<div class="imagerow imagerow--textandimage">
+<!-- image-text col1: -->
+					<div>
+						<div class="duallang">
+							<div class="lang-cn2">首次登录，用户会看到友善的提示，“用完后不要敲 exit 结束会话，而是直接关闭终端窗口，下次登录会自动恢复会话。” <br><br>
+							</div>
+							<div class="lang-en2">First-time login, user will see a friendly prompt: "No need to type 'exit' when you finish, just close your terminal window." <br><br>
+							</div>
+						</div>
+						<img src="res/easytmux-login1.png" alt="First-time login with Easytmux." />
+					</div>
+<!-- image-text col2: -->
+					<div>
+						<div class="duallang">
+							<div class="lang-cn2">关闭终端窗口后再次登录，Easytmux 将提示你在服务端已经有一个会话，是连接到原先的会话还是坚持创建一个新会话。这个行为比 Windows server 灵活，Windows server 此时不会给你选择。
+							</div>
+							<div class="lang-en2">Close your terminal window and connect again, now Easytmux will offer you two choices, attach to original session or create a brand new session. Easytmux does better than Windows server here, because Windows server does not give you the choice here.
+							</div>
+							
+						</div>
+						<img src="res/easytmux-login2.png" alt="Re-login after connection lost." />
+					</div>
 				</div>
 			</div>
 			<div class="careertable__skill">
@@ -620,8 +669,6 @@
 		</div>
 	
 	</div> <!-- careertable, life as a programmer -->
-
-
 
 
 </div> <!-- .maincol final one -->

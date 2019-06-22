@@ -55,6 +55,10 @@ pre {
 	line-height: 1.37;
 }
 
+tt {
+	color: #252590;
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -329,6 +333,16 @@ pre {
 	height: 100%; /* [2019-06-21] Without this, Chrome 74 will use image's orignal height, but Firefox 67 does not have such problem. */
 }
 
+.imagerow--textandimage {
+	align-items: flex-start;
+}
+.imagerow--textandimage > *{
+	border: 1px solid grey;
+	margin: 1px;
+}
+.imagerow > * img {
+	width: 100%;
+}
 /************************ Desktop Web Layout Override  ************************/
 
 
