@@ -194,6 +194,28 @@ tt {
 */
 }
 
+.h2title {
+	display: inline-block;
+}
+.h2title .stripe {
+	width: 100%;
+	height: 0.4rem;
+	background-image: repeating-linear-gradient(45deg, #cb5 0px, #a83 20px, #cb5 40px);
+}
+
+.ques{
+	font-weight: bold;
+}
+.ans { 
+	margin-left: 2.12em;
+}
+quote {
+	display: block;
+	padding-left: 1.78em;
+	padding-top: 0.28em;
+	padding-bottom: 0.28em;
+}
+
 [class^="lang-"] {
 	overflow: hidden;
 	transition: height 1500ms, color 1500ms;
