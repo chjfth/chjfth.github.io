@@ -730,9 +730,9 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="lang-en2">Which parts of UFCOM is accomplished by me?</div>
 		</div>
 		<div class="duallang ans">
-			<div class="lang-cn2">99% 的工作由我完成。包括以下部分：可行性调研，功能设计，用户界面设计，具体编码，自动构建系统，调试与诊断措施，自测程序，测试指南，用户指南，安装包制作。
+			<div class="lang-cn2">99% 的工作由我完成。包括以下部分：可行性调研，功能设计，用户界面设计，具体编码，bug 修正，自动构建系统，调试与诊断措施，自测程序，测试指南，用户指南，安装包制作。
 			</div>
-			<div class="lang-en2">99 percent of it. Including: Feasibility investigation, feature design, user interface design, actual coding, build system, debugging and diagnosing facility, self-testing programs, testing guide, user guide, installer making.
+			<div class="lang-en2">99 percent of it. Including: Feasibility investigation, feature design, user interface design, actual coding, bug fixing, build system, debugging and diagnosing facility, self-testing programs, testing guide, user guide, and installer making.
 			</div>
 		</div>
 
@@ -759,25 +759,159 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="lang-cn2">我如何取得进展？</div>
 			<div class="lang-en2">How do I make progress?</div>
 		</div>
-		<div class="duallang ans">
-			<div class="lang-cn2">这项工作需要来自三个领域的知识。一，理解 USB 协议是如何工作的；二，Windows 内核架构以及调试内核代码的方法；三，软件工程方法。</div>
-			<div class="lang-en2">It needs knowledge from 3 realms. (1) Understand how USB protocol works; (2) Windows kernel architecture and kernel code debugging technique; (3) software engineering methodology. </div>
+		<div class="ans">
+			<div class="duallang">
+				<div class="lang-cn2">这项工作需要来自三个领域的知识。一，理解 USB 协议是如何工作的；二，Windows 内核架构以及调试内核代码的方法；三，软件工程方法。看看到 2015 年的时候我已经有了哪些积累了。</div>
+				<div class="lang-en2">It needs knowledge from 3 realms. (1) Understand how USB protocol works; (2) Windows kernel architecture and kernel code debugging technique; (3) software engineering methodology. Let's see what I have by year 2015.</div>
+			</div>
+			<ul>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">USB 协议: 50% 就绪。对于 USB 我已经有相当程度的了解了，因为在过去的一年中，我对 PT-850 的设备端 USB 代码进行了彻底重写。在那之前，PT-850 有一份现成的 USB 代码，那是我的几位前同事在八年之前开发的，能工作，但功能很少而且比较脆弱——它们仅仅是将芯片提供商给的样板代码做了一些修补而已。但我的做事风格不同，我会尽力弄懂代码背后的每一项概念。因此，我在翻新 USB 代码的过程中对 USB 协议进行了较为深入的研究。值得一提的一个工具是 USB 协议分析器，称作 <a href="https://www.totalphase.com/products/beagle-usb480/" target="_blank">Beagle USB 480</a>. 这个小玩意儿能捕捉 USB 物理线路上的数据包，向我们展示真实世界中 USB 协议的工作过程。对于 USB 开发来说，它是不可或缺的工具。没有它，我很难取得进展，换言之，我无法仅仅通过阅读 USB 协议规范文本来理解 USB。</div>
+						<div class="lang-en2">USB protocol: 50% ready. I have known USB quite a bit, because in the past year I did a complete rewrite of PT-850's USB device-side code. Before that, PT-850's had its own USB code, developed by some colleagues 8 years ago, workable, but feature poor and somewhat fragile -- they just copied the boilerplate code from USB chip vendor and did some patches to make it work. But my way is different, I tried to comprehend each bit of concept behind my code. So, during my overhaul, I studied USB protocol to quite some extent. One tool worth mentioning is the USB protocol analyzer, called <a href="https://www.totalphase.com/products/beagle-usb480/" target="_blank">Beagle USB 480</a>. This small gadget captures USB packets from physical lines and show me how USB protocol works in real world. It is indispensable for USB software development. Without it, I can hardly make any progress. In other word, I can't get to know USB just by reading the specification text.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">Windows 内核: 10% 就绪。我有过几年的 Windows C++ 应用程序开发经验，这肯定有帮助，但进入内核领域更像是需要学习一个全新领域的知识。
+						</div>
+						<div class="lang-en2">Windows kernel: 10% ready. I have some years of Windows application layer development with C++, and sure it helps, but entering kernel layer is more like entering a whole new realm. 
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">软件工程方法: 80% 就绪。我的软件工程思想都是从实践中总结而来的，毕竟我已经有了 12 年的软件开发经验了。我需要保证开发过程向正确的方向行进、少走弯路，需要保证在软件结构变得复杂之后依旧能够不断地改进、且保持高质量，需要让软件容易被测试、让潜藏的缺陷能够尽早暴露出来而非掩藏得更深，需要有一套自动构建设施来让版本发布很便捷且不会轻易引入人工错误。总体思想有了就成功了一半，针对具体问题的实现方法可以留待具体问题出现时再解决。
+						</div>
+						<div class="lang-en2">Methodology: 80% ready. My software engineering methodology comes from my own practice over the past 12 years. I need to: ensure the development always heads for the right direction, less detour; ensure there is always room for improvement, no compromise to quality, even after the software becomes complex; ensure the software can be easily tested, to make potential bugs stand out instead of hiding them deeper; ensure an automated build facility works so that version releasing is convenient without manual error slipping in. Holding correct general idea is half the success, specific issues should always have a way out.
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="duallang">
+				<div class="lang-cn2">既然最大的一块空缺在 Windows 内核上，我需要找到这方面的学习材料。事实上，对于新领域的学习，我非常依赖书籍。一本好的明确主题的书籍，能够让我对那个主题有系统性的了解。我很奇怪我的同事很少像我这样看书，他们似乎总是通过搜索网上零碎的文章来学习。网上文章的缺点在于，它们通常篇幅有限，很难呈现一个知识体系的全貌，对于所陈述的内容常常缺乏足够的背景上下文铺垫。从 Internet 上找来的零零星星的资料，也许有助于解决一些很具体的问题，或是得到一些灵感，但对于建立起一个新领域的系统性全局观就很难有帮助了。也许这能够解释为什么公司多年来在 Windows 驱动程序改进上几乎没有进展了。</div>
+				<div class="lang-en2">Since the biggest lack is about Windows kernel, I need to find learning material in this realm. Actually, when it comes to new knowledge area, I rely heavily on books. A book with clear topic can introduce me to that topic systematically. I'm curious about my colleagues' despising the usefulness of a computer book; they seem to have a tendency of finding Internet articles as learning source. The downside of Internet articles is, they are mostly limited by their length, not "lengthy" enough to present a full view of a realm, and in many cases in short of background and context introduction. Grabbing odds and ends from the Internet may be helpful to solve some concrete issues or to get some enlightenment, but it helps little to achieve a solid systematic insight of a new realm. Maybe that explains why the company made little progress in Windows driver for so many years.</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">I find three useful books that is highly related to Windows driver developing:</div>
+				<div class="lang-en2">我找到了四本和 Windows 驱动开发有关的书籍：</div>
+			</div>
+			<ul>
+				<li>#1 <a href="https://www.microsoftpressstore.com/store/developing-drivers-with-the-windows-driver-foundation-9780735623743" target="_blank">Developing Drivers with the Windows Driver Foundation</a> -- Microsoft Press 2007</li>
+				<li>#2 <a href="https://www.amazon.com/Programming-Microsoft-Windows-Developer-Reference/dp/0735618038" target="_blank">Programming the Microsoft Windows Driver Model (2nd Edition)</a> -- Microsoft Press 2002</li> 
+				<li>#3 <a href="https://www.microsoftpressstore.com/store/inside-windows-debugging-9780735662780" target="_blank">Inside Windows Debugging</a> -- Microsoft Press 2012</li>
+				<li>#4 <a href="https://www.microsoftpressstore.com/store/windows-internals-part-1-9780735656567" target="_blank">Windows Internals, 6th-edition</a> -- Microsoft Press 2012</li>
+			</ul>
+			<div class="duallang">
+				<div class="lang-cn2">头两本是有关内核 API 的，第三本有关调试工具，第四本是系统全局观。这四本书让我看到了成功的曙光。因此，我的工作分成了五个阶段来展开。以下标注的各阶段时长有部分重叠，而不是界限分明的先后关系。
+				</div>
+				<div class="lang-en2">The first two are about Kernel API, the third about debugging tools, the fourth about system architecture. These three books shed light on my way to success. So, I carried out my work in four stages. The time ranges I mark below is of coarse estimation, they overlaps somewhat, not strictly one after another.
+				</div>
+			</div>
+			<ul>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第一阶段，六个月。主要是信息收集和调查工作，包括：进一步了解 Visual Studio 和 WinDBG 等开发工具的功能，比如远程调试，尝试 symbol server 和 source server，进一步了解 Windows 操作系统提供的功能，设定 UFCOM 的功能目标。#3 与 #4 两本书给了很大帮助。</div>
+						<div class="lang-en2">Stage One, six months. Most time is spent on information gathering and investigating, including: get to know deeper of tools like Visual Studio and WinDBG, such as remote debugging, try symbol server and source server, dig deeper to know the potential of Windows OS, so to establish UFCOM's feature goals. Book #3 and #4 helps a lot.</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第二阶段，五个月。学习内核 API。方法很直白，详读 #2、然后 #1 两本书，同时尝试它们给出的例子程序。</div>
+						<div class="lang-en2">Stage Two, five months. Learn the kernel API. Peruse book #2 then #1, at the same time try the sample programs provided.</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第三阶段，三个月。逐行研究 Windows 7 Driver Kit(WDK7) 给出的 Toaster 系列代码，结合书本 #2 和 #1 来理解它们，并且实地编译运行它们。 Toaster 示例代码非常重要，微软借此示例演示了如何给一份骨架驱动程序一步一步地添加功能，最后形成一个完整的软件包。但为什么用 Windows 7 版本的 WDK 呢？因为我发现它是最后一个支持 Windows XP 的版本。我们的客户中很多人还在使用经典的 Windows XP, 我不想落下他们。
+						</div>
+						<div class="lang-en2">Stage Three, three months. Scrutinize the Toaster sample code provided by Windows 7 Driver Kit(WDK7). The Toaster sample code series is of utter importance for driver learning. Microsoft demonstrates with it the whole driver developing lifecycle, starting from a piece of skeleton code, adding features step by step, then finally a full blown driver package. But why I choose WDK7? Because it is the final version to support Windows XP, the ever classic Windows OS that many our customers are staying with, and I don't want to leave them alone.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第四阶段，三个月。开始真正的 UFCOM 编码，直至其达成预期的功能。你知道的，在前面长达一年多的准备时间中，我其实一直在构想 UFCOM 应该达成的功能，我不甘心只是做已有同类软件的模仿者，我从 UFCOM 用户的角度来考察我的作品将呈现的模样，确实发现有很多潜在的需求是已有的同类软件都没有做到的，因此我的软件可以很多方面做出突破。真正开始编码那一刻，我已经确认了我至少能够做到下面这几条独创功能：(1) 动态修改设备管理器中的设备显示名称、以反映设备的当前状态；(2) 通过设定 VCOM Lifemode ，用户可以控制扫描枪被拔除后，VCOM 设备是否继续存在；(3) 通过设定 Bindmode，用户可以指定不同型号、不同序列号的扫描枪是关联到同一个串口号还是不同的串口号。
+						</div>
+						<div class="lang-en2">Stage Four, three months. Start actual UFCOM coding, until it reaches the functionality I have longed for. You know, I have always been conceiving the feature set of UFCOM before my coding actually starts because I'm not gratified to be a follower of existing counterpart software. I try to consider my software from a user's perspective, and find that may potential requirements have not been implemented by any of those existing software, so I can make many breakthroughs. From the moment I start my first code line for UFCOM, I have confirmed to be capable of adding these creativity features to UFCOM: (1) Dynamic device display name in Device Manager so that user know the device state intuitively. (2) By choosing a VCOM Lifemode, user can control whether the VCOM is still present after the scanner is unplugged from your system. (3) By choosing a Bindmode, user can decide whether VCOM port number association behavior is determined by scanner device-type or by device-serial-number.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">能进行到这一步，我已经说服自己继续推进该项目的绝大部分不确定性已经消除了，剩下的只是具体的细节问题了，因此我可以放心地开始真正的编码了，而不用担心编码到一半遭遇重大障碍而功亏一篑。最终证明，老天没有辜负我的期望，2017 十二月我在公司内发布第一个内测版本(1.0.3)时，预期功能顺利达成，而且后续所有版本也都是稳步改进，虽然编码过程虽然有一些波折，但没有出现重大的 bug 和回退，小的 bug 都能很快定位到原因并且在几天到几个星期内就能解决。
+						</div>
+						<div class="lang-en2">At this point, I have convinced myself that most uncertainty factors regarding this project have been dispelled, and I can peacefully start actual coding, without worrying about running into big obstacles and fail myself. It proves that I've made it well. I makes my first release company-wide in Dec 2017, and subsequent versions improve steadily. Despite some ripples on code refactoring, no prominent bugs ever arose, and small bugs are identified quickly, solving in several days or a few weeks.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第五阶段，一年。发布首个版本是里程碑，但一款软件只有不断迭代改进才会变得成熟。接下来的时间,我可以比较从容地对 UFCOM 进行外围改进了，让它变得更加友好易用。当然，用户反馈也是 UFCOM 改进的动力。主要改进有以下方面：
+						</div>
+						<div class="lang-en2">Stage Five, one year. Making first release is the milestone, but a piece of software matures only by continuous iteration. During the time that follows, I can make peripheral improvements to UFCOM to make it more friendly. Of course user feedback helps push it forward. I improve it in many aspects. 
+						</div>
+					</div>
+					<ol>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">日志功能。用户可以轻松地让驱动程序生成文本格式的日志。遇到故障时，用户将日志文件发送给开发者以便远程诊断问题。
+								</div>
+								<div class="lang-en2">Logging functionality. User can easily tell the driver to generate text-based logging information, and in case of problem, user can send the log to developer for diagnosing.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">Msi 格式的安装包。用户仅需双击 msi 文件，一路点击“下一步”即可安装完成。也可以用命令行启动静默安装方便用户进行脚本集成。
+								</div>
+								<div class="lang-en2">Installer in msi format. User just need to double click the msi file, clicking "Next" several times to accomplish installation. Or, user can use command line based silent installation, so to integrate it into his own script.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">全部编译过程的自动化。意即，一条启动命令即可编译/构建所有代码、生成最终的 msi 安装包。
+								</div>
+								<div class="lang-en2">Make the whole compiling/building process automatic. Yes, one startup command line builds everything, resulting in a final msi package.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">将 UFCOM 提交 WHQL 认证，顺利通过。在使用认证工具测试 UFCOM 的期间，发现并修复了一些隐蔽的 bug。</div>
+								<div class="lang-en2">Submit UFCOM to WHQL certification, pass with success. During the course of testing with certification tool, some subtle bugs are identified and get fixed.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">自测与自我诊断小工具。我自己可以用它们来测试 UFCOM 的 API 行为，以及测试传输速度。这些工具也大方地提供给用户。
+								</div>
+								<div class="lang-en2">Self-testing and verification tools. I myself use them to test UFCOM API conformity, and USB transferring speed. I also generously provide these tools to our users.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">强悍的调试设施。当我需要调试任何一个 UFCOM 版本时，我能够让 WinDBG 或 Visual Studio 当场从 SVN 源码仓库中取出对应 UFCOM 版本的源代码，并开始源码级别的调试，单步执行，观察变量等。这就是我通常能在发现 bug 的当天就定位到故障原因的秘诀。
+								</div>
+								<div class="lang-en2">Powerful debugging facility. When I wants to debug UFCOM's code, I can tell WinDBG or Visual Studio to grab source code of the corresponding version and start source-level debugging on it, step execution, view variable content etc. This is why I can usually pinpoint the error source the very day a bug is identified.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">许许多多的小功能和 bug 修复...</div>
+								<div class="lang-en2">Many many small features and bug fixes...</div>
+							</div>
+						</li>
+					</ol>
+				</li>
+			</ul>
 		</div>
-		<div class="duallang ans">
-			<div class="lang-cn2">看看到 2015 年的时候我已经有了哪些积累了。
-				<ul>
-					<li>USB 协议: 50% 就绪。todo </li>
-					<li>Windows 内核: 10% 就绪。我有过几年的 Windows C++ 应用程序开发经验，这肯定有帮助，但进入内核领域更像是需要学习一个全新领域的知识。</li>
-					<li>软件工程方法: 80% 就绪。</li>
-				</ul>
-			</div>
-			<div class="lang-en2">Let's see what I have by year 2015.
-				<ul>
-					<li>USB protocol: 50% ready. I have known USB quite a bit, because in the past year I have completed an overhaul of PT-850's USB device-side code. Before that, PT-850's had its own USB code, developed by some colleagues 8 years ago, workable, but feature poor and somewhat fragile -- they just copied the boilerplate code from USB chip vendor and did some patches to make it work. But my way is different, I tried to comprehend each bit of concept behind my code. So, during my overhaul, I studied USB protocol to  quite some extent. One tool worth mentioning is the USB protocol analyzer, called <a href="https://www.totalphase.com/products/beagle-usb480/" target="_blank">Beagle USB 480</a>. It captures USB packets from physical lines and show me how USB protocol works in real world. It is indispensable for USB software development.</li>
-					<li>Windows kernel: 10% ready. I have some years of Windows application layer development with C++, and sure it helps, but entering kernel layer is more like entering a whole new realm. </li>
-					<li>Methodology: 80% ready.</li>
-				</ul>
-			</div>
+		<div class="duallang ques">
+			<div class="lang-cn2">UFCOM 取得成功的那些关键因素是什么？</div>
+			<div class="lang-en2">What are the keys to UFCOM's success？</div>
+		</div>
+		<div class="ans">
 		</div>
 	
 	</div>
