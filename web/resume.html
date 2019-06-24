@@ -908,10 +908,82 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			</ul>
 		</div>
 		<div class="duallang ques">
-			<div class="lang-cn2">UFCOM 取得成功的那些关键因素是什么？</div>
+			<div class="lang-cn2">UFCOM 取得成功的那些关键因素有哪些？</div>
 			<div class="lang-en2">What are the keys to UFCOM's success？</div>
 		</div>
 		<div class="ans">
+			<div class="duallang">
+				<div class="lang-cn2">我将其总结为以下几个原因：</div>
+				<div class="lang-en2">I summarize it as following reasons:</div>
+			</div>
+			<ol>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">清醒地认识我所处的软件环境。驱动程序所处的环境就是它所在的操作系统，而操作系统完全是人为设计的产物。对于人为设计的系统，我认为探明其中各个环节的因果关系非常重要。我得分辨出这个系统中哪些要素是完全人为的设计，哪些要素是从预先设计的前提中推导出的必然结果。分清了各个要素的这两项性质，整个系统的结构也就清晰了。书和文档中有时候并不会很明确地向我传达这些因果关系，很多时候我得自行体会和验证。洞察了因果关系之后，我可以对很多未明说的问题作出合理的推测，这能够进一步加深我对系统的认知。
+						</div>
+						<div class="lang-en2">Get to know my software environment with insight. A driver's environment is the operating system, and the operating system is totally a human artifact. For a human artifact system, I think it is critical to figure out causal relationships of the elements within. I have to identify which elements are pure human design, and which are the results of predefined factors. With these in mind, the overall system structure will become clear. Book and docs may not explicitly state every underlying relationships, so I have to grok and verify them. With causal relationships in mind, I will be able to make many rational conjectures, and I help me understand the system deeper.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">耐心，不犯懒，多花时间来验证书和文档中告知的信息，让每一个知识点的推进都很牢靠。
+						</div>
+						<div class="lang-en2">Be patient, and don't be lazy. Spend time to verify what is stated in books and docs, in case of doubt. Every step upward should be solid.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">注重能够提高效率的工具。有三个非常典型的例子：
+						</div>
+						<div class="lang-en2">Consider productivity tools seriously. I have three prominent examples:
+						</div>
+					</div>
+					<ul>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">一，我的实验与开发工作 99% 是在虚拟机中进行的，虚拟机软件带来效率提升是极其明显的，调试代码的过程常常会遭遇死机，那就得重启 Windows，真机重启至少需要三分钟，而且重启后还无法保证让系统回到上一次开始调试时的同样状态（文件和注册表内容可能因为死机而遭到了破坏）；虚拟机只需要三十秒即可恢复，而且能保证回到初始状态。这两者的效率差别，何止是十倍。
+								</div>
+								<div class="lang-en2">First, I carry out my experiments and developing work on virtual machine(VM) 99% of the time. The productivity boost by VMs is dramatic. When debugging kernel code, system crashes are common, then I have to reboot the debuggee machine, and it will cost at least three minutes for a physical machine. What's worse, a rebooted machine is not guaranteed to have its healthy state restored(because file and registry content may have been damaged due to the crash). For a VM, 30 seconds is enough for state restoration, and it guarantees that the machine state is definitely intact. What a ten times life saver.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">二，我使用一个叫 VisualDDK 的软件来作为调试工具（它表现为 Visual Studio 2010 中深度集成的一个插件），不过分地说，它的调试功能比微软 Visual Studio 2015 自带的内核调试功能好上好几倍，我甚至觉得 Visual Studio 2012 起引入的内核调试功能是从 VisualDDK 那里模仿而来的，但却依旧赶不上。比如，VisualDDK 能够显示一个内核句柄背后的对象内容，然而 VS2015 却只能显示句柄值。
+								</div>
+								<div class="lang-en2">Second, I use a tool called VisualDDK at debugger side. It is a deeply integrated Add-on for Visual Studio 2010. Without any exaggeration, VisualDDK's kernel code debugging feature is far better than that of Visual Studio 2015. I even have the feeling that the kernel debugging feature introduced since Visual Studio 2012 is an imitator of VisualDDK but never catch up. For example, VisualDDK show the object content behind a kernel handle, while  VS2015 shows only handle value.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">三，真正开始编码前，我花费了很大精力来建立 <a href="https://docs.microsoft.com/en-us/windows/desktop/Debug/symbol-servers-and-symbol-stores" target="_blank">symbol server</a> 和 source server 调试手段，它们的作用是让我能够取得任意版本程序崩溃现场的源代码、快速找到崩溃原因。所谓养兵千日用兵一时，在整个 UFCOM 的改进过程中，这套调试手段真正派上用场的次数也不过三次，但我觉得我已经赚到了。如果没有这套手段，我将在真实的崩溃面前将陷入黑暗和无助。既然微软已经如此先见之明地提供了定位故障源码的基础设施，我真的没有理由不去利用它。
+								</div>
+								<div class="lang-en2">
+								Third, I made a lot of effort to set up <a href="https://docs.microsoft.com/en-us/windows/desktop/Debug/symbol-servers-and-symbol-stores" target="_blank">"symbol server"</a> and "source server" as my debugging facility. They enable me to fetch correct source code of the matching version for my driver on situation it fails or crashes, then I can pinpoint the error source line. During the whole UFCOM improving period, this facility really comes in handy. Although used only three times, it is really worth the effort. Were I not having this facility, I would have been trapped in darkness and despair in front of a real-world crash. Since Microsoft has envisioned the necessity of this debugging facility, why not set it up?
+								</div>
+							</div>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">不断地为 UFCOM 构思新的功能，在试图实现新功能的过程中，常常能够发现先前设计的不足、或是先前实现方法的不足。编写软件最怕的就是“盲知”的状态，在没有收到用户反馈前根本意识不到自己的软件有什么毛病。仅仅依赖用户的反馈来做改进的一个巨大局限是，你很难得到深层问题的反馈。普通用户不会超出手中软件的功能边界来给你提出反馈，他们的普遍行为是撞到 bug 之后才提出反馈，甚至不会提出反馈——如果 bug 比较轻微且有变通方法的话。正是抱着这种理念，在第一个内测版本发布后，我就一直主动地给 UFCOM 添加新功能，这种努力的成果也是巨大的，有 80% 的 bug 是被我自己提前发现的，剩余 20% 是我的同事（包括测试部门）发现的，而由最终用户率先报告的几乎没有。
+						</div>
+						<div class="lang-en2">I constantly conceive new features for UFCOM, and during the course of implementing those new features, I more and more potential design flaws coding defects arise. Blindness is an awful state for a standalone software developer. It means he is totally unaware of the problems inside his software before users give explicit feedback. The big limitation of relying solely from user feedback is, you can hardly get in-depth feedbacks from your user. Average users will not provide feedbacks that is beyond software functionality. Their feedbacks mostly target only perceptible bugs, or even no feedback -- if the bug is minor and workaround is available. With this notion in mind, I actively add new features to UFCOM, and it pays back. Nearly 80% of the bugs are identified by myself; only 20% are identified by my colleagues(including those from QA department). Bugs initially reported by our end users? Almost none.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">最后不得不说，关键时刻需要一点点好运气帮忙。我曾经在被调试虚拟机中碰到一个神秘的崩溃现象，在拔除 USB 设备时触发，不过另一个隐蔽的触发条件似乎是我的宿主机运行变得迟缓。你知道的，Windows 机器上同时运行太多的程序太多天就容易出现迟缓现象，或称系统卡顿。我敏感地意识到这可能是一个新 bug，因为之前已知的 bug 都被我干掉了。既然我手头有 VisualDDK 这么强大的调试工具，我肯定要挖一挖它的原因。我试图重现该故障几次后，果然我定位到一处隐秘的代码缺陷，这种隐蔽问题在我看过的书和文档中似乎都没有提及。既然定位到原因，就趁机将其修正。现在不修的话，可能再难有机会碰到今天这样能够触发它的环境了。我在日记中这样写道：“2017-06-23: 确认一个事实, WdfRequestSend 指定的 Completion-routine 完全有可能在目标设备 ReleaseHardware 之后才被回调，虽然这很罕见。”</div>
+						<div class="lang-en2">Finally, I admit fortune helps in some critical moments. I once had a mysterious crash on my debuggee VM, when my host Windows runs a bit sluggish. You know, running too many background programs on Windows for too many days can cause sluggish indefinitely. I sensitively deemed it a potential new bug in my program(before I deemed it a Microsoft bug). Since I have such powerful debugging tool with VisualDDK, why not dig it in? I reproduced the symptom several times and found it a subtle coding flaw, that is not clearly mentioned in any books and docs I have read. Well, since it arose with luck in front of me, I fixed it with confidence. I must do it right now, because the luck of have such reproducing environment may not easily come again. I recorded this issue in my diary as: "2017-06-23: Confirmed a fact: Will WdfRequestSend assigned Completion-routine be called *AFTER* the target device's ReleaseHardware has been executed? YES, utterly possible, although VERY RARE".
+						</div>
+					</div>
+				</li>
+			</ol>
 		</div>
 	
 	</div>
