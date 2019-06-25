@@ -59,6 +59,18 @@ tt {
 	color: #252590;
 }
 
+.img-float-right {
+	float: right;
+	margin: 0.41em;
+}
+
+.image-footnote {
+	font-size: 0.8em;
+	text-align: center;
+	color: #666;
+	background-image: linear-gradient(to bottom, #fff, #ccc);
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -217,7 +229,9 @@ quote {
 }
 
 [class^="lang-"] {
-	overflow: hidden;
+/*	overflow: hidden;
+	// a must?
+*/
 	transition: height 1500ms, color 1500ms;
 }
 
