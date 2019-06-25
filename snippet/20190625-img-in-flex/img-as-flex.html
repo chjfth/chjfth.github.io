@@ -1,0 +1,70 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+    box-sizing: border-box;
+}
+
+body { 
+	margin: 0px; 
+}
+
+img {
+	display: initial;
+}
+
+.globalframe {
+	/* inner frame of double container pattern. */
+	margin: auto;
+	max-width: 600px;
+
+	border: 1px dashed cyan;
+	background-color: #ccc;
+	border-radius: 1em;
+}
+
+
+.imagerow {
+	display: flex;
+	align-items: center;
+	border: 1px solid magenta;
+	width: 100%;
+}
+.imagerow > * {
+	flex: 1;
+	padding: 0.2em;
+	max-width: 100%;
+/*	width: 14.44px;
+*/
+	text-align: center; /* make img at center of flex-cell */
+}
+
+.imagerow > * img {
+	max-width: 100%;
+	object-fit: contain;
+}
+
+
+</style>
+</head>
+<body>
+<div class="globalframe">
+	<p> == img as flex cell == </p>
+	<div class="imagerow">
+			<img src="w240.png" />
+			<img src="w540.png" />
+	</div>
+	<div class="imagerow">
+			<img src="w240.png" />
+			<img src="w240.png" />
+	</div>
+	<div class="imagerow">
+			<img src="w540.png" />
+			<img src="w540.png" />
+	</div>
+	<p> == end == </p>
+
+</div>
+</body>
