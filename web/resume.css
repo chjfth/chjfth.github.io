@@ -364,8 +364,6 @@ quote {
 	flex: 1;
 	padding: 0.1em;
 	max-width: 100%;
-	object-fit: contain;
-	
 /*	height: 100%; 
 	[2019-06-21] Without this, Chrome 74 will use image's orignal height, but Firefox 67 does not have such problem. 
 	// That was the old comment when <img> directly acts as flex cell, and the behavior was odd.
@@ -380,6 +378,7 @@ quote {
 	margin: 1px;
 }
 .imagerow > * img {
+	object-fit: contain;
 	max-width: 100%;
 }
 /************************ Desktop Web Layout Override  ************************/
