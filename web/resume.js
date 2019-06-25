@@ -252,11 +252,20 @@ function setup_fixed_position_sidebar() {
 	
 	fix_sidebar_position(); 
 	
-	window.addEventListener("resize", function(){
+	window.addEventListener("resize", function(event){
 		// Making viewport wider can cause .globalframe to move, 
 		// so we need to fix the fixed sidebar position.
 
 		fix_sidebar_position();
+		
+		make_img_clickable_for_fullsize();
+		
+		// Test code >>>
+		if(event.target.tagName='img') {
+			// Weird: some element arises here, but who?
+			// console.log('<img> id={0} width={1} '.format(Object.id(event.target), event.target.naturalWidth));
+		}
+		// Test code <<<
 	});
 }
 
@@ -450,6 +459,46 @@ function setup_expandable_blocks() {
 	}
 }
 
+function make_img_clickable_for_fullsize() {
+
+	function wrap_img_inside_a_tag(img_ele) {
+
+		var parent = img_ele.parentNode;
+		
+		var imgwidth = img_ele.width;
+		if(img_ele.width < img_ele.naturalWidth) {
+			// Add an <a> wrapper to this <img> so that user can "click for fullsize image",
+			// but do it only when there is no <a> wrapper yet, no matter it is a .click_for_fullsize one or not.
+			// That is, if there has been a dedicated <a> wrapper, don't touch anything.
+			
+			if(parent.tagName=="A") // always in upper-case according to spec
+				return;
+			
+			var awrapper = document.createElement("a");
+			awrapper.target = "_blank";
+			awrapper.href = img_ele.getAttribute("src");
+			awrapper.className = "click_for_fullsize";
+			awrapper.appendChild( img_ele.cloneNode(true) );
+			
+			parent.replaceChild(awrapper, img_ele);
+		}
+		else {
+			// Remove the <a> wrapper if the wrapper has .click_for_fullsize class set. 
+			if(parent.tagName=="A" && parent.classList.contains("click_for_fullsize")) {
+				// remove this <a> parent:
+				var parent2 = parent.parentNode;
+				parent2.replaceChild(parent.firstElementChild, parent);
+			}
+		}
+	}
+	
+	var eles = document.querySelectorAll("img");
+	for(var ele of eles) {
+		wrap_img_inside_a_tag(ele);
+	}
+	
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -472,6 +521,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	setup_expandable_blocks();
 	
 	assert_langtext_0edge();
+	
+	make_img_clickable_for_fullsize();
 });
 
 

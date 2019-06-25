@@ -74,7 +74,7 @@ tt {
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
-	max-width: 1200px;
+	max-width: 1280px;
 
 	border: 1px dashed cyan;
 	background-color: #fffff0;
@@ -229,9 +229,8 @@ quote {
 }
 
 [class^="lang-"] {
-/*	overflow: hidden;
-	// a must?
-*/
+	overflow: hidden;
+		/* Without this, we'll see ugly text overflow when doing cn/en transitioning. */ 
 	transition: height 1500ms, color 1500ms;
 }
 
@@ -364,9 +363,13 @@ quote {
 .imagerow > * {
 	flex: 1;
 	padding: 0.1em;
-	width: 14.444%; /* casual, to prevent width bloat*/
+	max-width: 100%;
 	object-fit: contain;
-	height: 100%; /* [2019-06-21] Without this, Chrome 74 will use image's orignal height, but Firefox 67 does not have such problem. */
+	
+/*	height: 100%; 
+	[2019-06-21] Without this, Chrome 74 will use image's orignal height, but Firefox 67 does not have such problem. 
+	// That was the old comment when <img> directly acts as flex cell, and the behavior was odd.
+*/
 }
 
 .imagerow--textandimage {
@@ -377,7 +380,7 @@ quote {
 	margin: 1px;
 }
 .imagerow > * img {
-	width: 100%;
+	max-width: 100%;
 }
 /************************ Desktop Web Layout Override  ************************/
 
