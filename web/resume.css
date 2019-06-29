@@ -357,7 +357,7 @@ quote {
 
 .imagerow {
 	display: flex;
-	align-items: center;
+	align-items: stretch; /* so to make left-block & right-block same height */
 	width: 100%;
 }
 .imagerow > * {
@@ -370,9 +370,10 @@ quote {
 */
 }
 
-.imagerow--textandimage {
-	align-items: flex-start;
+/*.imagerow--textandimage {
+	align-items: stretch; 
 }
+*/
 .imagerow--textandimage > *{
 	border: 1px solid grey;
 	margin: 1px;
