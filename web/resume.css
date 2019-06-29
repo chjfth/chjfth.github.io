@@ -174,17 +174,19 @@ tt {
 }
 
 .profile {
+	display: table;
 }
 
 .profile__item {
-	display: flex;
+	display: table-row;
 }
 
 .item__name {
-	flex-basis: 6em;
+	display: table-cell;
+	font-weight: bold;
 }
 .item__value {
-	flex-grow: 1
+	display: table-cell;
 }
 
 .h1title {

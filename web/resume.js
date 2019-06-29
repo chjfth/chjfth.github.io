@@ -425,16 +425,24 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	parent_ele.appendChild(nob);
 	
 	// Truncate parent_ele's visible height.
-	parent_ele.style.height = "calc({0}px + {1}em".format(visible_height_px, nob_height_em);
-	parent_ele.style.overflow = "hidden";
+	// Be aware: We need a special process for <table> element who neglects .style.height assignment.
+	// So we have to wrap a <div> around <table> and set .style.height on that <div>.
+	
+	var parent_wrapper = parent_ele;
+	if( cs(parent_ele, "display")=="table" ) {
+		parent_wrapper = make_me_child_of(parent_ele, "div");
+	}
+	
+	parent_wrapper.style.height = "calc({0}px + {1}em".format(visible_height_px, nob_height_em);
+	parent_wrapper.style.overflow = "hidden";
 
 	// Add mouse-click event 
-	document.addEventListener("click", function(event) {
-		// event.target can be <path> or <svg>
+	window.addEventListener("click", function(event) {
+		// event.target can be <path> or <svg>, so I use has_ancestor() check.
 		// console.log(">>> "+event.target.tagName);
-		if( has_ancestor(event.target, nob) ) {
-			// Restore parent_ele's natural height, and remove curtain.
-			parent_ele.style.height = "auto";
+		if( has_ancestor(event.target, parent_wrapper) ) { // nob
+			// Restore parent_wrapper's natural height, and remove curtain.
+			parent_wrapper.style.height = "auto";
 			curtain.style.display = "none";
 			nob.style.display = "none";
 		}
@@ -474,13 +482,11 @@ function make_img_clickable_for_fullsize() {
 			if(parent.tagName=="A") // always in upper-case according to spec
 				return;
 			
-			var awrapper = document.createElement("a");
+			var awrapper = make_me_child_of(img_ele, "a");
+			AssertIt(awrapper, "make_img_clickable_for_fullsize(): error on make_me_child_of().");
 			awrapper.target = "_blank";
 			awrapper.href = img_ele.getAttribute("src");
 			awrapper.className = "click_for_fullsize";
-			awrapper.appendChild( img_ele.cloneNode(true) );
-			
-			parent.replaceChild(awrapper, img_ele);
 		}
 		else {
 			// Remove the <a> wrapper if the wrapper has .click_for_fullsize class set. 

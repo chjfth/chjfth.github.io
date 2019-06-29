@@ -113,3 +113,25 @@ function has_ancestor(child, ancestor) {
 	return false;
 }
 
+function make_me_child_of(me_ele, new_parent_tagname) {
+
+	if(!typeof(new_parent_tagname)=="string") {
+		console.log("Error input: make_me_child_of() new_parent_tagname should be a string.");
+		return null;
+	}
+	
+	// Implementation Note: We do not abandon me_ele here, so that event-listeners on me_ele 
+	// and its children will still be in effect.
+	
+	var true_parent = me_ele.parentNode;
+	
+	var orig_place_ele = me_ele.cloneNode(false); // as temp placeholder for original parent's place 
+	true_parent.replaceChild(orig_place_ele, me_ele);
+	
+	var new_parent = document.createElement(new_parent_tagname);
+	new_parent.appendChild( me_ele );
+	
+	true_parent.replaceChild(new_parent, orig_place_ele);
+	
+	return new_parent;
+}
