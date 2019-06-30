@@ -1034,13 +1034,125 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			</div>
 			<div class="lang-cn2">这款被命名为 PT-850 的条码采集器，是我头十年的工作生涯中投入时间最多的项目。不可否认，这款采集器是团队协作的成果，它最终也被证明是一款非常受欢迎的产品，即使在面世十年后仍然有很大量的销售。从 2008 年以来，大多数项目组成员将工作重点转移到新产品开发上去了，然后我成为了这款产品软件系统的主要维护者。我认为维护这款老产品是有意义的，因为一方面我知道它还有太多需要改进的地方和需要解决的问题，如果不继续改进，我内心觉得对不起花钱购买了我们产品的客户，另一方面，我希望把一件事情做得完美，至少在我能力所及的范围内应该如此。
 			</div>
-			<div class="lang-en2">The portable barcode data collector with model name PT850 is the one around which I invested most of effort during the first ten years of my career. Sure, it is the achievement of a whole team, and proves to be a popular product even after 10 years of its debut. Since the year 2008, most team members of this product turn their focus onto new product lines, and I became the primary software maintainer of this product series. I have always thought it meaningful to maintain this somewhat "unfashionable" product because of two reasons. First, I knew that it has too many issues to solve and too much potential to get improved. If I didn't make that way, I would feel guilty of leaving paying users with unfriendly or even buggy software. Second, I hope to make things perfect, at least try to achieve it in my scope.
+			<div class="lang-en2">The portable barcode data collector with model name PT850 is the one around which I invested most of effort during the first ten years of my career. Sure, it is the achievement of a whole team, and proves to be a popular product even after 10 years of its debut. Since the year 2008, most team members of this product turn their focus onto new product lines, and I became the primary software maintainer of this product series. I have always thought it meaningful to maintain this somewhat "unfashionable" product because of two reasons. First, I knew that it has too many issues to solve and too much potential to get improved. If I didn't make that way, I would feel guilty of leaving paying users with unfriendly or even buggy software. Second, I hope to make things perfect, at least try to achieve perfection in my scope.
 			</div>
 		</div>
 
-	==table==
+		<div class="duallang">
+			<div class="lang-cn2">我觉得有必要对 PT-850 作一个简要介绍，以便我的陈述显得比较具体。</div>
+			<div class="lang-en2">I think I should present a brief introduction to this PT-850, so that my words here sounds something concrete.</div>
+		</div>
+		
+		<div style="clear:both"></div> <!-- This seems a must. Only adding clearfix inside next <div> tag does not help. -->
 
-	</div>
+		<div class="table_s clearfix">
+			<div class="table__row">
+				<div class="table__cell itemname">
+					<div class="duallang">
+						<div class="lang-cn2">产品生命周期</div>
+						<div class="lang-en2">Product Lifecycle</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					2003 ~ 2016
+				</div>
+			</div>
+			<div class="table__row">
+				<div class="table__cell itemname">
+					<div class="duallang">
+						<div class="lang-cn2">硬件</div>
+						<div class="lang-en2">Hardware</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					<ul>
+						<li>CPU: Cirrus Logic EP7312, ARMv7 instruction set, 74MHz</li>
+						<li>RAM: 8M Bytes</li>
+						<li>NOR flash(as kernel code storage): 2MB</li>
+						<li>NAND flash(as file system storage): 16MB ~ 128MB</li>
+						<li>Barcode scanner engine: Symbol SE1200 or SE965</li>
+						<li>Communication peripherals: RS-232 serial port; USB 1.1 slave side controller by Philips PDIUSBD12</li>
+						<li>Wireless communications: GPRS module by SIEMENS MC35/MC35i or SIMCOM SIM900A; 802.11g Wifi with Lantronix WiPort, TCP/IP/MAC protocol integrated </li>
+					</ul>
+				</div>
+			</div>
+			<div class="table__row">
+				<div class="table__cell itemname">
+					<div class="duallang">
+						<div class="lang-cn2">软件系统</div>
+						<div class="lang-en2">Software system</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					<ul>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">内核: 基于 uC/OS-II 2.5 的实时多任务操作系统，外围设备的驱动程序由团队成员自行编写。我们称 PT-850 的内核为 uBase-III 。</div>
+								<div class="lang-en2">Kernel: RTOS based on uC/OS-II 2.5; peripheral device drivers written by our team members. We call PT-850's kernel uBase-III.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">文件系统：<a href="https://github.com/rickyzheng/uffs" target="_blank">UFFS</a> ，由此项目的软件架构师郑功梓开发，这是位博学的项目领导者。</div>
+								<div class="lang-en2">File system: <a href="https://github.com/rickyzheng/uffs" target="_blank">UFFS</a>, developed by the very project architect Ricky Zheng, who is a knowledgeable project lead.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">使用的编译器： ARM SDT 2.50 (1999 年时的版本)。内核和应用程序都使用此版本编译器，内核编译后大小 600KB 左右，应用程序大小 50KB~300KB。</div>
+								<div class="lang-en2">Compiler used: ARM SDT 2.50 (since 1999). Both kernel and application use this compiler. The kernel compiled size is around 600KB, and the application varies from 50KB to 300KB.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">为什么我们在整个产品生命周期中都没有更换新版本的编译器呢？因为[内核中的应用程序装载器代码]是跟[应用程序的二进制代码格式]紧密耦合的。简单地升级内核编译器会导致应用程序装载器无法匹配原先应用程序的二进制接口。开发一个新内核、同时能够兼容过往的应用程序，按理说是最好的做法，但这个任务对我们团队过于艰巨，因此我们止步于此。
+								</div>
+								<div class="lang-en2">Why don't we upgrade the compiler to newer versions during the whole product life cycle? Because the app-loader inside the kernel code is tightly coupled with user's application binary code. Simply upgrading the kernel compiler can cause binary interface mismatch between the kernel and the application layer. Developing a new kernel with good backward compatibility of old binary code may be the best solution, but it is a tough work for our team, so we stopped there.
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="table__row">
+				<div class="table__cell itemname">
+					<div class="duallang">
+						<div class="lang-cn2">用户 SDK</div>
+						<div class="lang-en2">User SDK</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					<div class="duallang">
+						<div class="lang-cn2">PT-850 的设计初衷就是为了让用户能够自行定制化开发（我们当时的称呼叫“二次开发”）。意思是，由我们提供内核软件（或说操作系统）和 SDK，用户可以自行编写定制化的应用程序来实现他的业务逻辑。当然，在不改动应用程序的情况下，用户可以单独升级内核来解决系统中的 bug 或得到新的功能。
+						</div>
+						<div class="lang-en2">PT-850 is meant for customized development. That is, we provide kernel software and SDK, and user can program his own application to accomplish his business logic. Of course, by upgrading the kernel alone, user can get system bug fixes and acquire new features.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">这套 SDK 被称作 uTools，它表现为 Visual C++ 6 集成开发环境(IDE)中的一个插件。用户用 Visual C++ 的强大代码编辑器来编辑他的代码，调用 ARM 编译器来生产二进制文件，再将二进制文件烧写到真机的 Flash 中，非常顺畅的工作流程。
+						</div>
+						<div class="lang-en2">The SDK we provide is called uTools, which is a Visual C++ 6 IDE add-in. User edits his code in Visual C++ 6's great code editor, and compiles his code to ARM executable binary, flashing the binary to PT-850 real device, all from the Visual C++ IDE, a very smooth workflow.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">uTools 的一个特色功能是，用户可以将自己的代码先编译成 Windows 平台上的模拟程序，利用 Visual C++ 强悍的可视化调试器来调试好代码，然后再编译成 ARM 的目标代码。这个功能大大节省了应用程序的开发时间，你想想，编译一个模拟器程序并当场运行，比起下载真实目标代码到 PT-850 上肯定要快捷得多，而且还弥补了真机上无法进行源码级调试的缺陷，另外，用户还可以在手边没有采集器真机的情况下继续开发和调试。
+						</div>
+						<div class="lang-en2">One prominent feature of uTools is, user can compile his code into Windows simulator programs. With the help of powerful Visual C++ debugger, user debugs his code with thoroughness, then compile to real ARM code. This feature is a great time saver. Think of it, compiling into a simulator program and run it on the spot, is surely much speedier than downloading code to a real PT-850 machine, and it provides a workaround for not being able to do source-level debugging on the real machine. Furthermore, user can go on development without a real device at hand. 
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">能够达成这个功能，是因为我们将 uBase-III 的绝大多数内核 API 都在 Windows 系统上进行了相同功能的实现。项目架构师郑功梓在 2002 年时设计了这个功能，我表示非常的赞赏。下方是真机上和模拟器中运行 Shell 应用程序的画面对比。
+						</div>
+						<div class="lang-en2">We achieve this by implementing most kernel API on Windows system, with the "same" functionality as real machine. Our architect Ricky Zheng designed this feature back in 2002, and I really appreciate this decision. Below, the Shell application UI seen on real machine, and the simulator program UI as a Windows EXE.
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+
+
+	</div> <!-- end: lv2content of PT850 -->
 
 </div> <!-- .maincol final one -->
 

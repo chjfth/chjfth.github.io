@@ -287,6 +287,27 @@ quote {
 	margin-top: 1.89em;
 }
 
+.table_s {
+	margin-left: 1em;
+	display: table;
+	font-size: 0.9em;
+	border-spacing: 0.244em;
+
+}
+.table_s .table__row {
+	display: table-row;
+}
+.table_s .table__cell {
+	display: table-cell;
+	padding: 0.5em;
+}
+.table_s .itemname {
+	background-color: #80c0dd;
+	min-width: 6.13em;
+}
+.table_s .itemvalue {
+	background-color: #d0d7e4;
+}
 
 .mainlang-cn .careertable__date::before {
 	content: "时间线";
