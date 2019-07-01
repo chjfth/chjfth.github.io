@@ -382,6 +382,7 @@ quote {
 	display: flex;
 	align-items: stretch; /* so to make left-block & right-block same height */
 	width: 100%;
+	text-align: center;
 }
 .imagerow > * {
 	flex: 1;
