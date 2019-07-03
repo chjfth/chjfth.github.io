@@ -176,6 +176,10 @@
 		<div class="lang-cn2">我希望我的工作伙伴能够分享他们的知识和经验，因为我自己一直就是这么做的。一个开放源代码的工作环境我会特别喜欢。</div>
 		<div class="lang-en2">I wish my workmates have a passion for sharing their knowledge and experience, because I myself have done this all the way. An open-source environment is especially welcome.</div>
 	</div>
+	<div class="duallang">
+		<div class="lang-cn2">我一直在收集软件开发中的最佳实践.。最佳实践，是让程序员的生活变得越来越有趣的重要因素。</div>
+		<div class="lang-en2">I'm always collecting best practices in software development. Best practices are what make a programmer's life more and more intriguing.</div>
+	</div>
 
 	<!-- ========== h1title ========== -->
 	<h1 class="h1title">
@@ -1045,7 +1049,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 		
 		<div style="clear:both"></div> <!-- This seems a must. Only adding clearfix inside next <div> tag does not help. -->
 
-		<div class="table_s clearfix">
+		<div class="table_s clearfix"> <!-- PT850 brief table >>> -->
 			<div class="table__row">
 				<div class="table__cell itemname">
 					<div class="duallang">
@@ -1071,6 +1075,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 						<li>NOR flash(as kernel code storage): 2MB</li>
 						<li>NAND flash(as file system storage): 16MB ~ 128MB</li>
 						<li>Barcode scanner engine: Symbol SE1200 or SE965</li>
+						<li>Display: 160*128 4-level grayscale LCD</li>
 						<li>Communication peripherals: RS-232 serial port; USB 1.1 slave side controller by Philips PDIUSBD12</li>
 						<li>Wireless communications: GPRS module by SIEMENS MC35/MC35i or SIMCOM SIM900A; 802.11g Wifi with Lantronix WiPort, TCP/IP/MAC protocol integrated </li>
 					</ul>
@@ -1087,8 +1092,10 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<ul>
 						<li>
 							<div class="duallang">
-								<div class="lang-cn2">内核: 基于 uC/OS-II 2.5 的实时多任务操作系统，外围设备的驱动程序由团队成员自行编写。我们称 PT-850 的内核为 uBase-III 。</div>
-								<div class="lang-en2">Kernel: RTOS based on uC/OS-II 2.5; peripheral device drivers written by our team members. We call PT-850's kernel uBase-III.</div>
+								<div class="lang-cn2">内核: 基于 uC/OS-II 2.5 的实时多任务操作系统，外围设备的驱动程序由团队成员自行编写。我们称 PT-850 的内核为 uBase-III 。PT-850 的内核总共经历了 6 个大版本和 30 多个小版本，这些版本依旧可以从<a href="http://down.nlscan.com:82/Release/uBase/uBase-III-kernel/" target="_blank">此处</a>获取。
+								</div>
+								<div class="lang-en2">Kernel: RTOS based on uC/OS-II 2.5; peripheral device drivers written by our team members. We call PT-850's kernel uBase-III. PT-850's kernel goes through 6 big versions and over 30 small versions during it life time. These versions can still be found <a href="http://down.nlscan.com:82/Release/uBase/uBase-III-kernel/" target="_blank">here</a>.
+								</div>
 							</div>
 						</li>
 						<li>
@@ -1154,12 +1161,397 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 							<img src="res/pt850-simulator-shell.png"/>
 						</div>
 					</div>
-					
+					<div class="duallang">
+						<div class="lang-cn2">为了支持应用程序的定制化开发，uTools 中提供了各种函数库供用户调用。比如：文件系统 API；线程 API；GUI 图形库（称 UFC）；条码扫描 API；简易的 HTTP 客户端库（称 WebComm）；通过串口或 USB 传输文件的通信库（称 uEasyFile）等等。
+						</div>
+						<div class="lang-en2">To facilitate customized application development, we provide various user libraries, such as: file system  API; threading API; GUI library(called UFC); barcode scanner API; simple HTTP client library(call WebComm); serial-port or USB based file transfer library(called uEasyFile), and so on.
+						</div>
+					</div>
 				</div>
 			</div>
-		
-		</div>
+		</div> <!-- PT850 brief table <<< -->
 
+		<div class="duallang">
+			<div class="lang-cn2">十多年在一个项目上持续进行改进，我领会到了很多软件开发中极好的原则。
+			</div>
+			<div class="lang-en2">Improving such a project for 10+ years, I have come to realize quite a lot of great principles in software development.
+			</div>
+		</div>
+		
+		<div class="table_s">
+			<div class="table__row">
+				<div class="table__cell itembrief">
+					<div class="duallang">
+						<div class="lang-cn2">API 语义稳定的重要性</div>
+						<div class="lang-en2">Importance of API semantic stability</div>
+					</div>
+				</div>
+				<div class="table__cell itemdetail">
+					<div class="duallang">
+						<div class="lang-cn2">我们每天都在使用 API (应用程序编程接口)。操作系统内核跟应用程序代码通过 API 进行互操作。API 是无形的，但它比有形的内核代码和应用层代码重要得多。API 是一组规则或约定，是我们对所需功能的抽象。具体的代码来来去去，浮浮沉沉，但 API 应始终保持稳定。
+						</div>
+						<div class="lang-en2">We use API(Application Programming Interface) everyday. The OS kernel interoperates with the applications through API. The API is intangible, but is much more important than the tangible kernel code and the application code. The API is a set of rules or agreement, and the abstraction of features we require. Actual code comes and goes, rises and falls, but long live the API should.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">在内核和应用程序都遵循 API 这个中间物的情况下，它们就可以各自独立地进行升级。这实在太有用了，内核代码和应用代码实现了“解耦”的效果，它们可以由完全不同的团队进行开发，多么了不起的效率提升。
+						</div>
+						<div class="lang-en2">Under the premise that OS kernel and application both conforms to this middleware called API, they can develop separately on their own. The kernel code and the application code get "decoupled"; they can be developed by utterly two different teams. What a efficiency boost.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">在现实中的案例就是：我们升级 Windows 的版本后（比如将 Windows XP 升级到 Windows 7），绝大多数的应用程序是能够继续在 Windows 7 上运行的（只不过在新的 Win7 OS 上某些软件需要重新安装一次）。用户之前在 Windows XP 上的应用软件投资大都能够得到保留。对于 PT-850 也是如此，用户通过自行获取并烧写新的内核版本，就可能够解决很多中途遇到的 bug。这种内核和应用分离的模式，已经越来越广泛地被大量的智能电子设备所采用，典型的如基于 Andriod 或是苹果 iOS 的手机。
+						</div>
+						<div class="lang-en2">The real world example is: If we upgrade an old Windows version to a new one(e.g., Windows XP to Windows 7), most applications can still run on Windows7, except that, some applications have to go through an "install" procedure on the new Win7 OS. User's most application investment on Windows XP is preserved. It is the same for PT-850; user acquires new kernel version and flash it onto their device, and many bugs get fixed. This OS/app separation mode, has been adopted more and more widely by all kinds of intelligent devices, most typically, mobile phones based on Andriod, or Apple iOS.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">现在，一件重要的事情就是，如何一次性地把 API 设计正确，这项工作甚至可以被称作艺术。我能够感受到，需要多年积累的暗知识以及富有洞察力的经验才能设计好一套经久耐用的 API 。我在改进 PT-850 的内核过程中其实设计了不少的 C/C++ 接口的 API，我能够感受到多年以前的无知，以及自己正在领悟其中的门道。这是个很大的话题，此处不方便展开了……
+						</div>
+						<div class="lang-en2">Now, one time correctness of API design becomes very important, and even an art. I can feel that quite a lot of dark knowledge and insightful experience are required to design an API with long-term usability and stability. Working with PT-850 for so many years, I have designed quite some APIs for it. I can feel my innocent from many years ago, and I have got many correct ideas along the time. This is a big topic and it may not be suitable to expand it here...
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="table__row">
+				<div class="table__cell itembrief">
+					<div class="duallang">
+						<div class="lang-cn2">延迟绑定造就动态系统</div>
+						<div class="lang-en2">Late binding makes a dynamic system</div>
+					</div>
+				</div>
+				<div class="table__cell itemdetail">
+					<div class="duallang">
+						<div class="lang-cn2">延迟绑定，意思是，不要将可以参数化的数据写死在代码中，而是要在代码运行的过程中根据外界的输入信息来动态确定。
+						</div>
+						<div class="lang-en2">By saying late binding, I mean that, do not hardcode parameterizable data, instead, determine those data according to environmental input during code run.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">早些年间，我习惯性地以为，对于 PT-850 这样一个小型的嵌入式系统，内核所看到的设备都是程序员事先确定好的，比如，这个硬件平台中有两个物理串口，一片 NAND Flash 芯片，这说明内核中要创建出三个设备。现在看来，这是相当没有经验的看法。我们需要进一步追问，系统中真的就只能呈现两个串口吗？条码识读器是可以模拟成串口数据源的，基于 USB 的数据通道，也是可以被模拟成一个串口的。Flash 方面的动态性就更强了。一片 Flash 上只能安放一份文件系统吗？当然不是。想想一台 Windows PC 上的硬盘，里头可是有 C: D: E: 这好些个分区的，每个分区都被 Windows 认为是一个设备。这么看起来，单一一个物理设备，在系统中可以呈现出的抽象设备可以是无限多的，不是吗？
+						</div>
+						<div class="lang-en2">In early years, I naively took it for granted that a small embedded system like PT-850 should have all its "devices" statically considered. For example, this hardware box has two physical serial ports, one NAND Flash chip, which should map to three devices. Now I know I was so inexperienced. We need some challenge. Is the system only limited to two serial ports? The barcode scanner can work like a serial port, because it is actually a data source, right? Does the single Flash chip accommodate only a single file system? Sure not. Think of a Windows PC, a harddisk supports many partitions that is named C: D: E: etc, each of which is considered a device. It looks like a single physical device can support an infinite number of abstract devices.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">一个具有足够动态性的软件系统，你打开它的代码来查看，将发现里头只有针对规则的描述，输入数据与输出数据的格式规则、不同类型数据在不同场景下的意义、不同部件之间交换数据的流程规则等等，而没有具体的数据。具体数据都是代码运行后从代码的外部获取的，比如，存放在硬盘上的数据，来自网络的数据，用户现场输入的数据。拿 PC 上的文件系统举例，当前机器上应该生成多少个文件系统实例，各个实例掌管多大范围的一块磁盘空间，肯定不是写在可执行代码里头的，而是通过代码读取硬盘分区表来确定的。人们需要富有远见地“浪费掉”硬盘上起始处的一点点空间来安放这份硬盘分区表，才能达成这种美妙的延迟绑定，进而得到一个高度动态的系统——非常高明的决定。
+						</div>
+						<div class="lang-en2">Peeking into a system with sheer power of dynamicity, reveals that it has only rule definitions in its code, rules for input/output data format, rules for interpreting data in different scenarios, rules for exchanging data between various components, but NO actual data.  The actual data, is fed from outside while the system is running, such as, from harddisk, from network, or from a human's onsite input. Take PC's file system for example, how many file system instances should be presented, and how large a space should a specific instance manage? These are not determined by the executable code, instead, determined by a piece of information on a disk called the partition table. The code reads and examines the partition table to make final decision. For us smart system designers, we insightfully waste a small piece of storage at the head of the harddisk in favor of the partition table, so to achieving such a beautiful result of late-binding, so a highly dynamic system. What a brilliant decision.
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="table__row">
+				<div class="table__cell itembrief">
+					<div class="duallang">
+						<div class="lang-cn2">单一二进制文件的好处</div>
+						<div class="lang-en2">Benefits of a single binary</div>
+					</div>
+				</div>
+				<div class="table__cell itemdetail">
+					<h4>
+						<div class="duallang">
+							<div class="lang-cn2">这说的是什么意思？</div>
+							<div class="lang-en2">What does it mean?</div>
+						</div>
+					</h4>
+					<div class="duallang">
+						<div class="lang-cn2">单一二进制文件，意思是我们应该尽力做到只提供一份二进制文件（或说可执行文件）给我们的客户，让这唯一一份文件来适应用户的不同使用环境。
+						</div>
+						<div class="lang-en2">Single binary, means we should strive to provide a single set of binary files(executable files) for all our users, and this set of binaries should be adaptable to all user environments.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">需要举一些反面的例子才能比较清楚地说明其含义。
+						</div>
+						<div class="lang-en2">Some contrary examples help clarify its meaning. 
+						</div>
+					</div>
+					<ul>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">我们开发的一个软件分为基础版和专业版，不应该为基础版编译一个 EXE 文件，为专业版再编译一个 EXE 文件；相反，应该只编译一个 EXE 文件，根据用户填入的序列号来呈现基础版和专业版的不同功能。
+								</div>
+								<div class="lang-en2">If our software is marketed as Basic version and Pro version, we should NOT compile and EXE file for Basic, and another for Pro; instead, we should compile a single EXE, and it presents different features according to serial number provided by the end-user.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">如果我们的软件同时支持 Windows XP 和 Windows 10，那么，不要为这两个 OS 各自编译一份 EXE，而是用同一份 EXE 。在古老的 WinXP 上，我们仅仅调用老式的 API 来完成工作；而在新版 的 Win10 上，我们才去调用新版的 API 来达成新系统上的新功能。事实上，UFCOM 就是这么做的，它从 WinXP 一直支持到 Win10，而且设法做到了只提供一份二进制文件。
+								</div>
+								<div class="lang-en2">If our software supports Windows XP through Windows 10, we should NOT build two EXE files for each of the OS version; instead, build only one. On the older WinXP, we call only old system APIs; on the newer Win10, we call new APIs to achieve new features by the OS. Actually, UFCOM takes the very approach; it support WinXP through Win10, by a single set of binary files, with a bit effort from me.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">对于像 PT-850 这样的产品，单一二进制的原则依然适用。PT-850 其实是一个产品系列，包含很多种子型号。不同的子型号在硬件配置上有所差别，它们可能有不同型号的条码识读头，不同的无线通信模块，甚至不同的主板版本号（主板上有一些细微的硬件差别）。我的同事曾经有生成多份二进制的倾向，比如，给不带无线通信模块的编译一个内核，给带 GPRS 模块的编译一个内核，再给带 Wifi 模块的编译一个内核。好在我介入该项目后及时阻止了这种做法，并且将单一二进制原则一直保持到产品生命周期结束。
+								</div>
+								<div class="lang-en2">For a product like PT-850, this principle still applies. PT-850 is actually a series of sub-models. Different sub-models may have different scanner hardware, different wireless module(GPRS or Wifi), and even different mainboard versions with subtle hardware discrepancies. There had been trends from my co-workers to build its kernel into different variants, for example, one kernel for non-wireless model, one for GPRS model, and yet another for Wifi model. That bad trend was stopped by me as I got involved in this project, and I never allowed it to stray away until end of the product life.
+								</div>
+							</div>
+						</li>
+					</ul>
+					<h4>
+						<div class="duallang">
+							<div class="lang-cn2">好处是什么？</div>
+							<div class="lang-en2">What's the benefit?</div>
+						</div>
+					</h4>
+					<div class="duallang">
+						<div class="lang-cn2">为什么我要坚持单一二进制策略呢？我多年的亲身经验告诉我，它带来的好处实在是太多了，对用户端和开发者端都有诸多的好处。
+						</div>
+						<div class="lang-en2">Why am I insisting on single-binary strategy? My own experiences through these years reveals so many benefits of it, both at user side and at developer side.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">【用户端的好处】</div>
+						<div class="lang-en2">【Benefits at user side】</div>
+					</div>
+					<ol>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">减少用户的选择负担。用户很可能不是 IT 专家，选择应该使用哪一份二进制（或软件安装包）对它可能有困难。比如，用户可能不清楚自己用的 Windows 版本是 XP 还是 7/8/10，不清楚自己的系统是 32 位的还是 64 位的。即使用户清楚，选择意味着更多犯错的可能性，用户也许不小心用了不匹配的版本，结果表现出软件故障让他一头雾水。
+								</div>
+								<div class="lang-en2">Relief the user from the burden of selection. Our users may not be IT experts, so picking an appropriate binary(or installer) may be difficult for them. For instance, some user may not know what operating system version he is using, Windows XP or 7/8/10, or not knowing whether his system is 32-bit or 64-bit. Even if he is clear all about these, making selection means possibility of making errors. User may accidentally pick an inappropriate version and see weird behavior appear, frustrated.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">降低用户的认知负担。用户可以简单地用一个软件名加一个版本号来清晰地辨识出我们的软件。由于实施了单一二进制策略，我们的软件安装包名称就可以很短，短却没有歧义，这样的软件在用户眼中无疑是极其出众的。
+								</div>
+								<div class="lang-en2">Reduce the cost of cognition. User can identify our software with a simple software name and a version number, no other hassles. Thanks to the single binary strategy, we can name the installer in very short words, what a relax to the user.
+								</div>
+							</div>
+						</li>
+					</ol>
+					<div class="duallang">
+						<div class="lang-cn2">【对开发者的好处】</div>
+						<div class="lang-en2">【Benefits at developer side】</div>
+					</div>
+					<ol>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">让版本号变简洁。实施单一二进制策略，我们的版本号命名只需要由数字构成即可，没有奇奇怪怪的各种后缀。比如 UFCOM，它的最新版本就是 1.7.12，由三个数字构成，就是如此简洁无歧义。</div>
+								<div class="lang-en2">Concise versioning. With single binary, our version number will consist only of numbers, no arcane suffixes.  For example, the latest version of UFCOM is 1.7.12, consisting of three numbers, concise and unambiguous.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">减轻测试人员的测试负担。在测试人员眼中，他的测试对象就是唯一的一样东西，而不是好几样不同的变体。当然，如果你将测试人员也想象成是用户的话，用户端得到的好处他们都能得到。
+								</div>
+								<div class="lang-en2">Reduce the burden of software tester(the QA team). From the perspective of the QA team, they test only a single object, not a bunch of variant. Of course, if you think of the QA team as your users, all user benefits apply to them.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">抑制源代码分支泛滥。
+								</div>
+								<div class="lang-en2">Inhibit source code forking contagion.
+								</div>
+							</div>
+							<div class="duallang">
+								<div class="lang-cn2">让我们看看不实施单一二进制会导致什么样的后果。许多缺乏经验的开发团队在决定开发一个新功能时，会倾向于将它们的代码进行一次永久分叉，然后在新分叉上加入新功能。这么做短期貌似会带来一点好处，新功能引入的 bug 不会影响到老代码。然而，长期来看这会变成灾难。他们的代码仓库中将会出现越来越多的无法自动同步改进的重复代码。为其中一份老代码的 bug 修正无法自动同步到其他的老代码副本中。开发者只能靠人力逐个去找出应该修正的副本并手工同步那个修正。更糟糕的是，没有人能够知道到底有多少个副本需要同步修正。是否它们已经全部被修正了，只能靠运气。当然，我知道如果团队能够坚持单一的代码源头，而仅仅是编译过程才生成不同的二进制文件，那么这个灾难并不会出现。我只是强调，坚持单一二进制是最彻底的解决方案。
+								</div>
+								<div class="lang-en2">Let's see the dark side of not going single binary. Many unorganized team tends to permanently fork their code base and add new features on that new fork. The short-term benefit is that bugs in new feature code does not cause harm to the old code base. However, that is a long-term disaster. There will be so many duplicated and unsyncable code in devteam's code repository. Fixing a bug in one of those old code copies DOES NOT automatically have it auto-fixed for other copies. Developers have to fix them manually, one by one. Even worse, no one knows exactly how many other copies need such fix. Whether all of them get fixed is determined by luck. Sure, I know that if the team can keep a single source base and compile into multiple binary variants, this disaster can be avoided. I just want to emphasize that going single binary is the most thorough approach.
+								</div>
+							</div>
+						</li>
+					</ol>
+					<h4>
+						<div class="duallang">
+							<div class="lang-cn2">实施单一二进制有代价吗？</div>
+							<div class="lang-en2">Any cost of sticking to single binary?</div>
+						</div>
+					</h4>
+					<div class="duallang">
+						<div class="lang-cn2">是的。不付出任何的代价，却想得到那么多单一二进制的好处，是不现实的。我们必须付出一些短期的利益来换取那些长远的好处。
+						</div>
+						<div class="lang-en2">Yes. It is not likely to attain so many benefits without any cost. We have to pay something in short-term in exchange for those long-term advantages.
+						</div>
+					</div>
+					<ol>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">我们需要额外的工作来探测出我们所在的软硬件环境，因为我们已经主动要求将这个探测工作的负担从用户身上转移到我们自己的身上。</div>
+								<div class="lang-en2">We need extra work to detect the hardware/software environment in which we are running, because we offer to transfer the burden of env-detection from our user to ourselves. 
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">我们需要经常重构我们的代码，以便让较少的代码能够完成较多场景下的工作。较少的代码，意味着较少的潜在 bug 以及较小的维护代价。重构，并不是简简单单地拷贝一份现有代码块后做出一点参数调整，相反，这是一项需要对原有架构进行优化甚至重新设计的工作，需要对于整个项目的全局视角才能做好。
+								</div>
+								<div class="lang-en2">We have to refactor our code often, so that we can use less code for more scenes. Less code implies less potential bugs and less maintenance cost in the future. Refactoring is not easy as well.  it needs deep understanding of our environment and the issues we need to solve. Refactoring is NOT simply copying a chunk of code tuning some running parameters, instead, it is about architectural optimization or even redesign, and that requires global insight into the whole project.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">单一二进制会让用户拿到的文件稍稍有点臃肿，因为里头的很多代码是多合一的，某些代码在具体用户的环境中可能一直会是休眠的状态。但我想这应该算是个次要问题，因为当今的计算机系统的存储一直在扩大。
+								</div>
+								<div class="lang-en2">Single binary would ship with a little bloated files to the user, because it is all-in-one code， and some code may stay dormant in a specific user environment. Anyway, I don't think it a big problem, because computer system storage is expanding fast nowadays.
+								</div>
+							</div>
+						</li>
+					</ol>
+				</div> 
+			</div>
+			<div class="table__row">
+				<div class="table__cell itembrief">
+					<div class="duallang">
+						<div class="lang-cn2">让代码跨平台运行，是提高代码质量的极好方法</div>
+						<div class="lang-en2">More cross-platform, better code quality</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					<div class="duallang">
+						<div class="lang-cn2">这里我主要指的是 C/C++ 代码，因为它是我在新大陆工作期间的主要编程语言。
+						</div>
+						<div class="lang-en2">I primarily refer to C/C++ code here, because it is my major programming language when I work for Newland.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">让代码跨平台的意思是，将我的源代码编译成能够在多种软件平台（比如 Windows, Linux）以及多种 CPU 架构（比如 x86, x64, ARM）上能够运行的二进制，并且想方设法地让各个平台上都将它们用上。你可能会问，像 UFCOM 这样的 Windows 专用软件，也能跨平台吗？我的观点其实很明确。虽然 UFCOM 整体上是 Windows-only 的，但它内部用到的很多功能模块是可以跨平台的。同样的道理，PT-850 的内核软件虽然被称为嵌入式软件，里头也有很多功能可以被提炼成通用的跨平台函数库。至于能够提炼到什么程度，就要看软件工程师抽象思维的水平了。<b>所谓抽象，就是总结不同事物之间的共性</b>。
+						</div>
+						<div class="lang-en2">Going cross-platform means: Compile my source code for multiple software platforms(Windows, Linux etc) and multiple CPU architectures(x86, x64, ARM etc), and find every opportunity to put them into actual use. You may ask, for Windows-specific software like UFCOM, how do I consider it cross-platform? OK, my idea is clear. Although UFCOM as a whole is Windows-only, but its many components can be made cross-platform. Same idea, while PT-850's kernel is considered embedded software, its many components can be cross-platform as well. As for how much of it can be distilled into platform-independent code, it relies on the software engineer's ability of abstract thinking. <strong>Abstract, is about finding common factors of different things.</strong> 
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">经过多年的跨平台软件思考与实践，我得出这样的结论：<strong>一个结构良好的软件，其中 90% 的部分应该是可重用的函数库，其余的 10% 是将那些函数库整合在一起形成最终软件样貌的黏合剂。</strong>
+						</div>
+						<div class="lang-en2">After many years of cross-platorm thinking and coding, I come up with such a conclusion: A piece of well structured software should consist of 90% of reusable libraries, and 10% of glue code that stitch the libraries to form the final software.
+						</div>
+					</div>
+					<h4>
+						<div class="duallang">
+							<div class="lang-cn2">让代码跨平台的各种好处</div>
+							<div class="lang-en2">Benefits of going cross-platform</div>
+						</div>
+					</h4>
+					<div class="duallang">
+						<div class="lang-cn2">能给我带来一种满足感。写一次代码就能在两个完全不同的系统中运行，就好像花一个面包的钱能买到两个面包，何乐而不为呢？ 
+						</div>
+						<div class="lang-en2">It brings me a feeling of fulfillment. Writing one piece of code and seeing it runs on two totally different systems, it's like getting two pieces of bread by paying for only one. Why not do it? </div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">在多个环境中运行，能够让代码得到更彻底的验证。比方说：
+						</div>
+						<div class="lang-en2">My code gets verified more thoroughly with multiple environments. For example: 
+						</div>
+					</div>
+					<ul>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">我的代码能够被多个编译器验证。比如，有些代码写法的缺陷在 Visual C++ 眼中被忽略了，但却可以被 GNU gcc 检查出来。
+								</div>
+								<div class="lang-en2">My code gets checked in multiple compilers, for example, some coding flaw shrouded by Visual C++ may be uncovered by GNU gcc. 
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">32 位编译的代码，编译为 64 位后运行崩溃。这说明代码写法上很可能有错误，常见的如将一个指针值存储在一个 <tt>int</tt> 变量中。
+								</div>
+								<div class="lang-en2">Code runs well as 32-bit binary but fails when runs as 64-bit. This probably signifies a coding error, such as storing a pointer inside a <tt>int</tt> variable.</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">在强功能的平台上轻松调试与验证，在弱功能平台上放心地运行。想象一下，我需要为一台弱功能的嵌入式系统编写代码（比如 PT-850），它的 CPU, RAM, 和硬盘都很弱小，我应该怎么做最好呢？假定我要写的代码不是直接硬件相关的，那么，我一定会在 Windows 上先将代码的功能先实现，途中用 Visual C++ IDE 来调试它，写大把的测试案例在 Windows 即时运行。当所有能在 Windows 上进行的事都完成后，我将代码编译到真正目标平台上运行。我非常自信我的代码在目标平台上将会顺利运行，毕竟 C/C++ 是跨平台的语言嘛。
+								</div>
+								<div class="lang-en2">Debug and verify my program on more powerful platform with ease, and run them on less powerful platform with confidence. Consider, I'm coding for an embedded platform that has constrained CPU, RAM and disk with weak debugging facility(PT-850 is one case). What should I do then? Assuming that code is not hardware-dependent, I will definitely code the same feature on Windows first, so, I can debug my code with powerful Visual C++ IDE, write test cases to run from Windows instantly. When everything can be done on Windows is done, I compile my code for that real target system. With great confidence, it will run there without problem as well -- C/C++ is a cross-platform language after all.
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="duallang">
+						<div class="lang-cn2">能从不同系统的差异中获得洞见。为了让我的代码尽量能够跨平台，我常常得细致地了解不同 OS 平台上系统 API 的使用方法，以便封装出统一形式的函数接口，这让我有机会对比不同系统设计的异同点，并思考它们各自的优点和缺点各在哪里。比如：通过考察 Windows 和 Linux 上线程创建函数的区别，我得出结论，线程创建函数接受一个 "user context" 参数是必须的，而给线程函数自身设计一个返回值的必要性就不大。
+						</div>
+						<div class="lang-en2">Get insights from different systems. In order to make my own code cross-platform, I often need to study various OS platform APIs so to encapsulate platform-specific code into uniform APIs. This gives me the chance of comparing underlying system to figure out what are good and bads of their designs. For instance, comparing threading API on Windows and Linux, I conclude that: It is vital for thread-creating function to accept a "user context" parameter, but not a must for the threading function itself to return a value.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">这是消除重复代码的一个重要手段，鲜明地实践了“别做重复的事”这个哲学思想。
+						</div>
+						<div class="lang-en2">It is an important way of eliminating code duplication, embracing the philosophy of "DON'T REPEAT YOURSELF".
+						</div>
+					</div>
+					<h4>
+						<div class="duallang">
+							<div class="lang-cn2">还是老问题，这么做有代价吗？</div>
+							<div class="lang-en2">Still the question, any cost?</div>
+						</div>
+					</h4>
+					<div class="duallang">
+						<div class="lang-cn2">确实有代价。我自己一路走来能够感受到这是一场印象深刻的苦难。难怪在新大陆时，我身边的绝大多数同事都没有像我这么做，我也没法强迫他们这么做，因为我不是他们的项目主管。
+						</div>
+						<div class="lang-en2">Yes, there is cost. I myself can feel the tribulation induced by this decision. No wonder most co-workers from Newland are reluctant to do this, and I cannot enforce my idea on them because I'm not their project manager. 
+						</div>
+					</div>
+					<ul>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">需要费心去了解各种目标平台的编译器，至少要知道用什么样的编译开关才能生成各种文件类型，EXE/LIB/DLL 等。我还需要留意不同厂商的编译器、以及同厂商编译器不同版本之间行为的差异，遵循它们共有的特性，以便我的源代码能够适应所有这些编译器，比如，Visual C++ 和 gcc 处理 C++ 模版行为就有一些区别。对于无法回避的差别，得设计一些预处理宏来区分不同的编译器、或是将无法调和的代码拆散到不同的源文件中。
+								</div>
+								<div class="lang-en2">Quite some effort is required to get acquainted with various compilers involved. At least, I should know what compiler switches are responsible for generating EXE/LIB/DLL etc. I also need to know subtle difference between compilers from different vendors(or different versions of the same vendor), stick to common parts of them, so that my source code is compilable by all of them，e.g. Visual C++ and gcc exhibit some different behaviors when coping with C++ template code. For differences that I cannot bypass, I need to design some preprocessor macros to distinguish them, or, dissect unsharable parts into different source files.
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="duallang">
+								<div class="lang-cn2">最具挑战性的工作是如何管理工程文件。我们知道，为了将 .c/.cpp 编译成可执行文件，我们还需要工程文件。一个工程文件用于告知需要编译和链接哪些源文件，用什么选项来编译和链接，甚至还含有依赖性信息（需要先编译哪些“库”）。问题在于，不同编译器、甚至同一编译器的不同版本使用的工程文件千差万别。Visual C++ 6 用的 .dsp, Visual C++ 2005/2008 用的 .vcproj, Visual C++ 2010 及后续版本用的 .vcxproj, Linux 工程一般用 makefiles, 基于 ARM 的商业编译器有它们各自的专有格式。如果我要为五个目标平台编译代码，难道我得维护五份工程文件吗？这简直是个负担。
+								</div>
+								<div class="lang-en2">The most challenging work turns out to be project-file management. As we all know, to compile .c/.cpp files into executables, we need project files. A project file tells what source files to compile and link, what options to use for compiling and linking, and even its dependencies(what libraries to build first etc). The problem is, project files from different compilers or different compiler versions are heterogenous. Visual C++ 6 uses .dsp, Visual C++ 2005/2008 uses .vcproj, Visual C++ 2010 and later uses .vcxproj, Linux projects use makefiles, ARM-based commercial compilers use their proprietary formats. If I want to compile for five target platforms, do I need to maintain five project files? What a burden.
+								</div>
+							</div>
+							<div class="duallang">
+								<div class="lang-cn2">因此我决定使用自己的工程文件格式，基于 GMU 的 makefiles 。我的典型工程管理模式是这样的：使用两组工程文件，一组是 Visual C++ 的工程文件，这让我在开发阶段便于编辑代码和可视化调试；另一组是 GMU makefiles，负责所有平台上的命令行编译。本文后头有对 GMU 的更详细介绍。虽然不算完美，但还算是总体能够接受的解决方案。
+								</div>
+								<div class="lang-en2">So I decided to employ my own project file, that is, makefiles based on GMU. My typical project management pattern is: Use two sets of project files, one is Visual C++ project file that ease code editing and visual debugging on Windows; the other is GMU makefiles that is responsible for command-line building for all platforms. I'll talk about GMU in more detail later. Although not perfect, it reaches a state of overall acceptance.
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="table__row">
+				<div class="table__cell itembrief">
+					<div class="duallang">
+						<div class="lang-cn2">封装可以解决很多棘手的问题</div>
+						<div class="lang-en2">Encapsulation solves many tough problems</div>
+					</div>
+				</div>
+				<div class="table__cell itemvalue">
+					<div class="duallang">
+						<div class="lang-cn2">封装，是一个巨大的话题。软件世界里除了数学和算法以外，其他的看起来好像都是封装。我在软件行业里头学习得越多，就越感受到封装的神奇。
+						</div>
+						<div class="lang-en2">Encapsulation is a gigantic topic. It seems that the software world is all about encapsulation besides mathematics and algorithms. The more I learn in software, the more I find it fantastic. 
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">让我就举一个例子吧。早年有一个让我苦恼了好一阵的小问题，这是有关 Windows 线程函数的一个问题。Windows 应用程序要创建线程的话，用哪个函数最好呢？根据 Windows 系统大牛 Jeffrey Richter 的说法，用 C 运行库函数 _beginthreadex 是最好的。但不知为何微软在定义此函数时干了件画蛇添足的事情，要求作为参数的线程函数是 <tt>__stdcall</tt> 类型的，而非 C/C++ 默认的 <tt>__cdecl</tt> 类型。这给我们带来的麻烦是，我们得为函数原型加上 __stdcall 修饰。为什么说它是个麻烦呢？因为我总是希望我的 C/C++ 代码是跨平台的，而其他平台（比如 Linux）根本就不识别这个 <tt>__stdcall</tt> 修饰。那怎么办呢？只好为其他所有编译器找个地方将 __stdcall 给 #define 成空符号。这不是多了一整套的累赘嘛！
+						</div>
+						<div class="lang-en2">Let me cite just one example. In early days, I had been bothered by a small issue for quite a while, which was about Windows thread function. When Windows application needs to create a thread, which thread creating function is the best? According to Windows system guru Jeffrey Richter, C Runtime function _beginthreadex is the best. But, Microsoft places an meaningless limitation on this API, who requires that the threading function must be of type <tt>__stdcall</tt>, instead of the default <tt>__cdecl</tt>. It brought me the hassle of adding <tt>__stdcall</tt> decoration to my threading functions. Why is it a hassle? Because I said I always want my code to be cross-platform, but all other platform(Linux for instance) does not recognize this <tt>__stdcall</tt> stuff. Then what shall I do? I had to <tt>#define</tt> all appearance of <tt>__stdcall</tt> to empty token for all other compilers. A whole bunch of verbosity!
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">几年后一天我突然想通了。为什么不给 _beginthreadex 来一层封装呢？现在我是封装者，我提供的函数叫 winCreateThread，这个 winCreateThread 接受的用户线程函数是自然的 <tt>__cdecl</tt> 类型；我当然不能把用户的线程函数直接传给 _beginthreadex（因为函数原型不匹配），我需要把自己准备的一个 __stdcall 类型的 wrapper-function 传给 _beginthreadex；我的 wrapper-function 开始执行后，它将转而去执行用户的线程函数，这样，用户的线程函数就跑起来了。一个小小的封装完美解决问题！
+						</div>
+						<div class="lang-en2">One day after several years, I got enlightened. Why not make an encapsulation for _beginthreadex? Now I am the encapsulator, I provide a new API called winCreateThread. This winCreateThread accepts user's threading function in the natural <tt>__cdecl</tt> form; of course I will not pass user's threading function to _beginthreadex(due to prototype mismatch), instead, I pass a __stdcall typed wrapper-function to _beginthreadex; and finally, as soon as my wrapper-function starts running, it in turn calls user's threading function. So, user's threading function finally runs. A small encapsulation solves it perfectly!
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 
 	</div> <!-- end: lv2content of PT850 -->
 
