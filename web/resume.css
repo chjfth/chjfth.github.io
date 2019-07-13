@@ -317,6 +317,17 @@ quote {
 	background-color: #dad0e8;
 }
 
+.itembrief {
+	display: block;
+	padding: 0.372em 0em;
+	color: brown;  /* test, no use */
+}
+.itemdetail {
+	margin-left: 2em;
+	padding: 0.372em 0em;
+}
+
+
 .mainlang-cn .careertable__date::before {
 	content: "时间线";
 }

@@ -721,7 +721,10 @@
 	</div>
 	
 	<h2 class="h2title">
-		<div>The UFCOM driver</div>
+		<div class="duallang">
+			<div class="lang-cn0">UFCOM 虚拟串口驱动程序</div>
+			<div class="lang-en0">The UFCOM virtual COM port driver</div>
+		</div>
 		<div class="stripe"></div>
 	</h2>
 
@@ -1026,7 +1029,10 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 	</div>
 
 	<h2 class="h2title">
-		<div>PT850 and its related software</div>
+		<div class="duallang">
+			<div class="lang-cn0">PT850 和它的配套软件</div>
+			<div class="lang-en0">PT850 and its related software</div>
+		</div>
 		<div class="stripe"></div>
 	</h2>
 
@@ -1410,7 +1416,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 						<div class="lang-en2">More cross-platform, better code quality</div>
 					</div>
 				</div>
-				<div class="table__cell itemvalue">
+				<div class="table__cell itemdetail">
 					<div class="duallang">
 						<div class="lang-cn2">这里我主要指的是 C/C++ 代码，因为它是我在新大陆工作期间的主要编程语言。
 						</div>
@@ -1552,8 +1558,165 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			</div>
 		</div>
 		
-
 	</div> <!-- end: lv2content of PT850 -->
+
+
+	<h2 class="h2title">
+		<div class="duallang">
+			<div class="lang-cn0">GMU - 一直伴随我前进的持续集成系统</div>
+			<div class="lang-en0">GMU - Continuous Integration all the way with me</div>
+		</div>
+		<div class="stripe"></div>
+	</h2>
+
+	<div class="lv2content">
+
+		<div class="duallang">
+			<div class="lang-cn2">你很可能是第一次听说 GMU，这并不奇怪，因为它是我自己开发的一套系统。最早时候我给它起的名字是 GnumakeUniproc，完整意思 GNU make universal process，写起来和念起来都很长，因此后来我就简称它 GMU 了。从名字上可以看出，这个系统是基于 GNU make 的，既然是 "make"，肯定是用来编译一个 C/C++ 工程的。没错，确实如此。那我用了它多久呢？很久，从 2006 年一直到 2008 年 UFCOM 完成。那就其他的替代品吗？呃……我觉得很难找到替代品，因为一路走来我有很多定制化的需求需要用 GMU 来满足。
+			</div>
+			<div class="lang-en2">It is probably the first time you hear GMU, because it is a system developed by me. At the beginning, I gave it the name GnumakeUniproc, with the full meaning "GNU make universal process", long and verbose, right? So I later give it a brief name GMU. As the name implies, this system is based on GNU make. Since it is "make", it must serve the purpose of compiling some C/C++ projects. Right, you get it. Then how long have I used it? Very long, from year 2006 to 2018, the year I finished UFCOM. Can I have some alternatives? I'm afraid not, because so many customized requirements have to be accomplished with GMU.
+			</div>
+		</div>
+		
+		<div class="itembrief">
+			<div class="duallang">
+				<div class="lang-cn2">GMU 这个东西最初是怎么在我头脑里产生的？</div>
+				<div class="lang-en2">How does GMU come into being in the first place?</div>
+			</div>
+		</div>
+		<div class="itemdetail">
+			<div class="duallang">
+				<div class="lang-cn2">我可以举出很多理由，但如果一直追溯到最源头，我发现是我的一个本能在驱使我这么做：我希望我写的代码能够在我所遇见过的所有平台上都能运行，这样的话我才能感受到物尽其用。所谓的平台，可以从硬件和软件两个角度进行划分。硬件角度有 Intel x86 and x64, ARM，MIPS, RISC-V 等。软件角度有 Windows, WinCE, Linux, 以及各种专门的嵌入式 OS。从 2003 年开始，我就意识到这个问题了，因为当时 PT-850 的很多代码已经需要同时被编译成 ARM 的和 PC Windows 的，而同时用两套工程管理文件常常出现不同步的问题。而且，接下来的几年中，我们公司的产品还要面对更多样化的平台，比如 ARM-Linux 和 ARM-WinCE 。没错，我的原始动机是，不要为每一个目标平台各自维护一份工程文件，而是共用一份工程文件。
+				</div>
+				<div class="lang-en2">I could cite many reasons. But if I trace them back to origin, I find that it is my "instinct" driving me do this. That is, I hope my code can be run on all platforms I have encountered. So I can feel I have got the most out of my effort writing those code. The so called platforms, can be viewed from two aspects: Hardware, like Intel x86 and x64, ARM, MIPS, RISC-V etc. Software: Windows, WinCE, Linux, and all kinds of embedded OS. Since 2003, I have been aware of such and situation because many of PT-850's code is compiled for both ARM and PC Windows(as I've mentioned before), and using two sets of project management files often went out of sync. Moreover, In the next years, more platforms like ARM-Linux and ARM-WinCE come into play in our company product. Yes, my initiative is: Don't maintain N project files for N platforms, instead, a single project file across all platforms.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">既然已经牵涉到 Linux ，工程管理文件不可避免地要用到 makefile ，这已经是 Unix 世界二十多年的传统了。既然需要写 makefile，为什么不用 makefile 来一并管理所有平台的 C/C++ 代码构建呢？这是我在 2006 年时能够想到的唯一可行方案。我得承认，当时我还没接触过 Python、Ruby ，因此错过了基于高级脚本语言的更有潜力的方案。
+				</div>
+				<div class="lang-en2">Since we've come to Linux, I can inevitably come across makefiles, which is the traditionally way in Unix world for 20+ years. So why not manage all-platform building with makefiles? That was the only viable solution I came up with back in 2006. I have to confess, I did not know Python or Ruby back then, so I missed the possibility of potential solutions using those high-level scripting languages.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">GNU make 到底能多大程度地满足我的需求呢？这个需要一番调查。我的许多同事可没像我这么想，因为他们一开始使用 makefile 的姿势就不对。比方说，要编译一些 Linux 工程时，他们会为每一个工程手工编写各自的一个 makefile，然后呢，每次执行 <tt>make</tt> 之前，他们会先敲 <tt>make clean</tt> 来清除掉旧的二进制文件。简直犯傻，如果每次 make 都要清除旧文件，那使用 makefile 的好处在哪里呢？干脆用 Bash 脚本不是更直接吗？
+				</div>
+				<div class="lang-en2">How does GNU make fit well to my needs? I had to investigate it first. Many of my colleagues did not think of it, because they just used makefiles poorly. For example, for Linux C/C++ projects, they handcrafted one makefile for each single project(big one or small one), and for each <tt>make</tt> execution, they run <tt>make clean</tt> first to clean all "stale" binary files. Yuck, what's the benefit of using makefile if he cleans everything before each run. A Bash script could be a better choice then.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">为了找到正确使用 makefile 的方法，我开始仔细阅读 <a href="https://www.gnu.org/s/make/manual/make.html">GNU make 官方手册</a>，这时我才发现我之前对它的功能了解还不到 10%。剩余 90% 的高级功能让我看到了实现跨平台 makefile 工程文件的希望。
+				</div>
+				<div class="lang-en2">To find the correct way of using make, I started reading <a href="https://www.gnu.org/s/make/manual/make.html">official GNU make manual</a>(was version 3.79 back then in 2006), and found that I knew less than 10% of its full features. The remaining 90% feature brought me the hope of accomplishing cross-platform makefiles.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">最后，我没有失望。我设法将 GMU 用到了我后来所有的 C/C++ 工程中。所有需要自动构建的工程，都是用GMU 来组织的。当然，在不断地延伸 GMU 的使用场合的过程中，我无数多次根据实际需要对它进行了大大小小改进。
+				</div>
+				<div class="lang-en2">Finally, I'm not disappointed. I have managed to use GMU in all my C/C++ projects. Especially, for projects that need auto-build, they are all built around GMU. Of course, GMU has gone through numerous big and small improvements.
+				</div>
+			</div>
+		</div>
+
+		<div class="itembrief">
+			<div class="duallang">
+				<div class="lang-cn0">简要描述 GMU 的功能和特点</div>
+				<div class="lang-en0">GMU features and highlights in brief</div>
+			</div>
+		</div>
+		<div class="itemdetail">
+			<div class="imagerow imagerow--textandimage">
+				<div>
+					<div class="duallang">
+						<div class="lang-cn2">GMU 在 Linux 构建完一个叫 sgetopt 的小工程。</div>
+						<div class="lang-en2">GMU on Linux building a small project.</div>
+					</div>
+					<img src="res/gmu-linux-done.png" />
+				</div>
+				<div>
+					<div class="duallang">
+						<div class="lang-cn2">UFCOM 构建完成后的屏幕显示。</div>
+						<div class="lang-en2">Screenshot at end of UFCOM building.</div>
+					</div>
+					<img src="res/gmu-ufcom-done.png" />
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">GMU 的核心理念是：用户被分为两层。第一层是编译器配置作者以及插件作者，第二层是最终用户。
+				</div>
+				<div class="lang-en2">The core idea of GMU is, user is two-tiered. Tier one is the complier-config author and the plugin author; tier two is the end-user.
+				</div>
+			</div>
+			<ul>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">处于第二层的最终用户，是 C/C++ 程序员。他们需要只编写简单的“GMU makefiles”来告知工程组织必要的信息，比如，.c/.cpp 源码列表、.h 头文件搜索路径、输出文件名等。重复性的脏活累活交由第一层来处理。
+						</div>
+						<div class="lang-en2">The end-user at tier two is the C/C++ programmer who also needs to manage project files. Using GMU, he only needs to create simple "GMU makefiles", providing project unique information in his makefile, such as .c/.cpp file list, .h search paths, output filename etc. Other repetitive dirty works should be handled by tier one.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">第一层的 GMU 代码懂得构建过程的细节，它们指出构建过程应该调用什么样的编译和链接命令，包括使用什么样的编译和链接开关，将 obj 和 exe 输出放到哪个目录中，如何生成 C/C++ 头文件依赖规则等。
+						</div>
+						<div class="lang-en2">Tier one GMU codes knows every detail of the build process. They determine what compile and link command to apply, including what compile/link options to use, where to place output obj/exe files, how to generate dependency rules for C/C++ header files.
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="duallang">
+				<div class="lang-cn2">总言之，GMU 核心代码和第一层代码承揽越多的工作，最终用户的 makefile 就能够越简洁同时还能越强大。
+				</div>
+				<div class="lang-en2">In general, more work is done by GMU core and Tier One code, more concise and more power makefiles will end-user achieve.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">现在简要列举几条最终用户能够从 GMU 得到的功能：</div>
+				<div class="lang-en2">Now I will cite several features end-user will get from GMU:</div>
+			</div>
+			<ol>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">自动生成头文件依赖关系。意即，如果有某个 .h 被修改，下一次运行 umake 时相关的 .c/.cpp 将被重新编译。注：umake 是 GMU makefile 的启动命令。
+						</div>
+						<div class="lang-en2">Auto-generate header file dependency. That is, if some .h file is modified, relevant .c/.cpp will get re-compiled on next umake. Memo: umake is the startup command for GMU makefile.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">Debug/Release 的编译输出自动被放在不同目录中，针对不同目标平台的编译输出也会分目录存放。这意味着，切换不同的“构建变体”时，无需 clean 掉其他变体的输出。
+						</div>
+						<div class="lang-en2">Debug/Release output is separated in different folders, so do outputs for different target platform. That means, when switching to a new build-variant, you don't have to clean output of other variants.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">用 umake 启动参数即可控制是否显示具体的编译/链接命令，而不用修改 makefile 自身。不显示会让屏幕输出显得干净，要求显示则能够帮助诊断问题。
+						</div>
+						<div class="lang-en2">Control whether to show detail compile/link command-line via umake command options, no need for modifying makefile itself. Suppressing it makes screen output concise, and requiring output helps diagnosing.
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="duallang">
+						<div class="lang-cn2">父工程自动探测子工程的输出文件名，并正确引用之。假定父工程生成 A.EXE ，子工程生成 B.LIB，父工程需要链接 B.LIB。GMU makefile 能够描述 A 和 B 的父子关系，并且自动链接 B 的输出。B 工程的输出名称由 B 自行决定，A 将自动探测得知。这是 GMU 核心层的一个特色功能，父工程通过一个专门的 "make target" 在运行过程当场查得子工程的输出文件名，这就避免了将子工程的输出文件名硬编码在父工程的 makefile 中。
+						</div>
+						<div class="lang-en2">The parent project can detect child project's output filename, and refers to that name correctly. For example, the parent project generates A.EXE, the child generates B.LIB. GMU makefile has a way to describe parent-child relationship between the two, and have A automatically links B's output. B's output filename is determined by solely by B's makefile, and A will detect it automatically. This is a special feature from GMU core. The parent project queries child project's output filename at runtime via a special "make target", eliminating the requirement of hardcoding child project's output filename inside parent project's makefile.
+						</div>
+					</div>
+					<div class="duallang">
+						<div class="lang-cn2">我一直认为这个输出文件名自动查询功能非常有用。想想看下面的情况：如果一个 LIB 工程要被十个父工程引用如何？如果子工程有四种输出变体（由 x86/x64 和 Debug/Release）组合而成，父工程要用四个不同的文件名来引用子工程的输出，将导致 makefile 变得多么繁琐？
+						</div>
+						<div class="lang-en2">I always deem this output-name-query feature very useful. Please think of the following situations: What if a LIB project is referred to by TEN parent projects? If we need four child project output variants by x86/x64 and Debug/Release, what a hard work will it be to refer to those four output filenames in the parent project?
+						</div>
+					</div>
+				</li>
+			</ol>
+		</div>
+
+	</div> <!-- end: lv2content of GMU -->
 
 </div> <!-- .maincol final one -->
 

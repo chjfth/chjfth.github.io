@@ -474,7 +474,15 @@ function make_img_clickable_for_fullsize() {
 		var parent = img_ele.parentNode;
 		
 		var imgwidth = img_ele.width;
-		if(img_ele.width < img_ele.naturalWidth) {
+		if(img_ele.naturalWidth==0) {
+//			console.log("delaying img: "+img_ele.src); // debug
+			// The image has not been loaded from network, prepare to retry the manipulation 
+			// when that image is finally loaded.
+			img_ele.addEventListener("load", function(event) {
+				wrap_img_inside_a_tag(img_ele);
+			});
+		}
+		else if(img_ele.width < img_ele.naturalWidth) {
 			// Add an <a> wrapper to this <img> so that user can "click for fullsize image",
 			// but do it only when there is no <a> wrapper yet, no matter it is a .click_for_fullsize one or not.
 			// That is, if there has been a dedicated <a> wrapper, don't touch anything.
@@ -487,6 +495,8 @@ function make_img_clickable_for_fullsize() {
 			awrapper.target = "_blank";
 			awrapper.href = img_ele.getAttribute("src");
 			awrapper.className = "click_for_fullsize";
+			
+			img_ele.title = "Click to see fullsize image.";
 		}
 		else {
 			// Remove the <a> wrapper if the wrapper has .click_for_fullsize class set. 
@@ -494,6 +504,8 @@ function make_img_clickable_for_fullsize() {
 				// remove this <a> parent:
 				var parent2 = parent.parentNode;
 				parent2.replaceChild(parent.firstElementChild, parent);
+
+				img_ele.title = "already in fullsize";
 			}
 		}
 	}
