@@ -53,6 +53,7 @@ pre {
 	border-radius: 0.34em;
 	padding: 0.5em;
 	line-height: 1.37;
+	white-space: pre-wrap;
 }
 
 tt {

@@ -115,6 +115,13 @@ function has_ancestor(child, ancestor) {
 
 function make_me_child_of(me_ele, new_parent_tagname) {
 
+	// Usage scenario: If a parent <div> has a child <img>, and we want to wrap the <img>
+	// inside an <a>, we want the new <a> to take the *exact* original place of <img>,
+	// we can call 
+	//		make_me_child_of(me_ele_of_img, "a");
+	// The newly created <a> element is returned to caller, and the caller can attach
+	// various properties to the new <a> element.
+
 	if(!typeof(new_parent_tagname)=="string") {
 		console.log("Error input: make_me_child_of() new_parent_tagname should be a string.");
 		return null;
