@@ -187,8 +187,10 @@ function setup_transitionend() {
 	
 	document.addEventListener('transitionend', function(event) {
 		var is_langtext = event.target.matches('[class^="lang-"]');
-		if(is_langtext)
+		if(is_langtext) {
 			hide_if_zeroheight(event.target);
+			event.target.style.height = "auto";
+		}
 	});
 }
 

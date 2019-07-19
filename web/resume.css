@@ -60,18 +60,6 @@ tt {
 	color: #252590;
 }
 
-.img-float-right {
-	float: right;
-	margin: 0.41em;
-}
-
-.image-footnote {
-	font-size: 0.8em;
-	text-align: center;
-	color: #666;
-	background-image: linear-gradient(to bottom, #fff, #ccc);
-}
-
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -80,6 +68,18 @@ tt {
 	border: 1px dashed cyan;
 	background-color: #fffff0;
 	border-radius: 1em;
+}
+
+.imgbox-float-right {
+	display: block;
+	margin: 0.41em;
+}
+
+.imgbox-float-right__foottext {
+	font-size: 0.8em;
+	text-align: center;
+	color: #666;
+	background-image: linear-gradient(to bottom, #fff, #ccc);
 }
 
 .mainlang-cn [class^="lang-cn"] , 
@@ -436,6 +436,11 @@ quote {
 	
 	.globalframe {
 		position: relative; /* as base frame */
+	}
+
+	.imgbox-float-right {
+		float: right;
+		margin: 0.41em;
 	}
 	
 	.maincol {
