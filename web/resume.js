@@ -37,7 +37,10 @@ var LangState =
 	},
 	
 	refresh_ui : function (is_delay_hide=true) {
-		refresh_cn_en_display(this.is_cn_on, this.is_en_on, this.is_cn_main, is_delay_hide);
+		if(is_delay_hide)
+			refresh_cn_en_display_delayed(this.is_cn_on, this.is_en_on, this.is_cn_main, true);
+		else
+			refresh_cn_en_display_now(this.is_cn_on, this.is_en_on, this.is_cn_main, false);
 	}
 }
 
@@ -105,7 +108,30 @@ function hide_if_zeroheight(ele) {
 		ele.style.display = "block";
 }
 
-function refresh_cn_en_display(is_cn_on, is_en_on, is_cn_main, is_delay_hide=true) {
+function refresh_cn_en_display_delayed(is_cn_on, is_en_on, is_cn_main) {
+
+	// Purpose: We have to change .height's "auto" value to actual px value so that 
+	// CSS transition works. So I scan for all "auto" values here and make the change.
+	// [2019-07-19] As I have tried on Chrome 75, it seems a must to delay the 
+	// "actual" .height changing to a timer callback(delayed execution context). 
+	// If I merely do 
+	//		auto => 21px => 0px 
+	// all in this execution context, Chrome will consider it auto => 0px so the 
+	// CSS transition does not occur.
+
+	var eles = document.querySelectorAll('[class^="lang-"]');
+	eles.forEach(function(ele, idx){
+		if(ele.style.height=="auto") {
+			ele.style.height = ele.scrollHeight+"px";
+		}
+	});
+	
+	setTimeout(function() {
+		refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, true);
+	}, 1);
+}
+
+function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide=true) {
 	
 	// If is_cn_on && is_en_on are both true, lang-cn0 and lang-en0 will compete
 	// according to is_cn_main.
@@ -188,8 +214,15 @@ function setup_transitionend() {
 	document.addEventListener('transitionend', function(event) {
 		var is_langtext = event.target.matches('[class^="lang-"]');
 		if(is_langtext) {
+			
+			if(event.target.style.height!="0px") {
+				// Set 'auto' so that ele's .height is auto adjusted when "float:right" img is delay loaded.
+				event.target.style.height = "auto"; 
+				
+				// Note that this "auto" will be changed to actual 21px etc in refresh_cn_en_display_delayed().
+			}
+
 			hide_if_zeroheight(event.target);
-			event.target.style.height = "auto";
 		}
 	});
 }

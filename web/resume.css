@@ -221,9 +221,11 @@ tt {
 .ques{
 	font-weight: bold;
 }
-.ans { 
-	margin-left: 2.12em;
+
+.ans ul {
+	padding-left: 1.12em;
 }
+
 quote {
 	display: block;
 	padding-left: 1.78em;
@@ -381,7 +383,8 @@ quote {
 }
 
 .duallang > *:first-child {
-	xxx-margin-bottom: 0.2em;
+/*	xxx-margin-bottom: 0.2em;
+*/
 }
 .duallang.bounding {
 	border: 1px solid transparent;
@@ -556,5 +559,12 @@ quote {
 		background-color: rgb(234, 248, 255);
 	}
 
+	.ans { 
+		margin-left: 2.12em;
+	}
+
+	.ans ul {
+		padding-left: 1.42em;
+	}
 }
 
