@@ -73,6 +73,7 @@ tt {
 .imgbox-float-right {
 	display: block;
 	margin: 0.41em;
+	text-align: center;
 }
 
 .imgbox-float-right__foottext {
@@ -301,7 +302,7 @@ quote {
 	display: table-row;
 }
 .table_s .table__cell {
-	display: table-cell;
+	display: block;  /* would be table-cell for desktop */
 	padding: 0.5em;
 }
 .table_s .itemname {
@@ -326,7 +327,8 @@ quote {
 	color: brown;  /* test, no use */
 }
 .itemdetail {
-	margin-left: 2em;
+/*	margin-left: 2em;
+*/
 	padding: 0.372em 0em;
 }
 
@@ -566,5 +568,11 @@ quote {
 	.ans ul {
 		padding-left: 1.42em;
 	}
+
+	.table_s .table__cell {
+		display: table-cell;
+		padding: 0.5em;
+	}
+
 }
 
