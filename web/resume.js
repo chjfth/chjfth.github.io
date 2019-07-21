@@ -229,13 +229,13 @@ function setup_transitionend() {
 
 function setup_fixed_position_sidebar() {
 	
-	// Purpose: I hope to have the side bar stick on screen when user scrolls down.
-	// So I'll change that .sidebar DIV to 'position:fixed' once I have acquired 
+	// Purpose: I hope to have the side-column stick on screen when user scrolls down.
+	// So I'll change that .sidecol DIV to 'position:fixed' once I have acquired 
 	// initial positioning parameters for it.
-	// We assume that sidebar's width keeps constant all the time.
+	// We assume that sidecol's width keeps constant all the time.
 	
 	var gframe = document.querySelector(".globalframe");
-	var sidebar = document.querySelector(".sidebar");
+	var sidecol = document.querySelector(".sidecol");
 	var portrait = document.querySelector('.portrait');
 	
 	var sidebar_neg_offset = undefined;
@@ -244,19 +244,19 @@ function setup_fixed_position_sidebar() {
 	
 	function try_init_sidebar_fixed_pos() {
 		
-		// Only when the first time we see the .sidebar is 'position:absolute',
+		// Only when the first time we see the .sidecol is 'position:absolute',
 		// will we be able to calculate sidebar_neg_offset.
 		// In other word, if user stays in mobile layout, we will not calculate it.
-		// By this way, user can adjust .sidebar margin and width solely from CSS.
+		// By this way, user can adjust .sidecol margin and width solely from CSS.
 		
-		var cs_sidebar = getComputedStyle(sidebar);
-		if(cs_sidebar.position!="absolute")
+		var cs_sidecol = getComputedStyle(sidecol);
+		if(cs_sidecol.position!="absolute")
 			return; // already init-ed.
 		
-		sidebar_neg_offset = sidebar.offsetLeft - gframe.offsetWidth; // typical: -236
+		sidebar_neg_offset = sidecol.offsetLeft - gframe.offsetWidth; // typical: -236
 		
-		sidebar_top_margin_px = cs_sidebar.marginTop;
-		sidebar_left_margin_px = cs_sidebar.marginLeft;
+		sidebar_top_margin_px = cs_sidecol.marginTop;
+		sidebar_left_margin_px = cs_sidecol.marginLeft;
 	}
 	
 	// console.log("sidebar_neg_offset="+sidebar_neg_offset);
@@ -269,19 +269,19 @@ function setup_fixed_position_sidebar() {
 			return; // Don't ruin the "position:absolute" state yet.
 		
 		var csp = getComputedStyle(portrait); // caution: these code may be fragile
-		if(csp.float=='none') { // a real sidebar, desktop layout
+		if(csp.float=='none') { // a real sidecol, desktop layout
 			
-			sidebar.style.position = "fixed";
+			sidecol.style.position = "fixed";
 			
 			var abs_x = gframe.offsetLeft + gframe.offsetWidth + sidebar_neg_offset;
 			
 			// [2019-06-16] Weird! 'left' and 'top' value for a "fixed" DIV determines
 			// the left-top *margin" position, NOT left-top border.
-			sidebar.style.left = 'calc({0}px - {1})'.format(abs_x, sidebar_left_margin_px);
-			// sidebar.style.top = sidebar_top_margin_px; // no need this
+			sidecol.style.left = 'calc({0}px - {1})'.format(abs_x, sidebar_left_margin_px);
+			// sidecol.style.top = sidebar_top_margin_px; // no need this
 		
 		} else { // should be 'right', mobile layout
-			sidebar.style.position = "static"; 
+			sidecol.style.position = "static"; 
 		}
 	}
 	
@@ -289,7 +289,7 @@ function setup_fixed_position_sidebar() {
 	
 	window.addEventListener("resize", function(event){
 		// Making viewport wider can cause .globalframe to move, 
-		// so we need to fix the fixed sidebar position.
+		// so we need to adjust the fixed sidecol position.
 
 		fix_sidebar_position();
 		
@@ -446,7 +446,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	nob.style.height = nob_height_em+'em';
 	nob.style.backgroundColor = bgc;
 	nob.style.padding = '2px';
-	nob.style['border-radius'] = cs(bgc_parent, 'border-radius'); // copy parent's border-radius
+//	nob.style['border-radius'] = cs(bgc_parent, 'border-radius'); // copy parent's border-radius // not rational, should delete
 	nob.style['text-align'] = 'center';
 	// Add a down-arrow svg
 	nob.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" \

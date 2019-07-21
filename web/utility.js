@@ -142,3 +142,10 @@ function make_me_child_of(me_ele, new_parent_tagname) {
 	
 	return new_parent;
 }
+
+function isInArray(value, array) {
+	// https://stackoverflow.com/a/18101063/151453
+	return array.indexOf(value) > -1;
+}
+
+
