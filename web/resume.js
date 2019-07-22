@@ -552,9 +552,28 @@ function make_img_clickable_for_fullsize() {
 	
 }
 
+function hx_txt_id(seqs_str) {
+	// Construct the html id for main-content.
+	return "txt-" + seqs_str;
+}
+
+function hx_toc_id(seqs_str) {
+	// Construct the html id for TOC area.
+	return "toc-" + seqs_str;
+}
+
 function prepare_toc_sidebar() {
 	
-	var toc_html = "";
+	var ar_hx_seqs = [];
+	
+	var toc_html = '<div class="toc_depth0" id="{0}"><a href="#">\
+			<div class="lang-cn0" style="display:{1}">文章开始</div>\
+			<div class="lang-en0" style="display:{2}">Artical Start</div>\
+		</a></div>'.format(hx_toc_id("0"), 
+					LangState.is_cn_main ? "block" : "none",
+					LangState.is_cn_main ? "none" : "block"
+				);
+	;
 	
 	var hxgen = scan_hx_headings(document.body, 1, 3);
 	for(let hxobj of hxgen) {
@@ -563,10 +582,12 @@ function prepare_toc_sidebar() {
 		var depth = hxobj.seqs.length-1;
 		var seqs_str = hxobj.seqs.join("."); // Sample: "1", "1.2", "1.2.3" ...
 
+		ar_hx_seqs.push(seqs_str);
 		// console.log(">>> "+seqs_str+ " - " + hele.textContent); // debug
-		
+
 		// Add html id to original <h1> <h2>..., so that we can later link to them from TOC.
-		hele.id = "txt-"+seqs_str;
+		hele.id = hx_txt_id(seqs_str);
+		
 		var inner = "";
 		
 		// `hele` may probably have `<div class="lang-cn0" style="display: block; height: 43px;">...</div>`
@@ -622,9 +643,10 @@ function prepare_toc_sidebar() {
 			inner = '{0} {1}'.format(seqs_str, hele.innerHTML);
 		}
 		
-		var div_oneh = '<div class="toc_depth{0}" id="toc-{1}"><a href="#txt-{1}">{2}</a></div>'.format(
+		var div_oneh = '<div class="toc_depth{0}" id="{1}"><a href="#{2}">{3}</a></div>'.format(
 			depth, 
-			seqs_str, 
+			hx_toc_id(seqs_str), 
+			hx_txt_id(seqs_str), 
 			inner);
 		
 		toc_html += div_oneh;
@@ -632,6 +654,43 @@ function prepare_toc_sidebar() {
 
 	var tocdiv = document.querySelector(".toctext");
 	tocdiv.innerHTML = toc_html;
+	
+	//
+	// Monitor scrolling event so that we can sync scrolling/focusing the TOC area.
+	//
+	var prev_tocfocus = undefined;
+	document.addEventListener("scroll", function() {
+//		var pagepos = document.documentElement.scrollTop;
+		
+		// Find out which hx is now in the viewport(at top of viewport).
+		var prev_hx_idstem = "0";
+		for(var idstem of ar_hx_seqs) {
+			var id = hx_txt_id(idstem); // idstem sample: "4.1", return: id="txt-4.1"
+			var ele = document.getElementById(id);
+			var hxpos = ele.getBoundingClientRect().top; 
+				// An hx scrolled beyond viewport top will have hxpos<0 .
+				// An hx visible in viewport or far beyond viewport bottom will have hxpos>=0 .
+			if(hxpos<0+33) // 33 is casual
+				prev_hx_idstem = idstem;
+			else
+				break;
+		}
+		
+		var toc_id = hx_toc_id(prev_hx_idstem);
+//		console.log("toc-id="+ toc_id); //debug
+		
+		var toctext = document.querySelector(".toctext");
+		var tocfocus = document.getElementById(toc_id);
+			
+		toctext.scrollTop = tocfocus.offsetTop; // actively scroll the TOC area
+		
+		if(prev_tocfocus)
+			prev_tocfocus.classList.remove("focus");
+		
+		tocfocus.classList.add("focus");
+		prev_tocfocus = tocfocus;
+	});
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////

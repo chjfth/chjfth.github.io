@@ -205,6 +205,21 @@ tt {
 }
 
 
+h1:target, h2:target, h3:target {
+/*	background-color: yellow;
+*/
+	animation: yellow-fading 1.2s linear;
+}
+@keyframes yellow-fading {
+    0% {
+        background-color: yellow;
+    }
+    
+    100% {
+        background-color: transparent;
+    }
+}
+
 .h1title {
 	display: inline-block;
 /*	padding-bottom: 0.2em;
@@ -219,8 +234,9 @@ tt {
 }
 
 .h1title [class^="lang-"] {
+/*
 	background-color: var(--maincol-bgcolor);
-/*	border-bottom: 5px solid;
+	border-bottom: 5px solid;
 */
 }
 
@@ -251,6 +267,9 @@ quote {
 [class^="lang-"] {
 	overflow: hidden;
 		/* Without this, we'll see ugly text overflow when doing cn/en transitioning. */ 
+}
+
+.maincol [class^="lang-"] {
 	transition: height 1500ms, color 1500ms;
 }
 
@@ -486,7 +505,7 @@ quote {
 		display: block;
 		position: absolute;
 		z-index: 2;
-		top: calc(var(--langsel-height) + 350px); /* todo */
+		top: calc(var(--langsel-height) + 510px); /* todo */
 		left: 0em;
 		right: 0em;
 		bottom: 0em;
@@ -524,7 +543,7 @@ quote {
 	}
 
 	body .tocframe [class^="lang-"] {
-		color: white;
+		color: #e2e2e2;
 	}
 
 	body .tocframe .toctitle {
@@ -532,7 +551,12 @@ quote {
 	}
 
 	body .tocframe .toctext {
-		margin-left: 30px;
+		position: absolute;
+		top: var(--toctitle-height);
+		bottom: 0px;
+		
+		margin-left: 0.415em;
+		margin-right: 0.415em;
 		overflow: auto;
 	}
 
@@ -541,17 +565,22 @@ quote {
 	}
 
 	.toctext .toc_depth1 {
-		padding-left: 2px;
+		padding-left: 4px;
 		padding-top: 2px;
 	}
 
 	.toctext .toc_depth2 {
-		padding-left: 4px;
+		padding-left: 8px;
 		padding-top: 0px;
 	}
 
 	.toctext .toc_seqs {
 		color: #999;
+	}
+	
+	body .tocframe .focus [class^="lang-"] {
+		color: yellow;
+		font-weight: bold;
 	}
 
 	.tocframe a {
