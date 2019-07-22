@@ -552,6 +552,88 @@ function make_img_clickable_for_fullsize() {
 	
 }
 
+function prepare_toc_sidebar() {
+	
+	var toc_html = "";
+	
+	var hxgen = scan_hx_headings(document.body, 1, 3);
+	for(let hxobj of hxgen) {
+
+		var hele = hxobj.hele;
+		var depth = hxobj.seqs.length-1;
+		var seqs_str = hxobj.seqs.join("."); // Sample: "1", "1.2", "1.2.3" ...
+
+		// console.log(">>> "+seqs_str+ " - " + hele.textContent); // debug
+		
+		// Add html id to original <h1> <h2>..., so that we can later link to them from TOC.
+		hele.id = "txt-"+seqs_str;
+		var inner = "";
+		
+		// `hele` may probably have `<div class="lang-cn0" style="display: block; height: 43px;">...</div>`
+		// in its content. If so, we have to add seqs_str to those child elements.
+		var cssqlang = ".lang-cn0 , .lang-en0";
+		var langs_ele = hele.querySelectorAll(cssqlang);
+		if(langs_ele) {
+			
+			//
+			// Make a clone of original hx, and tweak it to be an item in TOC.
+			//
+			
+			var hele_clone = hele.cloneNode(true);
+			var eles = querySelectorAll_directchild(hele_clone, "*");
+								//			var eles = hele_clone.querySelectorAll("*");
+			
+			// remove everything except elements with '.lang-cn0 , .lang-en0'
+			
+			for(var ele of eles) { // note: DO NOT use the live `hele_clone.childNodes`, bcz we'll be removing child from it.
+				
+				var ok = false;
+				if(!ele.classList) {
+					// get rid of textNodes
+				}
+				else if(ele.classList.contains("lang-cn0")) {
+					ele.className = "lang-cn0"; // yes, remove other "unrelated" classes
+					ok = true;
+				}
+				else if(ele.classList.contains("lang-en0")) {
+					ele.className = "lang-en0";
+					ok = true;
+				}
+				
+				if(ok) {
+					// reject meaningless attributes from original hx.
+					var old_display = ele.style.display; // we need "display", which may be "block" or "none"!
+					ele.style = "";
+					ele.style.display = old_display;
+					
+					ele.innerHTML = '<span class="toc_seqs">{0}</span> {1}'.format(
+						seqs_str, 
+						ele.innerHTML
+						);
+				}
+				else {
+					ele.parentNode.removeChild(ele);
+				}
+			}
+			inner = '<div class="toc_depth{0}">{1}</div>'.format(depth, hele_clone.innerHTML);
+		}
+		else {
+			// this case untested (todo)
+			inner = '{0} {1}'.format(seqs_str, hele.innerHTML);
+		}
+		
+		var div_oneh = '<div class="toc_depth{0}" id="toc-{1}"><a href="#txt-{1}">{2}</a></div>'.format(
+			depth, 
+			seqs_str, 
+			inner);
+		
+		toc_html += div_oneh;
+	}
+
+	var tocdiv = document.querySelector(".toctext");
+	tocdiv.innerHTML = toc_html;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -576,6 +658,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	assert_langtext_0edge();
 	
 	make_img_clickable_for_fullsize();
+	
+	prepare_toc_sidebar();
 });
 
 

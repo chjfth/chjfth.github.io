@@ -41,7 +41,7 @@ body {
 	margin: 0px; 
 }
 
-a {
+.maincol a {
 	text-decoration: none;
 	font-weight: bold;
 	color: #6767b4;
@@ -525,7 +525,37 @@ quote {
 
 	body .tocframe [class^="lang-"] {
 		color: white;
+	}
+
+	body .tocframe .toctitle {
 		text-shadow: cyan 1px 1px 3px
+	}
+
+	body .tocframe .toctext {
+		margin-left: 30px;
+		overflow: auto;
+	}
+
+	.toctext .toc_depth0 {
+		padding-top: 5px;
+	}
+
+	.toctext .toc_depth1 {
+		padding-left: 2px;
+		padding-top: 2px;
+	}
+
+	.toctext .toc_depth2 {
+		padding-left: 4px;
+		padding-top: 0px;
+	}
+
+	.toctext .toc_seqs {
+		color: #999;
+	}
+
+	.tocframe a {
+		text-decoration: none;
 	}
 
 	.careertable {

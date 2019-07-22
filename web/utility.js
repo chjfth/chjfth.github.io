@@ -149,3 +149,63 @@ function isInArray(value, array) {
 }
 
 
+function* scan_hx_headings(start_ele, start_hx, depth)
+{
+	var seqs_now = [0];
+	var hx_sheet = [null, "h1", "h2", "h3", "h4", "h5", "h6"];
+	
+	var hx_range = hx_sheet.slice(start_hx, start_hx+depth);
+		// Example: start_hx=2, depth=3, will get ["h2", "h3", "h4"]
+	var hx_sel = hx_range.join(",");
+	if(!hx_sel)
+		return null;
+	
+	var hx_all_eles = document.querySelectorAll(hx_sel);
+	
+	for(var new_hele of hx_all_eles) {
+		
+		var new_hnum = parseInt(new_hele.tagName.slice(1));
+		
+		var new_depth = new_hnum - start_hx;
+		
+		// Three cases to update seqs_now[]:
+		var prev_depth = seqs_now.length-1;
+		
+		if(new_depth > prev_depth) {
+			// Hx goes deeper. H1->H2 or H1->H3 ...
+			var diff = new_depth - prev_depth;
+
+			for(var i=0; i<diff; i++)
+				seqs_now.push(0);
+		}
+		else if(new_depth < prev_depth) {
+			// Hx return from deeper. H2->H1 or H3->H1 ...
+			var diff = prev_depth - new_depth;
+
+			for(var i=0; i<diff; i++) 
+				seqs_now.pop()
+		}
+
+		// Assert(seqs_now.length-1 == new_depth)
+
+		seqs_now[seqs_now.length-1]++; // update seq for the new ele
+		
+		var seqs_str = seqs_now.join(".");
+		
+//		new_hele.innerHTML = seqs_str + ": " + new_hele.innerHTML
+//		console.log("See "+ seqs_str);
+		yield { hele:new_hele, seqs:seqs_now };
+	}
+}
+
+function querySelectorAll_directchild(start_ele, querystr) {
+	
+	var rets = [];
+	var eles = start_ele.querySelectorAll(querystr);
+	for(var i in eles) {
+		if(eles[i].parentNode==start_ele) {
+			rets.push(eles[i]);
+		}
+	}
+	return rets;
+}
