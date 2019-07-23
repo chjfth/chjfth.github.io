@@ -227,7 +227,7 @@ function setup_transitionend() {
 	});
 }
 
-function setup_fixed_position_sidebar() {
+function setup_fixed_position_sidecol() {
 	
 	// Purpose: I hope to have the side-column stick on screen when user scrolls down.
 	// So I'll change that .sidecol DIV to 'position:fixed' once I have acquired 
@@ -562,7 +562,7 @@ function hx_toc_id(seqs_str) {
 	return "toc-" + seqs_str;
 }
 
-function prepare_toc_sidebar() {
+function prepare_toc_syncing() {
 	
 	var ar_hx_seqs = [];
 	
@@ -573,7 +573,10 @@ function prepare_toc_sidebar() {
 					LangState.is_cn_main ? "block" : "none",
 					LangState.is_cn_main ? "none" : "block"
 				);
-	;
+	
+	//
+	// "Copy" content from maincol <h1>,<h2>... to TOC area.
+	//
 	
 	var hxgen = scan_hx_headings(document.body, 1, 3);
 	for(let hxobj of hxgen) {
@@ -656,7 +659,7 @@ function prepare_toc_sidebar() {
 	tocdiv.innerHTML = toc_html;
 	
 	//
-	// Monitor scrolling event so that we can sync scrolling/focusing the TOC area.
+	// Monitor whole-page scrolling event so that we can update the TOC thumbnail cursor position.
 	//
 	var prev_tocfocus = undefined;
 	document.addEventListener("scroll", function() {
@@ -693,6 +696,59 @@ function prepare_toc_sidebar() {
 	
 }
 
+function prepare_toc_popup() {
+	
+	// (In desktop mode) The TOC area is initially shrunk at right-bottom corner.
+	// With a click of the UP-arrow(.svg_arrowup), it slides up to full height in sidecol.
+	// The full-height of TOC may shroud my profile-list and portrait, 
+	// but the langsel bar should keep visible.
+
+	var sidecol = document.querySelector(".sidecol");
+	var langsel = document.querySelector(".langsel");
+	var tocframe = document.querySelector(".tocframe");
+	var toctitle = document.querySelector(".toctitle");
+	var toctitle_arrow = document.querySelector(".toctitle_arrow");
+	var toctext = document.querySelector(".toctext");
+	
+	var is_toc_expanded = false;
+	
+	function expand_toc_frame() {
+		var full_height_px = toctitle.offsetHeight + toctext.scrollHeight;
+		var height_limit_px = sidecol.offsetHeight - langsel.offsetHeight;
+		
+		var now_height_px = Math.min(full_height_px, height_limit_px);
+		tocframe.style.height = now_height_px + "px";
+		
+		toctitle_arrow.classList.add("svg_arrowdown");
+		toctitle_arrow.classList.remove("svg_arrowup");
+		is_toc_expanded = true;
+	}
+	
+	function collapse_toc_frame() {
+		tocframe.style.height = "initial";
+		
+		toctitle_arrow.classList.remove("svg_arrowdown");
+		toctitle_arrow.classList.add("svg_arrowup");
+		is_toc_expanded = false;
+	}
+	
+	window.addEventListener("resize", function() {
+		// TOC frame's height needs adjust on window size change.
+		if(is_toc_expanded)
+			expand_toc_frame();
+	});
+	
+	toctitle.addEventListener("click", function(event) {
+		
+		if(!is_toc_expanded)
+			expand_toc_frame();
+		else
+			collapse_toc_frame();
+	});	
+	
+//	expand_toc_frame(); // Don't initially expand.
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -708,7 +764,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	setup_transitionend();
 
-	setup_fixed_position_sidebar();
+	setup_fixed_position_sidecol();
 	
 	setup_keypress_switch_lang();
 	
@@ -718,7 +774,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	make_img_clickable_for_fullsize();
 	
-	prepare_toc_sidebar();
+	prepare_toc_syncing();
+	prepare_toc_popup();
 });
 
 

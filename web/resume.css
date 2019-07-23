@@ -133,6 +133,8 @@ tt {
 	border: 1px dashed;
 	border-radius: 0.5em;
 	font-size: var(--sidecol-fontsize);
+	
+	overflow: hidden; /* Delete this prop may sometimes help diagnose layout problem. */
 }
 
 .sidecol button {
@@ -505,8 +507,8 @@ quote {
 		display: block;
 		position: absolute;
 		z-index: 2;
-		top: calc(var(--langsel-height) + 510px); /* todo */
-		left: 0em;
+/*		top: calc(var(--langsel-height) + 510px);
+*/		left: 0em;
 		right: 0em;
 		bottom: 0em;
 		border-radius: 0.5em;
