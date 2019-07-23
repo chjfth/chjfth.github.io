@@ -683,9 +683,12 @@ function prepare_toc_syncing() {
 //		console.log("toc-id="+ toc_id); //debug
 		
 		var toctext = document.querySelector(".toctext");
-		var tocfocus = document.getElementById(toc_id);
-			
-		toctext.scrollTop = tocfocus.offsetTop; // actively scroll the TOC area
+		var tocfocus = document.getElementById(toc_id); // strange, here I cannot use querySelector("#toc-4.1") etc
+		
+		// Now actively scroll the TOC area, by setting toctext.scrollTop .
+		// overhang_px is to make the focusing item appear roughly at middle of the scrolling area.
+		var overhang_px = toctext.offsetHeight * 0.3;
+		toctext.scrollTop = tocfocus.offsetTop - overhang_px; 
 		
 		if(prev_tocfocus)
 			prev_tocfocus.classList.remove("focus");
@@ -710,6 +713,9 @@ function prepare_toc_popup() {
 	var toctitle_arrow = document.querySelector(".toctitle_arrow");
 	var toctext = document.querySelector(".toctext");
 	
+//	var toctitle_height_px = toctitle.offsetHeight;
+//	tocframe.style.height = toctitle_height_px + "px";
+	
 	var is_toc_expanded = false;
 	
 	function expand_toc_frame() {
@@ -725,7 +731,8 @@ function prepare_toc_popup() {
 	}
 	
 	function collapse_toc_frame() {
-		tocframe.style.height = "initial";
+		tocframe.style.height = "initial"; // memo: "initial" will suppress height animation
+		//tocframe.style.height = toctitle_height_px+"px"; 
 		
 		toctitle_arrow.classList.remove("svg_arrowdown");
 		toctitle_arrow.classList.add("svg_arrowup");
