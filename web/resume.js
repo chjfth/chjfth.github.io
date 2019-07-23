@@ -662,7 +662,7 @@ function prepare_toc_syncing() {
 	// Monitor whole-page scrolling event so that we can update the TOC thumbnail cursor position.
 	//
 	var prev_tocfocus = undefined;
-	document.addEventListener("scroll", function() {
+	window.addEventListener("scroll", function() {
 //		var pagepos = document.documentElement.scrollTop;
 		
 		// Find out which hx is now in the viewport(at top of viewport).
@@ -713,10 +713,11 @@ function prepare_toc_popup() {
 	var toctitle_arrow = document.querySelector(".toctitle_arrow");
 	var toctext = document.querySelector(".toctext");
 	
-//	var toctitle_height_px = toctitle.offsetHeight;
+	var toctitle_height_px = toctitle.offsetHeight;
 //	tocframe.style.height = toctitle_height_px + "px";
 	
 	var is_toc_expanded = false;
+	var is_toc_prompted = false;
 	
 	function expand_toc_frame() {
 		var full_height_px = toctitle.offsetHeight + toctext.scrollHeight;
@@ -728,11 +729,11 @@ function prepare_toc_popup() {
 		toctitle_arrow.classList.add("svg_arrowdown");
 		toctitle_arrow.classList.remove("svg_arrowup");
 		is_toc_expanded = true;
+		is_toc_prompted = true;
 	}
 	
 	function collapse_toc_frame() {
 		tocframe.style.height = "initial"; // memo: "initial" will suppress height animation
-		//tocframe.style.height = toctitle_height_px+"px"; 
 		
 		toctitle_arrow.classList.remove("svg_arrowdown");
 		toctitle_arrow.classList.add("svg_arrowup");
@@ -743,6 +744,23 @@ function prepare_toc_popup() {
 		// TOC frame's height needs adjust on window size change.
 		if(is_toc_expanded)
 			expand_toc_frame();
+	});
+	
+	window.addEventListener("scroll", function() {
+		// When the user scrolls by window.innerHeight the first time,
+		// I'll slide up the TOC area automatically prompting my TOC feature,
+		// but only do it once so the disturbance is minimal.
+		if(is_toc_prompted)
+			return;
+		
+		if(document.documentElement.scrollTop > window.innerHeight) {
+			
+			tocframe.style.height = toctitle_height_px + "px";
+			setTimeout(function() {
+				expand_toc_frame();
+			}, 1);
+			is_toc_prompted = true;
+		}
 	});
 	
 	toctitle.addEventListener("click", function(event) {

@@ -516,8 +516,8 @@ quote {
 		color: white;
 		background-color: #21385d;
 		
-/*		transition: height 500ms;
-*/	}
+		transition: height 510ms;
+	}
 	
 	.toctitle {
 		position: relative;
