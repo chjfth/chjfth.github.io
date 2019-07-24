@@ -243,74 +243,36 @@ function setup_fixed_position_sidecol() {
 	
 	var gframe = document.querySelector(".globalframe");
 	var sidecol = document.querySelector(".sidecol");
-	var portrait = document.querySelector('.portrait');
 	
-	var sidebar_neg_offset = undefined;
-	var sidebar_top_margin_px = undefined;
-	var sidebar_left_margin_px = undefined;
-	
-	function try_init_sidebar_fixed_pos() {
+	function fix_sidecol_position() {
 		
-		// Only when the first time we see the .sidecol is 'position:absolute',
-		// will we be able to calculate sidebar_neg_offset.
-		// In other word, if user stays in mobile layout, we will not calculate it.
-		// By this way, user can adjust .sidecol margin and width solely from CSS.
-		//
-		// [2019-07-24] Hint: Although the .sidecol will finally appear as a position:fixed element,
-		// its fixed position is actually calculated dynamically according to its offsetParent
-		// (gframe in this case), not necessarily according to the browser viewport.
-		// So, in .css, the .sidecol initially has `position:absolute` instead of `position:fixed`. 
-		
-		var cs_sidecol = getComputedStyle(sidecol);
-		if(cs_sidecol.position!="absolute") 
-		{
-			// If it is "static"(mobile layout), we don't need to init here.
-			// If it is "fixed", it means already init-ed.
+		if(IsMobileLayoutNow()) {
+			sidecol.style.position = "static";
 			return;
 		}
 		
-		sidebar_neg_offset = sidecol.offsetLeft - gframe.offsetWidth; // typical: -236
+		// Desktop layout below:
 		
-		// From now on, the .sidecol will be place relative to gframe's right border,
-		// and the distance between [left-border of .sidecol] and [right-border of gframe]
-		// will be sidebar_neg_offset.
+		sidecol.style.position = "fixed";
 		
-		sidebar_top_margin_px = cs_sidecol.marginTop;
-		sidebar_left_margin_px = cs_sidecol.marginLeft;
+		var sidecol_width = cs(sidecol, "width");
+		var sidecol_width_px = parseInt(sidecol_width);
+		
+		var abs_x = gframe.offsetLeft + gframe.offsetWidth - sidecol_width_px;
+		
+		// [2019-06-16] NOTE: 'left/top/right/bottom' for a *fixed* DIV determines
+		// the *margin corner* , NOT the border corner. So sidecol_mr should be doubly subtracted.
+		var sidecol_mr = cs(sidecol, "margin-right");
+		sidecol.style.left = 'calc({0}px - {1} - {1})'.format(abs_x, sidecol_mr);
 	}
 	
-	// console.log("sidebar_neg_offset="+sidebar_neg_offset);
-	
-	function fix_sidebar_position() {
-		
-		try_init_sidebar_fixed_pos(); // we need to get `sidebar_neg_offset` ready
-		
-		if(sidebar_neg_offset===undefined)
-			return; // Don't ruin the "position:absolute" state yet.
-		
-		if( ! IsMobileLayoutNow() ) {
-			
-			sidecol.style.position = "fixed";
-			
-			var abs_x = gframe.offsetLeft + gframe.offsetWidth + sidebar_neg_offset;
-			
-			// [2019-06-16] Weird! 'left' and 'top' value for a "fixed" DIV determines
-			// the left-top *margin" position, NOT left-top border.
-			sidecol.style.left = 'calc({0}px - {1})'.format(abs_x, sidebar_left_margin_px);
-			// sidecol.style.top = sidebar_top_margin_px; // no need this
-		
-		} else {
-			sidecol.style.position = "static"; 
-		}
-	}
-	
-	fix_sidebar_position(); 
+	fix_sidecol_position(); 
 	
 	window.addEventListener("resize", function(event){
 		// Making viewport wider can cause .globalframe to move, 
 		// so we need to adjust the fixed sidecol position.
 
-		fix_sidebar_position();
+		fix_sidecol_position();
 		
 		make_img_clickable_for_fullsize();
 		

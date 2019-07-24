@@ -25,11 +25,20 @@
 /* CSS variables  */
 
 :root {
+	--globalframe-max-width: 1280px;
 	--sidecol-fontsize: 0.85em;
-	--sidecol-width: 18rem;
+	--sidecol-width: 16rem;
+	--sidecol-width_w2: 20rem;
+	
 	--maincol-bgcolor: #f0f0f0;
-	--date-period-ems: 10em;   /* enough width for "2002.07 ~ 2018.06" */ 
-	--year-period-ems: 6.12em;  /* enough width for "2002 ~ 2018 */ 
+	--maincol-padding-leftright: 1.03em;
+	
+	/* The three below use `em`(not `rem`) bcz this reflects the character-count of containter's font-size, not the root's. */
+	--date-period-ems: 9.88em;   /* enough width for "2002.07 ~ 2018.06" */ 
+	--year-period-ems: 8.22em;  /* enough width for "2002 ~ 2018 */ 
+	--skill-list-ems: 7.88em;
+	
+	
 	--langsel-height: 2.51em;
 	--toctitle-height: 2.05em; /* the small title grib at right-bottom corner */
 	
@@ -73,7 +82,7 @@ tt {
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
-	max-width: 1280px;
+	max-width: var(--globalframe-max-width);
 
 	border: 1px dashed cyan;
 	background-color: #fffff0;
@@ -128,8 +137,8 @@ tt {
 /*	margin: 0.8rem 1rem;
 */
 	border: 1px solid #888;
-	padding-left: 1.33em;
-	padding-right: 1.33em;
+	padding-left:  var(--maincol-padding-leftright);
+	padding-right: var(--maincol-padding-leftright);
 
 	background-color: var(--maincol-bgcolor);
 	border-radius: 1em;
@@ -138,8 +147,8 @@ tt {
 
 /* Mobile first side-column styles */
 .sidecol {
-/*	margin: 0.4rem 0.42rem;
-	// We can adjust these margins to verify .sidecol's sticking-to-right behavior.
+/*	margin: 0.8rem 18px;
+	// Enable margin to see fix_sidebar_position() can cope with margins.
 */	
 	position: static;
 	display: block; /* `block` in mobile layout, will change to "fixed" in desktop layout */
@@ -202,6 +211,7 @@ tt {
 
 .profile_list {
 	display: table;
+	margin: auto; /* horizontal centered */
 }
 
 .profile__item {
@@ -300,6 +310,8 @@ quote {
 
 .careerbanner {
 	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .careerb__orgname {
@@ -325,6 +337,10 @@ quote {
 	display: block;
 	margin-top: 0.8rem;
 	margin-bottom: 0.8rem;
+}
+
+.careertable__row > * {
+	border-bottom: 1px solid;
 }
 
 /* mobile layout scattered table heading, shared properties: */
@@ -422,7 +438,7 @@ quote {
 	margin: 0.2em;
 }
 
-.careertable__row.careertable__headrow {
+.careertable__headrow {
 	display: none;
 }
 
@@ -502,6 +518,13 @@ quote {
 		margin: 0.41em;
 	}
 	
+	@media (min-width: 1200px)
+	{
+		:root {
+			--sidecol-width: var(--sidecol-width_w2);
+		}
+	}
+	
 	.maincol {
 		margin-right: var(--sidecol-width);
 	}
@@ -526,6 +549,8 @@ quote {
 		position: absolute;
 		top: calc( var(--langsel-height) + var(--portrait-height) + var(--portrait-marginv)*2 );
 		bottom: var(--toctitle-height);
+		left: 0px;
+		right: 0px;
 		
 		overflow: auto;
 	}
@@ -585,7 +610,8 @@ quote {
 		position: absolute;
 		top: var(--toctitle-height);
 		bottom: 0px;
-		
+		left: 0px;
+		right: 0px;
 		margin-left: 0.415em;
 		margin-right: 0.415em;
 		overflow: auto;
@@ -618,11 +644,6 @@ quote {
 		text-decoration: none;
 	}
 
-	.careertable {
-		/* As container of careertable__rows. */
-		padding-left: 1em; /* to make an indent effect*/
-	}
-
 	.careerbanner {
 	/*	width: 100%;
 		// would cause right-side stick out.
@@ -630,7 +651,7 @@ quote {
 		display: flex;
 	}
 
-
+	/* careerb means carrerbanner */
 	.careerb__orgname {
 		margin-right: auto;
 		text-align: left;
@@ -645,6 +666,13 @@ quote {
 		flex: var(--date-period-ems) 0;
 		text-align: right;
 		padding-left: 0.46em;
+	}
+
+	.careertable {
+		/* As container of careertable__rows. */
+/*		padding-left: 1em; 
+		// to make an indent effect (no sense, to delete)
+*/	
 	}
 
 	.careertable__row {
@@ -662,28 +690,39 @@ quote {
 
 	.careertable__date {
 		font-size: 0.7rem;
-		flex: 118px 0;
+		flex: var(--date-period-ems) 0;
+		word-break: break-word;
 	}
 	.careertable__year {
 		font-size: 0.7rem;
-		flex: 97px 0;
+		flex: var(--year-period-ems) 0;
+		word-break: break-word;
 	}
 	.careertable__achievement {
 		font-size: 0.9rem;
 		flex: 1;
+		margin-left: 2px;
+		margin-right: 2px;
 	}
 	.careertable__skill {
 		font-size: 0.7rem;
-		flex: 20% 0 1;
+		flex: var(--skill-list-ems) 0 1;
+		/*flex: 20% 0 1;*/
 	}
 
-	.careertable__row.careertable__headrow {
+	.careertable__headrow {
 		display: flex;
 	}
-
-	.careertable__row.careertable__headrow > * {
+	
+	.careertable__headrow .headtext {
 		font-weight: bold;
-		font-size: 1rem
+		font-size: 1rem;
+		text-align: center;
+	}
+
+	.careertable__headrow > * {
+		/* headrow cell background color */
+		background-color: lightskyblue;
 	}
 
 	.duallang {
