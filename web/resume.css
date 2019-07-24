@@ -26,7 +26,7 @@
 
 :root {
 	--sidecol-fontsize: 0.85em;
-	--sidecol-width: 16em;
+	--sidecol-width: 18rem;
 	--maincol-bgcolor: #f0f0f0;
 	--date-period-ems: 10em;   /* enough width for "2002.07 ~ 2018.06" */ 
 	--year-period-ems: 6.12em;  /* enough width for "2002 ~ 2018 */ 
@@ -117,8 +117,11 @@ tt {
 }
 
 .maincol {
-	margin: 0.8rem 1rem;
+/*	margin: 0.8rem 1rem;
+*/
 	border: 1px solid #888;
+	padding-left: 1.33em;
+	padding-right: 1.33em;
 
 	background-color: var(--maincol-bgcolor);
 	border-radius: 1em;
@@ -127,8 +130,9 @@ tt {
 
 /* Mobile first side-column styles */
 .sidecol {
-	margin: 0.8rem 1rem;
-/*	background-color: #57b;
+/*
+	margin: 0.4rem 0.42rem;
+	background-color: #57b;
 */	
 	border: 1px dashed;
 	border-radius: 0.5em;
