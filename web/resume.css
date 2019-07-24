@@ -31,7 +31,10 @@
 	--date-period-ems: 10em;   /* enough width for "2002.07 ~ 2018.06" */ 
 	--year-period-ems: 6.12em;  /* enough width for "2002 ~ 2018 */ 
 	--langsel-height: 2.51em;
-	--toctitle-height: 2.05em;
+	--toctitle-height: 2.05em; /* the small title grib at right-bottom corner */
+	
+	--portrait-height: 120px;
+	--portrait-marginv: 0.811em;
 }
 
 /*****************************************************************/
@@ -180,11 +183,11 @@ tt {
 .portrait {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 0.811em;
-	margin-bottom: 0.811em;
-	max-width: 120px;
-	width: 120px;
-	height: 120px;
+	margin-top: var(--portrait-marginv);
+	margin-bottom: var(--portrait-marginv);
+/*	max-width: 120px;
+*/	width: var(--portrait-height);
+	height: var(--portrait-height);
 	border-radius: calc(120px/2);
 	background: linear-gradient(15deg, green, cyan);
 	box-shadow: 0em 0.211em 0.811em gray;
@@ -506,6 +509,14 @@ quote {
 		
 	}
 */
+
+	.profile_scrollbox {
+		position: absolute;
+		top: calc( var(--langsel-height) + var(--portrait-height) + var(--portrait-marginv)*2 );
+		bottom: var(--toctitle-height);
+		
+		overflow: auto;
+	}
 
 	.tocframe {
 		display: block;
