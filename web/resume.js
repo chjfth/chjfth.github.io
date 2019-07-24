@@ -1,5 +1,12 @@
 "use strict"
 
+function IsMobileLayoutNow() {
+	var element = document.getElementById("css_layout_now");
+	var cs = getComputedStyle(element);
+	return cs['line-height']=="1px" ? true : false;
+}
+
+
 var LangState = 
 {
 	// lang-cn & lang-en can be both "on", but not both "off"
@@ -248,12 +255,25 @@ function setup_fixed_position_sidecol() {
 		// will we be able to calculate sidebar_neg_offset.
 		// In other word, if user stays in mobile layout, we will not calculate it.
 		// By this way, user can adjust .sidecol margin and width solely from CSS.
+		//
+		// [2019-07-24] Hint: Although the .sidecol will finally appear as a position:fixed element,
+		// its fixed position is actually calculated dynamically according to its offsetParent
+		// (gframe in this case), not necessarily according to the browser viewport.
+		// So, in .css, the .sidecol initially has `position:absolute` instead of `position:fixed`. 
 		
 		var cs_sidecol = getComputedStyle(sidecol);
-		if(cs_sidecol.position!="absolute")
-			return; // already init-ed.
+		if(cs_sidecol.position!="absolute") 
+		{
+			// If it is "static"(mobile layout), we don't need to init here.
+			// If it is "fixed", it means already init-ed.
+			return;
+		}
 		
 		sidebar_neg_offset = sidecol.offsetLeft - gframe.offsetWidth; // typical: -236
+		
+		// From now on, the .sidecol will be place relative to gframe's right border,
+		// and the distance between [left-border of .sidecol] and [right-border of gframe]
+		// will be sidebar_neg_offset.
 		
 		sidebar_top_margin_px = cs_sidecol.marginTop;
 		sidebar_left_margin_px = cs_sidecol.marginLeft;
@@ -268,8 +288,7 @@ function setup_fixed_position_sidecol() {
 		if(sidebar_neg_offset===undefined)
 			return; // Don't ruin the "position:absolute" state yet.
 		
-		var csp = getComputedStyle(portrait); // caution: these code may be fragile
-		if(csp.float=='none') { // a real sidecol, desktop layout
+		if( ! IsMobileLayoutNow() ) {
 			
 			sidecol.style.position = "fixed";
 			
@@ -280,7 +299,7 @@ function setup_fixed_position_sidecol() {
 			sidecol.style.left = 'calc({0}px - {1})'.format(abs_x, sidebar_left_margin_px);
 			// sidecol.style.top = sidebar_top_margin_px; // no need this
 		
-		} else { // should be 'right', mobile layout
+		} else {
 			sidecol.style.position = "static"; 
 		}
 	}

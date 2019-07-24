@@ -65,6 +65,11 @@ tt {
 	color: #252590;
 }
 
+#css_layout_now {
+	display: none;
+	line-height: 1px;
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -133,10 +138,12 @@ tt {
 
 /* Mobile first side-column styles */
 .sidecol {
-/*
-	margin: 0.4rem 0.42rem;
-	background-color: #57b;
+/*	margin: 0.4rem 0.42rem;
+	// We can adjust these margins to verify .sidecol's sticking-to-right behavior.
 */	
+	position: static;
+	display: block; /* `block` in mobile layout, will change to "fixed" in desktop layout */
+	
 	border: 1px dashed;
 	border-radius: 0.5em;
 	font-size: var(--sidecol-fontsize);
@@ -480,6 +487,11 @@ quote {
 @media (min-width: 799.1px) 
 {
 	/* Desktop layout side-column styles. Whole side-column is fixed at viewport right-side. */
+
+	#css_layout_now {
+		display: none;
+		line-height: 2px;
+	}
 	
 	.globalframe {
 		position: relative; /* as base frame */

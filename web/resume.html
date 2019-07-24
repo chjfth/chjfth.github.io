@@ -12,6 +12,10 @@
 <!-- ====================================================================== -->
 
 <body>
+<div id="css_layout_now">
+	<!-- Use this empty ele to know whether we are in mobile layout or desktop layout at any specific time. -->
+</div>
+
 <div class="globalframe">
 
 <div class="maincol titlebar">
@@ -24,8 +28,8 @@
 
 <div class="sidecol clearfix">
 	<!-- 
-		When in mobile mode, display beneath the .titlebar .
-		When in desktop mode, display as right-hand "fixed" side-column.
+		When in mobile layout, display beneath the .titlebar .
+		When in desktop layout, display as right-hand "fixed" side-column.
 	 -->
 	<div class="langsel">
 		<button id="btn-cn" class="langbtn langbtn__left button_on">中文</button>
