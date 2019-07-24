@@ -160,7 +160,7 @@ function* scan_hx_headings(start_ele, start_hx, depth)
 	if(!hx_sel)
 		return null;
 	
-	var hx_all_eles = document.querySelectorAll(hx_sel);
+	var hx_all_eles = start_ele.querySelectorAll(hx_sel);
 	
 	for(var new_hele of hx_all_eles) {
 		
