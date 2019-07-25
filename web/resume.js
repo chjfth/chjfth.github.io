@@ -415,7 +415,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	
 	var curtain = document.createElement('div');
 	curtain.style.position = 'absolute';
-//	curtain.style.backgroundColor = 'red';
+//	curtain.style.backgroundColor = 'red'; // only for test
 	curtain.style.left = '0px';
 	var top = fixed_height_px; // children[nfixed].getBoundingClientRect().top - parent_ele.getBoundingClientRect().top;
 	curtain.style.top =  top+'px';
@@ -442,8 +442,8 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	nob.style.height = nob_height_em+'em';
 	nob.style.backgroundColor = bgc;
 	nob.style.padding = '2px';
-//	nob.style['border-radius'] = cs(bgc_parent, 'border-radius'); // copy parent's border-radius // not rational, should delete
 	nob.style['text-align'] = 'center';
+//	nob.style['cursor'] = 'pointer'; // optional
 	// Add a down-arrow svg
 	nob.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" \
 		class="svg-inline--fa fa-chevron-circle-down fa-w-16" \
@@ -468,7 +468,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	parent_wrapper.style.overflow = "hidden";
 
 	// Add mouse-click event 
-	window.addEventListener("click", function(event) {
+	parent_wrapper.addEventListener("click", function(event) {
 		// event.target can be <path> or <svg>, so I use has_ancestor() check.
 		// console.log(">>> "+event.target.tagName);
 		if( has_ancestor(event.target, parent_wrapper) ) { // nob
