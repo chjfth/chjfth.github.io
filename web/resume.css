@@ -237,6 +237,13 @@ tt {
 	margin: auto; /* horizontal centered */
 }
 
+.profile_list [class^="lang-"] {
+/*	transition: height 1500ms, color 1500ms;
+	// Can enable it if you like.
+*/
+}
+
+
 .profile__item {
 	display: table-row;
 }
@@ -590,8 +597,6 @@ quote {
 		
 		color: white;
 		background-color: #21385d;
-		
-		transition: height 510ms;
 	}
 	
 	.toctitle {

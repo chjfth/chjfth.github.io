@@ -102,11 +102,15 @@ function get_background_parent(ele) {
 	return ele; // ele is the <html>, document.documentElement
 }
 
-function has_ancestor(child, ancestor) {
+function has_ancestor(child, ancestor_ele, is_match_self=true) {
 	// Check if child-element has given ancestor-element.
-	var ele = child;
+	
+	if(is_match_self && child==ancestor_ele)
+		return true;
+	
+	var ele = child.parentElement;
 	while(ele) {
-		if(ele==ancestor)
+		if(ele==ancestor_ele)
 			return true;
 		ele = ele.parentElement;
 	}

@@ -100,7 +100,7 @@ function prepare_langbtn_callback() {
 		
 		var ele_clicked = event.target;
 		
-		LangState.toggle(ele_clicked==btn_cn?true:false);
+		LangState.toggle(has_ancestor(ele_clicked, btn_cn));
 	}
 	
 	btn_cn.addEventListener('click', on_langbtn_click);
@@ -170,9 +170,12 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 	function batch_cn_en_text(prefix, suffix, is_display) {
 		
 		// Enable/Disable cn/en text display according to input-params.
-		
+
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
 		for(var ele of eles) {
+//			if(ele.textContent=="目录列表") // debug
+//				console.log((is_display?"[*]":"[ ]") + ">>> "+ ele.textContent);
+
 			if(is_display) {
 				// Checking is_display should be done first, otherwise, 
 				// ele.scrollHeight will report 0px for a "display:none" element.
@@ -180,8 +183,20 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 			}
 			ele.style.height = is_display ? ele.scrollHeight+"px" : "0px";
 			
-			if(!is_delay_hide)
-				hide_if_zeroheight(ele);
+			if(is_delay_hide) {
+				var anistr = cs(ele, "transition");
+				var is_height_ani = anistr.indexOf("height")>=0;
+//				AssertIt(is_height_ani, "No css transition/animation set on "+ele.textContent);
+				
+				// Note: If there is css height-transition, we will hide this ele at transitionend.
+				// But if there is no height-transition, we must hide this `ele` immediately,
+				// otherwise, we will have no chance to hide it later.
+				if(!is_height_ani)
+					hide_if_zeroheight(ele);
+			}
+			else {
+				hide_if_zeroheight(ele); // hide now
+			}
 		}
 	}
 
