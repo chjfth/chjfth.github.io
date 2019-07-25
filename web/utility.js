@@ -61,7 +61,10 @@ function AssertIt(value, errormsg) {
 	if (!results) {
 		results = document.createElement("ul");
 		results.setAttribute('id','assert_error');
-		results.style.cssText="color:red; border:1px solid; background-color:#fee;"
+		results.style.cssText="color:red; border:1px solid; background-color:#fee;" 
+			+ "position:fixed; z-index:4; left:100px; top:0px; right:0px; bottom:-50px; overflow:auto;"
+			// Enable the above second line to have a always visible error-debugging pane.
+			// [2019-07-25] This is useful when I want to debug "scroll" events on an iPad.
 		
 		// insert as <body>'s first child.
 		document.body.insertBefore(results, document.body.firstElementChild);
@@ -213,3 +216,52 @@ function querySelectorAll_directchild(start_ele, querystr) {
 	}
 	return rets;
 }
+
+var get_millisec = (function() {
+	
+	var start_millisec = Date.now();
+		
+	function in_get_millisec() {
+		return Date.now() - start_millisec;
+	}
+	
+	return in_get_millisec;
+})(); // get_millisec() returns millisec count since program started.
+
+
+function get_scrollTop() { return my_scrollTop(); }
+function set_scrollTop(val) { my_scrollTop(val); }
+
+var my_scrollTop = (function() {
+	
+	// Use this function to work around [Chrome,Firefox] and [iOS/Safari]'s 
+	// whole-page .scrollTop difference.
+	//
+	// my_scrollTop(): get current .scrollTop value.
+	// my_scrollTop(100): set new .scrollTop value, causing webpage to scroll.
+	
+	// First, we should check whether we'are on Chrome or Safari.
+	// Be aware: Chrome App on Safari is actually using Safari core, and should be 
+	// considered Safari.
+	
+	var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple')>-1 ;
+		// according to https://stackoverflow.com/a/31732310/151453
+
+	function _scrollTop(val) {
+		if(val==undefined) {
+			if(!isSafari)
+				return document.documentElement.scrollTop;
+			else
+				return document.body.scrollTop;
+		} 
+		else {
+			if(!isSafari)
+				document.documentElement.scrollTop = val;
+			else
+				document.body.scrollTop = val;
+		}
+	}
+	
+	return _scrollTop;
+})(); 
+

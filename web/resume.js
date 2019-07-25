@@ -659,7 +659,7 @@ function prepare_toc_syncing() {
 	//
 	var prev_tocfocus = undefined;
 	window.addEventListener("scroll", function() {
-//		var pagepos = document.documentElement.scrollTop;
+//		var pagepos = get_scrollTop();
 		
 		// Find out which hx is now in the viewport(at top of viewport).
 		var prev_hx_idstem = "0";
@@ -749,7 +749,7 @@ function prepare_toc_popup() {
 		if(is_toc_prompted)
 			return;
 		
-		if(document.documentElement.scrollTop > window.innerHeight) {
+		if(get_scrollTop() > window.innerHeight) {
 			
 			tocframe.style.height = toctitle_height_px + "px";
 			setTimeout(function() {
@@ -768,6 +768,13 @@ function prepare_toc_popup() {
 	});	
 	
 //	expand_toc_frame(); // Don't initially expand.
+}
+
+function prepare_floating_toolbar() {
+	
+	window.addEventListener("scroll", function() {
+//		AssertIt(0, "[{0}ms] .scrollTop={1}".format(get_millisec(), get_scrollTop()));
+	});
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -797,6 +804,10 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	prepare_toc_syncing();
 	prepare_toc_popup();
+	
+	prepare_floating_toolbar();
+	
+//	for(var i=0;i<30;i++) AssertIt(0, i+ "Hello");
 });
 
 

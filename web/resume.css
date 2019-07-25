@@ -597,6 +597,8 @@ quote {
 		
 		color: white;
 		background-color: #21385d;
+		
+		transition: height 900ms;
 	}
 	
 	.toctitle {
