@@ -259,8 +259,94 @@ tt {
 }
 
 .tocframe {
-	display: none;
+//	display: none;
+	position: fixed;
+	z-index: 5;
+	right: 10px;
+	bottom: 10px;
+	/* Note: max-width and max-height will be set by jscode */
+	background-color: white;
+//	border: 1px solid;
+	border-radius: 0.5em;
+	box-shadow: 0.1em 0.1em 0.5em black;
+
+	color: white;
+	background-color: #21385d;
 }
+
+
+body .tocframe [class^="lang-"] {
+	/* Use body prefix so to override the selector of `.duallang.bounding:hover`  */
+	color: #e2e2e2;
+}
+
+body .tocframe .focus [class^="lang-"] {
+	color: yellow;
+	font-weight: bold;
+}
+
+.tocframe .toctitle {
+	font-size: 1.5em;
+	text-align: center;
+	text-shadow: cyan 1px 1px 3px;
+
+	position: relative;
+	left: 0em;
+	right: 0em;
+	display: flex;
+	justify-content: center; /* horizontal center */
+	align-items: center;     /* vertical center */
+}
+
+.toctitle_arrow {
+	position: absolute;
+	top: 2px;
+	bottom: 2px;
+	right: 2px;
+	width: 1.2em; /* var(--toctitle-height); */
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
+.tocframe .toctext {
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-left: 0.415em;
+	margin-right: 0.415em;
+	overflow: auto;
+}
+
+.tocframe a {
+	text-decoration: none;
+}
+
+.toctext .toc_depth0 {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.toctext .toc_depth1 {
+	padding-left: 4px;
+	padding-top: 2px;
+}
+
+.toctext .toc_depth2 {
+	padding-left: 8px;
+	padding-top: 0px;
+}
+
+.toctext .toc_seqs {
+	color: #999;
+}
+
+	.svg_arrowup {
+		background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-up" class="svg-inline--fa fa-chevron-circle-up fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm231-113.9L103.5 277.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L256 226.9l101.6 101.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L273 142.1c-9.4-9.4-24.6-9.4-34 0z"></path></svg>');
+	}
+	.svg_arrowdown {
+		background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" class="svg-inline--fa fa-chevron-circle-down fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path stroke="blue" fill="white" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg>');
+	}
+
 
 
 h1:target, h2:target, h3:target {
@@ -562,12 +648,21 @@ quote {
 	margin-left: calc(var(--float-toolbar-width)/5.66);
 	
 	background-repeat: no-repeat;
-	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-up" class="svg-inline--fa fa-chevron-circle-up fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
+	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
 }
 
 /************************ Desktop Web Layout Override  ************************/
 
+                   /*** REMEMBER TO change the two 799.1px below SIMULTANEOUSLY. ***/
 
+@media (max-width: 799.1px) 
+{
+	.tocframe {
+		/* For mobile layout, I use !important to override js-code's calculated ele.style.height. */
+		padding: 0.62em;
+		height: auto !important;
+	}
+}
 
 @media (min-width: 799.1px) 
 {
@@ -627,55 +722,28 @@ quote {
 	.tocframe {
 		display: block;
 		position: absolute;
-		z-index: 2;
 /*		top: calc(var(--langsel-height) + 510px);
 */		left: 0em;
 		right: 0em;
 		bottom: 0em;
 		border-radius: 0.5em;
-		
-		color: white;
-		background-color: #21385d;
-		
+/*		padding-top: 0em; 
+*/		
+		box-shadow: initial;
 		transition: height 900ms;
 	}
 	
-	.toctitle {
-		position: relative;
-		left: 0em;
-		right: 0em;
-		display: flex;
-		justify-content: center; /* horizontal center */
-		align-items: center;     /* vertical center */
+	.tocframe .toctitle {
+		font-size: 1em;
 		height: var(--toctitle-height);
 		cursor: pointer;
 	}
-	
+
 	.toctitle_arrow {
-		position: absolute;
-		top: 2px;
-		bottom: 2px;
-		right: 2px;
 		width: var(--toctitle-height);
-		background-repeat: no-repeat;
 	}
 	
-	.svg_arrowup {
-		background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-up" class="svg-inline--fa fa-chevron-circle-up fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm231-113.9L103.5 277.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L256 226.9l101.6 101.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L273 142.1c-9.4-9.4-24.6-9.4-34 0z"></path></svg>');
-	}
-	.svg_arrowdown {
-		background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" class="svg-inline--fa fa-chevron-circle-down fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path stroke="blue" fill="white" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg>');
-	}
-
-	body .tocframe [class^="lang-"] {
-		color: #e2e2e2;
-	}
-
-	body .tocframe .toctitle {
-		text-shadow: cyan 1px 1px 3px
-	}
-
-	body .tocframe .toctext {
+	.tocframe .toctext {
 		position: absolute;
 		top: var(--toctitle-height);
 		bottom: 0px;
@@ -686,32 +754,6 @@ quote {
 		overflow: auto;
 	}
 
-	.toctext .toc_depth0 {
-		padding-top: 5px;
-	}
-
-	.toctext .toc_depth1 {
-		padding-left: 4px;
-		padding-top: 2px;
-	}
-
-	.toctext .toc_depth2 {
-		padding-left: 8px;
-		padding-top: 0px;
-	}
-
-	.toctext .toc_seqs {
-		color: #999;
-	}
-	
-	body .tocframe .focus [class^="lang-"] {
-		color: yellow;
-		font-weight: bold;
-	}
-
-	.tocframe a {
-		text-decoration: none;
-	}
 
 	.careerbanner {
 	/*	width: 100%;

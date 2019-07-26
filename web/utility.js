@@ -62,7 +62,7 @@ function AssertIt(value, errormsg) {
 		results = document.createElement("ul");
 		results.setAttribute('id','assert_error');
 		results.style.cssText="color:red; border:1px solid; background-color:#fee;" 
-//			+ "position:fixed; z-index:4; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
+//			+ "position:fixed; z-index:14; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
 			// Enable the above second line to have a always visible error-debugging pane.
 			// [2019-07-25] This is useful when I want to debug "scroll" events on an iPad.
 		

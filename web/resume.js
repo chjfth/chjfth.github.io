@@ -716,6 +716,9 @@ function prepare_toc_popup() {
 	var is_toc_prompted = false;
 	
 	function expand_toc_frame() {
+		
+		// Will recalculate tocframe.style.height in this function.
+		
 		var full_height_px = toctitle.offsetHeight + toctext.scrollHeight;
 		var height_limit_px = sidecol.offsetHeight - langsel.offsetHeight;
 		
@@ -736,7 +739,17 @@ function prepare_toc_popup() {
 		is_toc_expanded = false;
 	}
 	
+	function tocframe_set_maxheight() {
+		// TODO: the 10 should sync with .tocframe{bottom:10px}
+		tocframe.style["max-height"] = window.innerHeight-10 + "px"; 
+	}
+	
 	window.addEventListener("resize", function() {
+		
+		// For mobile layout: Limit tocframe's max-height.
+		tocframe_set_maxheight();
+		
+		// For both layout:
 		// TOC frame's height needs adjust on window size change.
 		if(is_toc_expanded)
 			expand_toc_frame();
@@ -766,6 +779,8 @@ function prepare_toc_popup() {
 		else
 			collapse_toc_frame();
 	});	
+	
+	tocframe_set_maxheight();
 	
 //	expand_toc_frame(); // Don't initially expand.
 }
