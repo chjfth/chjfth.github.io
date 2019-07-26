@@ -62,7 +62,7 @@ function AssertIt(value, errormsg) {
 		results = document.createElement("ul");
 		results.setAttribute('id','assert_error');
 		results.style.cssText="color:red; border:1px solid; background-color:#fee;" 
-			+ "position:fixed; z-index:4; left:100px; top:0px; right:0px; bottom:-50px; overflow:auto;"
+//			+ "position:fixed; z-index:4; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
 			// Enable the above second line to have a always visible error-debugging pane.
 			// [2019-07-25] This is useful when I want to debug "scroll" events on an iPad.
 		
@@ -265,3 +265,102 @@ var my_scrollTop = (function() {
 	return _scrollTop;
 })(); 
 
+
+function do_triggerEvent(target, eventType, eventDetail){
+    const evt = new CustomEvent(eventType, {
+      detail: eventDetail
+    });
+    target.dispatchEvent(evt);
+}
+
+//////////////// FBRunning (floating toolbar Running state) ////////////////
+
+var FBRunning = 
+{
+	// three states as enum value:
+	Idle : 0, Scrolling : 1 , Burning : 2,
+	
+	// class members:
+	curstate : 0, // default to Idle, how can I write `Idle`?
+	starty : -1,
+	prevy : -1,
+	endy : -1,
+	timer1 : undefined, // the calming interval after last scrolling
+
+	delay_show_ms : 100, // caution: can be 50~500, but cannot be smaller than a OS jiffy(16ms).
+	
+	anti_dither_px : 5, // anti finger dithering when finger leaves the screen. Use 0 and you see problem.
+		
+	floatbar : undefined, // the floating toolbar to show/hide
+	
+	Log : function(msg) {
+		// Comment the following line to suppress logging output.
+		console.log("[{0}] {1}".format(get_millisec(), msg));
+	},
+	
+	FloatbarShow : function() {
+		this.curstate = FBRunning.Burning;
+		this.floatbar.style.display= "block";
+	},
+	
+	FloatbarHide : function() {
+		this.floatbar.style.display= "none";
+			// this.floatbar.style.removeProperty("display"); // This does not cause floatbar to disappear on iPad iOS 12.
+		this.curstate = FBRunning.Idle;
+	},
+
+	timer1Due : function() {
+		var dbg = "[y: {0}->{1} , diff={2}]".format(this.starty, this.endy, this.endy-this.starty)
+		this.Log("FT timer due. Checking whether to show floatbar."+dbg);
+		
+		// Check whether scrolling distance meet the floatbar showing up rule.
+		
+		var diffy = this.endy - this.starty;
+		var ok = diffy==0 || (diffy<=-2 && diffy>=-window.innerHeight/2);
+			// diffy==0 is for iPad better experience, very special for touch screen scrolling.
+		
+		if(ok) {
+			this.Log("  OK. will show toolbar.");
+			this.FloatbarShow();
+		}
+		else {
+			this.curstate = FBRunning.Idle;
+			this.Log("  No. Go back to idle.");
+		}
+	},
+		
+	OnScroll : function(ypos, floatbar_ele) {
+		
+		this.floatbar = floatbar_ele;
+		
+		if(this.curstate==FBRunning.Idle) {
+			this.curstate = FBRunning.Scrolling;
+			this.starty = this.prevy = this.endy = ypos;
+		}
+		else if(this.curstate==FBRunning.Scrolling) {
+			this.endy = ypos;
+		}
+		
+		if(this.curstate==FBRunning.Idle || this.curstate==FBRunning.Scrolling) {
+			
+			// Restart timer.
+			clearTimeout(this.timer1);
+			
+			this.timer1 = setTimeout(function(thisobj) {
+				// `this` here is the `window`
+				thisobj.timer1Due();
+			}, this.delay_show_ms, this);
+		}
+		
+		if(this.curstate==FBRunning.Burning) {
+			var diffy = ypos - this.prevy;
+			if(diffy>=this.anti_dither_px) {
+				// Memo: 5 is for
+				this.Log("Re-scrolling down. Will hide the float-toolbar");
+				this.FloatbarHide();
+			}
+		}
+		
+		this.prevy = ypos;
+	},
+}

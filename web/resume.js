@@ -771,9 +771,12 @@ function prepare_toc_popup() {
 }
 
 function prepare_floating_toolbar() {
-	
-	window.addEventListener("scroll", function() {
-//		AssertIt(0, "[{0}ms] .scrollTop={1}".format(get_millisec(), get_scrollTop()));
+
+	var fb_ele = document.querySelector(".toolbarfloat");
+	AssertIt(fb_ele, ".toolbarfloat NOT found in html.");
+		
+	document.addEventListener("scroll", function() {
+		FBRunning.OnScroll(get_scrollTop(), fb_ele);
 	});
 }
 
@@ -807,7 +810,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	prepare_floating_toolbar();
 	
-//	for(var i=0;i<30;i++) AssertIt(0, i+ "Hello");
 });
 
 

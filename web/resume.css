@@ -46,6 +46,8 @@
 	
 	--portrait-height: 120px;
 	--portrait-marginv: 0.811em;
+	
+	--float-toolbar-width: 3.66rem;
 }
 
 /*****************************************************************/
@@ -386,6 +388,11 @@ quote {
 	margin-top: 1.89em;
 }
 
+.careertable__date , .careertable__year {
+	border-left: 5px solid black;
+	padding-left: 0.5em;
+}
+
 .table_s { /* _s implies: with a smaller font */
 	margin-left: 1em;
 	display: table;
@@ -526,6 +533,38 @@ quote {
 	object-fit: contain;
 	max-width: 100%;
 }
+
+.toolbarfloat {
+	display: none;
+	position: fixed;
+	z-index: 3;
+	right: 10px;
+	bottom: 10px;
+}
+
+.toolbarframe {
+	width: var(--float-toolbar-width);
+	height: var(--float-toolbar-width);
+	cursor: pointer;
+	
+	background-color: pink;
+	border-radius: calc(var(--float-toolbar-width)/2);
+	display: flex;
+	justify-content: center; /* horizontal center */
+	align-items: center;     /* vertical center */
+	
+	box-shadow: 0em 0em 0.5em #124;
+}
+.toolbaricon {
+	flex: 1;
+	width:  calc(var(--float-toolbar-width)/1.66);
+	height: calc(var(--float-toolbar-width)/1.66);
+	margin-left: calc(var(--float-toolbar-width)/5.66);
+	
+	background-repeat: no-repeat;
+	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-up" class="svg-inline--fa fa-chevron-circle-up fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
+}
+
 /************************ Desktop Web Layout Override  ************************/
 
 
@@ -711,6 +750,11 @@ quote {
 		margin-bottom: 0.8rem;
 	}
 
+	.careertable__date , .careertable__year {
+		border-left: 0px;
+		padding-left: 0em;
+	}
+
 	.careertable__date::before ,
 	.careertable__year::before ,
 	.careertable__achievement::before ,
@@ -793,6 +837,10 @@ quote {
 	.table_s .table__cell {
 		display: table-cell;
 		padding: 0.5em;
+	}
+
+	.toolbarfloat {
+		display: none !important;
 	}
 
 }
