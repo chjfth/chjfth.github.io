@@ -6,6 +6,10 @@ function IsMobileLayoutNow() {
 	return cs['line-height']=="1px" ? true : false;
 }
 
+function get_floatbar_corner_px() {
+	var ret = parseInt(cs(document.documentElement, "--floatbar-corner"));
+	return ret;
+}
 
 var LangState = 
 {
@@ -709,8 +713,8 @@ function prepare_toc_popup() {
 	var toctitle_arrow = document.querySelector(".toctitle_arrow");
 	var toctext = document.querySelector(".toctext");
 
-	var fb_ele = document.querySelector(".toolbarfloat");
-	AssertIt(fb_ele, ".toolbarfloat NOT found in html.");
+	var fb_ele = document.querySelector(".floatbartray");
+	AssertIt(fb_ele, ".floatbartray NOT found in html.");
 	
 	var toctitle_height_px = toctitle.offsetHeight;
 
@@ -735,7 +739,7 @@ function prepare_toc_popup() {
 			var toctext_height_limit_px = window.innerHeight 
 				- parseInt(cs(tocframe, "padding-top")) - parseInt(cs(tocframe, "padding-bottom"))
 				- toctitle.offsetHeight
-				- 10; // "10px" todo, make it auto
+				- get_floatbar_corner_px();
 			
 			var toctext_now_height_px = Math.min(toctext_height_limit_px, toctext.scrollHeight);
 			
@@ -755,7 +759,7 @@ function prepare_toc_popup() {
 
 			is_toc_prompted = true;
 			
-			toctext.style.height = "auto"; // otherwise, #20190727-1
+			toctext.style.height = "auto"; // #20190727-1, in Desktop layout, this should not be explicit px.
 		}
 
 		is_toc_expanded = true;
@@ -770,8 +774,8 @@ function prepare_toc_popup() {
 	}
 	
 	function tocframe_set_maxheight() {
-		// TODO: the 10 should sync with .tocframe{bottom:10px}
-		tocframe.style["max-height"] = window.innerHeight-10 + "px"; 
+		var corner_px = get_floatbar_corner_px();
+		tocframe.style["max-height"] = window.innerHeight-corner_px + "px"; 
 	}
 	
 	window.addEventListener("resize", function() {
@@ -885,8 +889,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	prepare_toc_syncing();
 	prepare_toc_popup();
-	
-//	prepare_floating_toolbar();
 	
 	prepare_langrefresh_on_resize();
 	

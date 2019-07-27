@@ -82,7 +82,10 @@ function AssertFail(errormsg) {
 // cs: get computed (css) style 
 function cs(element, csspropname, pseudoElt) {
 	var s = window.getComputedStyle(element, pseudoElt);
-	return s[csspropname];
+	
+	// return s[csspropname]; // This cannot get custom property like '--floatbar-corner'
+	
+	return s.getPropertyValue(csspropname);
 }
 
 function get_background_parent(ele) {

@@ -47,7 +47,8 @@
 	--portrait-height: 120px;
 	--portrait-marginv: 0.811em;
 	
-	--float-toolbar-width: 3.66rem;
+	--floatbar-corner: 20px;
+	--floatbar-width: 3.66rem;
 }
 
 /*****************************************************************/
@@ -262,10 +263,9 @@ tt {
 	display: none;
 	position: fixed;
 	z-index: 5;
-	right: 10px;
-	bottom: 10px;
+	right: var(--floatbar-corner);
+	bottom: var(--floatbar-corner);
 	/* Note: max-width and max-height will be set by jscode */
-	background-color: white;
 //	border: 1px solid;
 	border-radius: 0.5em;
 	box-shadow: 0.1em 0.1em 0.5em black;
@@ -628,35 +628,36 @@ quote {
 	max-width: 100%;
 }
 
-.toolbarfloat {
+.floatbartray {
 	display: none;
 	position: fixed;
 	z-index: 3;
-	right: 10px;
-	bottom: 10px;
+	right: var(--floatbar-corner);
+	bottom: var(--floatbar-corner);
 }
 
-.toolbarframe {
-	width: var(--float-toolbar-width);
-	height: var(--float-toolbar-width);
+.floatbarframe {
+	width: var(--floatbar-width);
+	height: var(--floatbar-width);
 	cursor: pointer;
 	
-	background-color: pink;
-	border-radius: calc(var(--float-toolbar-width)/2);
+	background-color: #21385d;
+	border-radius: calc(var(--floatbar-width)/2);
+	box-shadow: 0em 0em 0.5em #124;
+
 	display: flex;
 	justify-content: center; /* horizontal center */
 	align-items: center;     /* vertical center */
 	
-	box-shadow: 0em 0em 0.5em #124;
 }
-.toolbaricon {
+.floatbaricon {
 	flex: 1;
-	width:  calc(var(--float-toolbar-width)/1.66);
-	height: calc(var(--float-toolbar-width)/1.66);
-	margin-left: calc(var(--float-toolbar-width)/5.66);
+	width:  calc(var(--floatbar-width)/1.66);
+	height: calc(var(--floatbar-width)/1.66);
+	margin-left: calc(var(--floatbar-width)/5.66);
 	
 	background-repeat: no-repeat;
-	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
+	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
 }
 
 /************************ Desktop Web Layout Override  ************************/
