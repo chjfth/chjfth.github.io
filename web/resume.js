@@ -107,8 +107,32 @@ function prepare_langbtn_callback() {
 		LangState.toggle(has_ancestor(ele_clicked, btn_cn));
 	}
 	
-	btn_cn.addEventListener('click', on_langbtn_click);
-	btn_en.addEventListener('click', on_langbtn_click);
+	btn_cn.addEventListener("click", on_langbtn_click);
+	btn_en.addEventListener("click", on_langbtn_click);
+}
+
+function prepare_duallang_hilight() {
+	
+	var gframe = document.querySelector(".globalframe");
+
+	// Note for iPad: To register a "global" click event callback, we can't just register it 
+	// on document or document.body, we have to register it on an explicit element,
+	// `gframe` in this case.
+	
+	gframe.addEventListener("click", function(event) {
+//		AssertInfo("duallang clicked.");
+		// Check if it is within a .duallang.bounding ele, if so, toggle its "hilight" class.
+		// Effect: on iPad, touch a .duallang blcok will have it highlighted with a dashed boarder,
+		// so to easily read CN/EN words in pair.
+		var ele = event.target;
+		while(ele) {
+			if(ele.classList.contains("duallang") && ele.classList.contains("bounding") ) {
+				ele.classList.toggle("hilight");
+				break;
+			}
+			ele = ele.parentElement;
+		}
+	});
 }
 
 function hide_if_zeroheight(ele) {
@@ -872,6 +896,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	check_cn_en_pairing();
 
 	prepare_langbtn_callback();
+	prepare_duallang_hilight();
 	
 	LangState.refresh_ui(false); // TODO: Select one lang according to usr browser lang setting
 
@@ -892,6 +917,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 	prepare_langrefresh_on_resize();
 	
+//	_AssertIt_fixedpos();
+//	AssertInfo(IsSafari() ? "isSafari=true" : "isSafari=false");
 });
 
 

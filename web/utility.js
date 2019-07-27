@@ -48,7 +48,13 @@ function foobar(){}
 
 // Print assert fail info on webpage. Thanks to the book "Secret of javascript Ninja".
 
-function AssertIt(value, errormsg) {
+var g_fixedpos = false;
+//
+function _AssertIt_fixedpos() {
+	g_fixedpos = true;
+}
+//
+function AssertIt(value, errormsg, color) {
 	
 	if(!errormsg)
 		alert("AssertIt() missing second parameter!");
@@ -56,15 +62,26 @@ function AssertIt(value, errormsg) {
 	if(value)
 		return;
 	
+	if(!color)
+		color = "red";
+	
 	// create a <ul> block to place assertion fail message.
 	var results = document.getElementById("assert_error");
 	if (!results) {
 		results = document.createElement("ul");
 		results.setAttribute('id','assert_error');
-		results.style.cssText="color:red; border:1px solid; background-color:#fee;" 
-//			+ "position:fixed; z-index:14; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
-			// Enable the above second line to have a always visible error-debugging pane.
+		
+		var csstext = "color:{0}; ".format(color);
+		
+		csstext += "border:1px solid; background-color:#fee;" 
+		
+		if(g_fixedpos) {
+			// Enable this to have a always visible error-debugging pane.
 			// [2019-07-25] This is useful when I want to debug "scroll" events on an iPad.
+			csstext += "position:fixed; z-index:14; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
+		}
+		
+		results.style.cssText = csstext;
 		
 		// insert as <body>'s first child.
 		document.body.insertBefore(results, document.body.firstElementChild);
@@ -76,7 +93,11 @@ function AssertIt(value, errormsg) {
 }
 
 function AssertFail(errormsg) {
-	AssertIt(0, errormsg);
+	AssertIt(0, errormsg, "red");
+}
+
+function AssertInfo(msg) {
+	AssertIt(0, msg, "blue");
 }
 
 // cs: get computed (css) style 
@@ -232,6 +253,14 @@ var get_millisec = (function() {
 })(); // get_millisec() returns millisec count since program started.
 
 
+function IsSafari() {
+	
+	// according to https://stackoverflow.com/a/31732310/151453
+	
+	var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple')>-1 ;
+	return isSafari;
+}
+
 function get_scrollTop() { return my_scrollTop(); }
 function set_scrollTop(val) { my_scrollTop(val); }
 
@@ -247,8 +276,7 @@ var my_scrollTop = (function() {
 	// Be aware: Chrome App on Safari is actually using Safari core, and should be 
 	// considered Safari.
 	
-	var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple')>-1 ;
-		// according to https://stackoverflow.com/a/31732310/151453
+	var isSafari = IsSafari();
 
 	function _scrollTop(val) {
 		if(val==undefined) {
@@ -323,7 +351,7 @@ var FBRunning =
 			// diffy==0 is for iPad better experience, very special for touch screen scrolling.
 		
 		if(ok) {
-			this.Log("  OK. will show toolbar.");
+			this.Log("  OK. will show floatbar.");
 			this.FloatbarShow();
 		}
 		else {

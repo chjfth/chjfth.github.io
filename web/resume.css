@@ -56,6 +56,8 @@
 body { 
 	/* outer frame of double container pattern. */
 	margin: 0px; 
+/*	color: orange;
+*/
 }
 
 .maincol a {
@@ -587,11 +589,18 @@ quote {
 .duallang.bounding {
 	border: 1px solid transparent;
 	/* Use a *transparent* border as placeholder, otherwise, when 1px border is added by :hover,
-	the layout inside will go for a subtle re-flow, not visually friendly. */
+	the layout inside will go for a subtle re-flow, not visually friendly. 
+	[2019-06-17 23:20] This border width does not cause transitionend flicker.
+	*/
 }
+
 .duallang.bounding:hover {
 	border: 1px dashed gray;
 }
+.duallang.bounding.hilight {
+	border: 1px dashed #32cd32; /* limegreen */
+}
+
 .duallang.bounding:hover .lang-cn2 {
 	background-color: rgb(240, 240, 224);
 }
@@ -854,22 +863,6 @@ quote {
 	/* NOTE: duallang padding/border/margin will cause cn/en transitionend FLICKER! Don't use it! */
 /*		padding: 3.32em;
 */	}
-	.duallang.bounding {
-		border: 1px solid transparent;
-		/* Use a *transparent* border as placeholder, otherwise, when 1px border is added by :hover,
-		the layout inside will go for a subtle re-flow, not visually friendly. 
-		[2019-06-17 23:20] This border width does not cause transitionend flicker.
-		*/
-	}
-	.duallang.bounding:hover {
-		border: 1px dashed gray;
-	}
-	.duallang.bounding:hover .lang-cn2 {
-		background-color: rgb(240, 240, 224);
-	}
-	.duallang.bounding:hover .lang-en2 {
-		background-color: rgb(234, 248, 255);
-	}
 
 	.ans { 
 		margin-left: 2.12em;
@@ -884,7 +877,7 @@ quote {
 		padding: 0.5em;
 	}
 
-	.toolbarfloat {
+	.floatbartray {
 		display: none !important;
 	}
 
