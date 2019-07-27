@@ -295,7 +295,7 @@ var FBRunning =
 	
 	Log : function(msg) {
 		// Comment the following line to suppress logging output.
-		console.log("[{0}] {1}".format(get_millisec(), msg));
+//		console.log("[{0}] {1}".format(get_millisec(), msg));
 	},
 	
 	FloatbarShow : function() {

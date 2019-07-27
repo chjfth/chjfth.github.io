@@ -173,7 +173,7 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
 		for(var ele of eles) {
-//			if(ele.textContent=="目录列表") // debug
+//			if(ele.textContent=="目录列表" || ele.textContent=="Table of Content") // debug
 //				console.log((is_display?"[*]":"[ ]") + ">>> "+ ele.textContent);
 
 			if(is_display) {
@@ -708,25 +708,42 @@ function prepare_toc_popup() {
 	var toctitle = document.querySelector(".toctitle");
 	var toctitle_arrow = document.querySelector(".toctitle_arrow");
 	var toctext = document.querySelector(".toctext");
+
+	var fb_ele = document.querySelector(".toolbarfloat");
+	AssertIt(fb_ele, ".toolbarfloat NOT found in html.");
 	
 	var toctitle_height_px = toctitle.offsetHeight;
-//	tocframe.style.height = toctitle_height_px + "px";
+
 	
 	var is_toc_expanded = false;
 	var is_toc_prompted = false;
 	
 	function expand_toc_frame() {
 		
-		// Will recalculate tocframe.style.height in this function.
-		
-		var full_height_px = toctitle.offsetHeight + toctext.scrollHeight;
-		var height_limit_px = sidecol.offsetHeight - langsel.offsetHeight;
-		
-		var now_height_px = Math.min(full_height_px, height_limit_px);
-		tocframe.style.height = now_height_px + "px";
-		
-		toctitle_arrow.classList.add("svg_arrowdown");
-		toctitle_arrow.classList.remove("svg_arrowup");
+		if(IsMobileLayoutNow()) {
+			// Will recalculate toctext.style.height in Mobile layout.
+			
+			var toctext_height_limit_px = window.innerHeight 
+				- parseInt(cs(tocframe, "padding-top")) - parseInt(cs(tocframe, "padding-bottom"))
+				- toctitle.offsetHeight
+				- 10; // "10px" todo, make it auto
+			
+			var toctext_now_height_px = Math.min(toctext_height_limit_px, toctext.scrollHeight);
+			toctext.style.height = toctext_now_height_px + "px";
+		}
+		else {
+			// Will recalculate tocframe.style.height in Desktop layout.
+			
+			var tocframe_full_height_px = toctitle.offsetHeight + toctext.scrollHeight;
+			var tocframe_height_limit_px = sidecol.offsetHeight - langsel.offsetHeight;
+
+			var tocframe_now_height_px = Math.min(tocframe_full_height_px, tocframe_height_limit_px);
+			tocframe.style.height = tocframe_now_height_px + "px";
+
+			toctitle_arrow.classList.add("svg_arrowdown");
+			toctitle_arrow.classList.remove("svg_arrowup");
+		}
+
 		is_toc_expanded = true;
 		is_toc_prompted = true;
 	}
@@ -756,7 +773,9 @@ function prepare_toc_popup() {
 	});
 	
 	window.addEventListener("scroll", function() {
-		// When the user scrolls by window.innerHeight the first time,
+		// Desktop layout scrolling action:
+
+		// When the user scrolls by window.innerHeight the *first* time,
 		// I'll slide up the TOC area automatically prompting my TOC feature,
 		// but only do it once so the disturbance is minimal.
 		if(is_toc_prompted)
@@ -764,34 +783,65 @@ function prepare_toc_popup() {
 		
 		if(get_scrollTop() > window.innerHeight) {
 			
-			tocframe.style.height = toctitle_height_px + "px";
+			tocframe.style.height = toctitle_height_px + "px"; // set explicit height for animation
 			setTimeout(function() {
 				expand_toc_frame();
 			}, 1);
 			is_toc_prompted = true;
 		}
+
+	});
+
+	window.addEventListener("scroll", function() {
+		// Mobile layout scrolling action:
+		FBRunning.OnScroll(get_scrollTop(), fb_ele);
 	});
 	
-	toctitle.addEventListener("click", function(event) {
+	toctitle.addEventListener("click", function(event) { // For desktop layout:
 		
-		if(!is_toc_expanded)
-			expand_toc_frame();
-		else
-			collapse_toc_frame();
-	});	
+		if(IsMobileLayoutNow()){
+			tocframe.classList.remove("mobile_popup");
+		}
+		else 
+		{
+			if(!is_toc_expanded)
+				expand_toc_frame();
+			else
+				collapse_toc_frame();
+		}
+	});
+	
+	fb_ele.addEventListener("click", function(event) {  // For mobile layout:
+		
+		// fb_ele is meaningful only for mobile layout:
+		tocframe.classList.add("mobile_popup");
+		LangState.refresh_ui(false);
+		expand_toc_frame();
+	});
 	
 	tocframe_set_maxheight();
 	
+	collapse_toc_frame();
 //	expand_toc_frame(); // Don't initially expand.
 }
 
-function prepare_floating_toolbar() {
+function prepare_langrefresh_on_resize() {
 
-	var fb_ele = document.querySelector(".toolbarfloat");
-	AssertIt(fb_ele, ".toolbarfloat NOT found in html.");
+	var is_prev_mobile = IsMobileLayoutNow();
+	
+	window.addEventListener("resize", function() {
+		var is_now_mobile = IsMobileLayoutNow();
 		
-	document.addEventListener("scroll", function() {
-		FBRunning.OnScroll(get_scrollTop(), fb_ele);
+		if(is_now_mobile!=is_prev_mobile) {
+			LangState.refresh_ui(true); 
+			
+			// -- When doing refresh_ui, `true`(delayed refresh) is required, bcz 
+			// list-entries' `height` may change across desktop/mobile layout change, 
+			// so we need a "delay" to change `height`s value to "auto" 
+			// instead of concrete 21px etc.
+		}
+		
+		is_prev_mobile = is_now_mobile;
 	});
 }
 
@@ -823,7 +873,9 @@ document.addEventListener("DOMContentLoaded", function(){
 	prepare_toc_syncing();
 	prepare_toc_popup();
 	
-	prepare_floating_toolbar();
+//	prepare_floating_toolbar();
+	
+	prepare_langrefresh_on_resize();
 	
 });
 

@@ -42,7 +42,7 @@
 	--langsel-height: 2.21rem;
 	--langsel-fontsize: 1.02rem;
 	
-	--toctitle-height: 2.05em; /* the small title grib at right-bottom corner */
+	--toctitle-height: 2.05rem; /* the small title grib at right-bottom corner */
 	
 	--portrait-height: 120px;
 	--portrait-marginv: 0.811em;
@@ -259,7 +259,7 @@ tt {
 }
 
 .tocframe {
-//	display: none;
+	display: none;
 	position: fixed;
 	z-index: 5;
 	right: 10px;
@@ -274,6 +274,9 @@ tt {
 	background-color: #21385d;
 }
 
+.tocframe.mobile_popup {
+	display: block;
+}
 
 body .tocframe [class^="lang-"] {
 	/* Use body prefix so to override the selector of `.duallang.bounding:hover`  */
@@ -286,7 +289,11 @@ body .tocframe .focus [class^="lang-"] {
 }
 
 .tocframe .toctitle {
-	font-size: 1.5em;
+	font-size: 1.00rem;
+	
+	height: var(--toctitle-height);
+	cursor: pointer;
+
 	text-align: center;
 	text-shadow: cyan 1px 1px 3px;
 
@@ -303,7 +310,8 @@ body .tocframe .focus [class^="lang-"] {
 	top: 2px;
 	bottom: 2px;
 	right: 2px;
-	width: 1.2em; /* var(--toctitle-height); */
+	width: var(--toctitle-height);
+	margin: 2px;
 	background-position: right;
 	background-repeat: no-repeat;
 }
@@ -659,7 +667,7 @@ quote {
 {
 	.tocframe {
 		/* For mobile layout, I use !important to override js-code's calculated ele.style.height. */
-		padding: 0.62em;
+		padding: 1.02em;
 		height: auto !important;
 	}
 }
@@ -734,13 +742,7 @@ quote {
 	}
 	
 	.tocframe .toctitle {
-		font-size: 1em;
-		height: var(--toctitle-height);
-		cursor: pointer;
-	}
-
-	.toctitle_arrow {
-		width: var(--toctitle-height);
+		font-size: 1.00rem;
 	}
 	
 	.tocframe .toctext {
