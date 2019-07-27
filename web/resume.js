@@ -718,6 +718,15 @@ function prepare_toc_popup() {
 	var is_toc_expanded = false;
 	var is_toc_prompted = false;
 	
+	function toc_arrowup() {
+		toctitle_arrow.classList.remove("svg_arrowdown");
+		toctitle_arrow.classList.add("svg_arrowup");
+	}
+	function toc_arrowdown() {
+		toctitle_arrow.classList.remove("svg_arrowup");
+		toctitle_arrow.classList.add("svg_arrowdown");
+	}
+	
 	function expand_toc_frame() {
 		
 		if(IsMobileLayoutNow()) {
@@ -729,7 +738,11 @@ function prepare_toc_popup() {
 				- 10; // "10px" todo, make it auto
 			
 			var toctext_now_height_px = Math.min(toctext_height_limit_px, toctext.scrollHeight);
-			toctext.style.height = toctext_now_height_px + "px";
+			
+			if(toctext_now_height_px==0)
+				; // console.log("toctext_now_height_px=0 !!!"); // debug
+			
+			toctext.style.height = toctext_now_height_px + "px"; // #20190727-1
 		}
 		else {
 			// Will recalculate tocframe.style.height in Desktop layout.
@@ -740,19 +753,19 @@ function prepare_toc_popup() {
 			var tocframe_now_height_px = Math.min(tocframe_full_height_px, tocframe_height_limit_px);
 			tocframe.style.height = tocframe_now_height_px + "px";
 
-			toctitle_arrow.classList.add("svg_arrowdown");
-			toctitle_arrow.classList.remove("svg_arrowup");
+			is_toc_prompted = true;
+			
+			toctext.style.height = "auto"; // otherwise, #20190727-1
 		}
 
 		is_toc_expanded = true;
-		is_toc_prompted = true;
+		toc_arrowdown();
 	}
 	
 	function collapse_toc_frame() {
 		tocframe.style.height = "initial"; // memo: "initial" will suppress height animation
 		
-		toctitle_arrow.classList.remove("svg_arrowdown");
-		toctitle_arrow.classList.add("svg_arrowup");
+		toc_arrowup();
 		is_toc_expanded = false;
 	}
 	
