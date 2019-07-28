@@ -531,7 +531,9 @@ quote {
 .itembrief {
 	display: block;
 	padding: 0.372em 0em;
-	color: brown;  /* test, no use */
+	color: brown;  /* will be overridden by duallang color switch */
+	font-size: 1.2em;
+	font-weight: bold;
 }
 .itemdetail {
 /*	margin-left: 2em;

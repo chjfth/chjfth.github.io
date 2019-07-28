@@ -1620,6 +1620,13 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="lang-en2">It is probably the first time you hear GMU, because it is a system developed by me. At the beginning, I gave it the name GnumakeUniproc, with the full meaning "GNU make universal process", long and verbose, right? So I later give it a brief name GMU. As the name implies, this system is based on GNU make. Since it is "make", it must serve the purpose of compiling some C/C++ projects. Right, you get it. Then how long have I used it? Very long, from year 2006 to 2018, the year I finished UFCOM. Can I have some alternatives? I'm afraid not, because so many customized requirements have to be accomplished with GMU.
 			</div>
 		</div>
+
+		<div class="duallang">
+			<div class="lang-cn2">如果想了解一下 GMU 是如何使用的，可以看一眼<a href="https://svn.code.sf.net/p/gnumakeuniproc/code/trunk/GMU-manual/quick-start/quick-start.htm">快速使用指南（英文）</a>。
+			</div>
+			<div class="lang-en2">To get an idea of how GMU is used, you can peek into the <a href="https://svn.code.sf.net/p/gnumakeuniproc/code/trunk/GMU-manual/quick-start/quick-start.htm">Quick start guide</a>.
+			</div>
+		</div>
 		
 		<div class="itembrief">
 			<div class="duallang">
@@ -1746,7 +1753,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">父工程自动探测子工程的输出文件名，并正确引用之。假定父工程生成 A.EXE ，子工程生成 B.LIB，父工程需要链接 B.LIB。GMU makefile 能够描述 A 和 B 的父子关系，并且自动链接 B 的输出。B 工程的输出名称由 B 自行决定，A 将自动探测得知。这是 GMU 核心层的一个特色功能，父工程通过一个专门的 "make target" 在运行过程当场查得子工程的输出文件名，这就避免了将子工程的输出文件名硬编码在父工程的 makefile 中。
 						</div>
-						<div class="lang-en2">The parent project can detect child project's output filename, and refers to that name correctly. For example, the parent project generates A.EXE, the child generates B.LIB. GMU makefile has a way to describe parent-child relationship between the two, and have A automatically links B's output. B's output filename is determined by solely by B's makefile, and A will detect it automatically. This is a special feature from GMU core. The parent project queries child project's output filename at runtime via a special "make target", eliminating the requirement of hardcoding child project's output filename inside parent project's makefile.
+						<div class="lang-en2">The parent project can detect child project's output filename, and refers to that name correctly. For example, the parent project generates A.EXE, the child generates B.LIB. GMU makefile has a way to describe parent-child relationship between the two, and have A automatically links B's output. B's output filename is determined solely by B's makefile, and A will detect it automatically. This is a special feature from GMU core. The parent project queries child project's output filename at runtime via a special "make target", eliminating the requirement of hardcoding child project's output filename inside parent project's makefile.
 						</div>
 					</div>
 					<div class="duallang">
@@ -1757,8 +1764,56 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					</div>
 				</li>
 			</ol>
+			
+			<div class="duallang">
+				<div class="lang-cn2">事实上，GMU 有很多很多的小巧且有用的功能，篇幅所限无法在这里一一列出。我能说的是，随着 GMU 的不断改进，我越来越体会到，如果没有 GMU 这样的一个框架，从头手写 makefile 会是多么的痛苦。
+				</div>
+				<div class="lang-en2">Actually, GMU has many many small and usefull features, and I cannot list them all due to too much text consuming. What I can say is: with constant improvements of GMU, I have stronger and stronger feeling that what a pain it will be if I have to write raw makefiles from scratch without the help a framework like GMU.
+				</div>
+			</div>
+			
 		</div>
-
+		
+		<div class="itembrief">
+			<div class="duallang">
+				<div class="lang-cn0">为什么只有我一个人在使用 GMU ?</div>
+				<div class="lang-en0">Why am I still the only user of GMU?</div>
+			</div>
+		</div>
+		<div class="itemdetail">
+			<div class="duallang">
+				<div class="lang-cn2">这是一个好问题。我试着从多个方面回答它。
+				</div>
+				<div class="lang-en2">This is a good question. I will try to answer it from different aspects.
+				</div>
+			</div>
+		</div>
+		<div class="itemdetail">
+			<div class="duallang">
+				<div class="lang-cn2">【必要性】 也许我的 C/C++ 代码编译需求太过特殊。在别人眼中，太特殊就显得没有必要。一方面，一个构建系统并不是产品的最终用户能看得到的部分，为了用户看不见的部分投入大量精力似乎不值得；另一方面，为了让代码在多个平台上能够运行也不是眼前的产品需要关注的功能，至于今后是否需要跨平台那是今后的事，为了将来不一定会发生的事现在就投入大量精力，似乎也不值得。如果已经有现成的工具可以满足当前产品的构建（比如直接使用 Visual Studio IDE），为什么还要费力去学习陈军的 GMU 呢？少学一样东西就少了一个环节的复杂性，这看起来没什么不对。
+				</div>
+				<div class="lang-en2">【Necessity】 Maybe my requirements for building C/C++ code is too special. From the eyes of others, being too special means unnecessary. For one, a building system is not what will present to the end-user, then it looks unworthy to  spend so much energy on user-unseeable features. For two, to make current code run on multiple platforms is not we need right now, it is again unworthy to invest so much energy on something contingent in the future. So, if there has been off the rack tool to accomplish current task(using Visual Studio IDE as build tool), why bother learning a new tool from Jimm Chen? One less tool means one less complexity. It is not wrong after all.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">【学习门槛】 就像所有基于文本指令的工具那样，GMU 的使用也是有一定门槛的，使用者需要懂得基本的 GNU make 语法，需要一次性将所有 make 语句写正确才能有正确的运行效果。为了达成这个目标，用户需要花费一两小时先阅读我的 GMU 指南。当 umake 运行结果未达期望时，用户还得懂得如何从错误提示中查找错误原因。错误原因可能出现在好几个层次： GMU 本身有 bug，误用了 GMU 的功能，误用了 GNU make 的功能，误用了编译器开关。排查出错原因有时真是个技术活，你通常得精通好几层工具才能准确定位出错误原因。
+				</div>
+				<div class="lang-en2">【Learning Threshold】 Like any text command based tools, GMU enforces some learning threshold. User needs to know basic GNU make grammar, and needs to write correct make commands all at once in order to get correct result. To achieve correct result, user need to spend one or two hours reading my GMU manual. In case the (umake) running result is unexpected, user needs to figure out the error cause from error messages. The error may come from multiple tiers: GMU's bug, misuse of GMU, misuse of GNU make, misuse of compiler commands. Pinpointing the error cause is a technical work, you often have to master tools from that much tiers to get it right.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">我没有开玩笑，程序员的工具对于大多数程序员来说太复杂了。大多数使用 Visual C++ 写代码的程序员，并不知道完整的编译和链接命令行是什么样的，有些人甚至连编译和链接这两个步骤都分不清。很多用 Visual C++ 编写程序多年的程序员，依旧不懂得如何为一个 Visual C++ 工程启用/禁用预编译头，他们总是用系统给的缺省设置。当遇到预编译头错误时，他们的解决方法是让整个工程完全禁用预编译头。
+				</div>
+				<div class="lang-en2">I'm not kidding. Programmer's tools are too complex for most programmers. Most programmers writing code with Visual C++ do not know the complete compile and link command line, and some are even unaware of the two-step process of compiling and linking. Many Visual C++ programmers do not know how to enable/disable precompiled headers, they always use what is given by default. When encountering precompiled header issues, their best bet is to entirely disable precompiled header feature for the whole project.
+				</div>
+			</div>
+			<div class="duallang">
+				<div class="lang-cn2">【对于个人作品的信心】 前面提及，GMU 是我为了满足我自己的需求偏好，从 2006 年开始开发并逐步改进的作品。这意味着，这个项目没有公司层面的支持，它的进度由我自己把控，遇到的所有问题都得我自己设法解决。既然如此，我的同事有什么理由一定要在没有陈军参与的项目中使用 GMU 呢？说不定哪天陈军辞职走人了，那 GMU 出的问题谁来解决？ 我得承认，GMU 头几年确实经历了很频繁的修改，到 2010 年才达到比较稳定的状态。而 2010 之后，我的几乎所有大小软件项目都是独立一个人完成的，因此 GMU 也就没有向其他人渗透的机会。
+				</div>
+				<div class="lang-en2">【Confidence in personal work】 As I have mentioned, GMU is a project I started myself since 2006 according to my own preference. That means, this project has never got company-wide support. I have sole control of its schedule, and any problem encountered should be solved by myself. So, any reason for my colleagues to use GMU in a project without Jimm Chen's involvement? I have to confess, GMU in her first years went through frequent modifications, and it got fair stability in year 2010. However, from 2010 on, nearly all software projects I got involved have only one member, that's me. GMU then has no chance to infiltrate into other's mind.
+				</div>
+			</div>
+		</div>
 	</div> <!-- end: lv2content of GMU -->
 
 	<h1 class="h1title">
@@ -1771,32 +1826,6 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 		<div class="duallang">
 			<div class="lang-cn2">Sec 5.1 中文</div>
 			<div class="lang-en2">Sec 5.1 English</div>
-		</div>
-	</div>
-
-	<h1 class="h1title">
-		<div class="lang-cn0">(666) 最近一年在家学习的新知</div>
-		<div class="lang-en0">(666) New knowledge learned at home in the past year, Long, long2, long3, long4 section title.</div>
-		<div class="stripe"></div>
-	</h1>
-
-	<div class="lv2content">
-		<div class="duallang">
-			<div class="lang-cn2">Sec 6.1 中文</div>
-			<div class="lang-en2">Sec 6.1 English</div>
-		</div>
-	</div>
-
-	<h1 class="h1title">
-		<div class="lang-cn0">(777) 最近一年在家学习的新知</div>
-		<div class="lang-en0">(777) New knowledge learned at home in the past year</div>
-		<div class="stripe"></div>
-	</h1>
-
-	<div class="lv2content">
-		<div class="duallang">
-			<div class="lang-cn2">Sec 7.1 中文</div>
-			<div class="lang-en2">Sec 7.1 English</div>
 		</div>
 	</div>
 
