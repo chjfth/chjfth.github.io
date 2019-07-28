@@ -44,7 +44,7 @@
 	
 	--toctitle-height: 2.05rem; /* the small title grib at right-bottom corner */
 	
-	--portrait-height: 120px;
+	--portrait-height: 160px;
 	--portrait-marginv: 0.811em;
 	
 	--floatbar-corner: 20px;
@@ -91,8 +91,8 @@ tt {
 	margin: auto;
 	max-width: var(--globalframe-max-width);
 
-	border: 1px dashed cyan;
-	background-color: #fffff0;
+/*	border: 1px dashed cyan;
+*/
 	border-radius: 1em;
 }
 
@@ -123,6 +123,23 @@ tt {
 	text-decoration: underline;
 } 
 
+.maincol {
+/*	margin: 0.8rem 1rem;
+*/
+	border: 1px solid #888;
+	padding-left:  var(--maincol-padding-leftright);
+	padding-right: var(--maincol-padding-leftright);
+
+	background-color: var(--maincol-bgcolor);
+/*	border-radius: 1em;
+*/
+}
+
+.maincol.titlebar {
+	background-image: url('res/bg-pagehead.jpg');
+	background-repeat: no-repeat;
+}
+
 .titlebar__head {
 	text-align: center;
 	font-size: 2em;
@@ -139,17 +156,6 @@ tt {
 	font-size: 0.6em;
 }
 
-.maincol {
-/*	margin: 0.8rem 1rem;
-*/
-	border: 1px solid #888;
-	padding-left:  var(--maincol-padding-leftright);
-	padding-right: var(--maincol-padding-leftright);
-
-	background-color: var(--maincol-bgcolor);
-	border-radius: 1em;
-}
-
 
 /* Mobile first side-column styles */
 .sidecol {
@@ -163,6 +169,7 @@ tt {
 	border-radius: 0.5em;
 	font-size: var(--sidecol-fontsize);
 	
+	background-color: #7890c0; /* night blue */
 	overflow: hidden; /* Delete this prop may sometimes help diagnose layout problem. */
 }
 
@@ -232,9 +239,11 @@ tt {
 /*	max-width: 120px;
 */	width: var(--portrait-height);
 	height: var(--portrait-height);
-	border-radius: calc(120px/2);
-	background: linear-gradient(15deg, green, cyan);
-	box-shadow: 0em 0.211em 0.811em gray;
+	border-radius: calc(var(--portrait-height)/2);
+	box-shadow: 0em 0.11em 0.811em white;
+	background-image: url('res/me2019.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 .profile_list {
