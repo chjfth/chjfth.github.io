@@ -309,7 +309,7 @@ function do_triggerEvent(target, eventType, eventDetail){
 var FBRunning = 
 {
 	// three states as enum value:
-	Idle : 0, Scrolling : 1 , Burning : 2,
+	Idle : 0, Scrolling : 1 , Showing : 2,
 	
 	// class members:
 	curstate : 0, // default to Idle, how can I write `Idle`?
@@ -318,7 +318,7 @@ var FBRunning =
 	endy : -1,
 	timer1 : undefined, // the calming interval after last scrolling
 
-	delay_show_ms : 100, // caution: can be 50~500, but cannot be smaller than a OS jiffy(16ms).
+	delay_show_ms : 150, // caution: can be 50~500, but cannot be smaller than a OS jiffy(16ms).
 	
 	anti_dither_px : 5, // anti finger dithering when finger leaves the screen. Use 0 and you see problem.
 		
@@ -330,7 +330,7 @@ var FBRunning =
 	},
 	
 	FloatbarShow : function() {
-		this.curstate = FBRunning.Burning;
+		this.curstate = FBRunning.Showing;
 		this.floatbar.style.display= "block";
 	},
 	
@@ -341,13 +341,19 @@ var FBRunning =
 	},
 
 	timer1Due : function() {
+		
+		if(this.curstate!=FBRunning.Scrolling) {
+			this.Log("Got stale timer event when curstate==Scrolling.");
+			return;
+		}
+		
 		var dbg = "[y: {0}->{1} , diff={2}]".format(this.starty, this.endy, this.endy-this.starty)
 		this.Log("FT timer due. Checking whether to show floatbar."+dbg);
 		
 		// Check whether scrolling distance meet the floatbar showing up rule.
 		
 		var diffy = this.endy - this.starty;
-		var ok = diffy==0 || (diffy<=-2 && diffy>=-window.innerHeight/2);
+		var ok = diffy==0 || (diffy<=-this.anti_dither_px && diffy>=-window.innerHeight/2);
 			// diffy==0 is for iPad better experience, very special for touch screen scrolling.
 		
 		if(ok) {
@@ -355,8 +361,8 @@ var FBRunning =
 			this.FloatbarShow();
 		}
 		else {
-			this.curstate = FBRunning.Idle;
 			this.Log("  No. Go back to idle.");
+			this.FloatbarHide();
 		}
 	},
 		
@@ -383,10 +389,9 @@ var FBRunning =
 			}, this.delay_show_ms, this);
 		}
 		
-		if(this.curstate==FBRunning.Burning) {
+		if(this.curstate==FBRunning.Showing) {
 			var diffy = ypos - this.prevy;
 			if(diffy>=this.anti_dither_px) {
-				// Memo: 5 is for
 				this.Log("Re-scrolling down. Will hide the float-toolbar");
 				this.FloatbarHide();
 			}

@@ -564,7 +564,7 @@
 					<div class="lang-en2">It means, transcode two parts of the .ts input(<u>00:00~16:29</u> and <u>17:36~end</u>) into a single final.mp4, with video bitrate of 900kbps. You can imagine that content between 16:29~17:36 is the TV ad to reject. I design command-line format to meet my own efficiency requirements; inside my python wrapper, I call ffmpeg and HandbrakeCLI to carry out the actual transcoding work.</div>
 				</div>
 				<div class="duallang">
-					<div class="lang-cn2">还有最后一个效率瓶颈需要解答，我是如何快速准确生成 "[-1629][1736-]" 这截参数的？倘若我仅仅是从视频播放器 UI 上将时间值抄到命令行上，那将很容易犯错。实施上我借助了 Autohotkey 脚本，帮我抓取 MPC-HC 显示的时间值并形成参数。下图示意了操作方法。
+					<div class="lang-cn2">还有最后一个效率瓶颈需要解答，我是如何快速准确生成 "[-1629][1736-]" 这截参数的？倘若我仅仅是从视频播放器 UI 上将时间值抄到命令行上，那将很容易犯错。事实上我借助了 Autohotkey 脚本，帮我抓取 MPC-HC 显示的时间值并形成参数。下图示意了操作方法。
 					</div>
 					<div class="lang-en2">There is a final efficiency bottleneck left. How do I quickly and accurately produce time ranges like "[-1629][1736-]"? Actually, I turn to Autohotkey scripting for help. Autohotkey can grab time value displayed by MPC-HC video player, so that time ranges can be constructed. It works as illustrated below.
 					</div>
