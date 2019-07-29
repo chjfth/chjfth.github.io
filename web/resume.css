@@ -25,7 +25,7 @@
 /* CSS variables  */
 
 :root {
-	--globalframe-max-width: 1280px;
+	--globalframe-max-width: 1600px;
 	--sidecol-fontsize: 0.85em;
 	--sidecol-width: 16rem;
 	--sidecol-width_w2: 20rem;
@@ -138,6 +138,7 @@ tt {
 .maincol.titlebar {
 	background-image: url('res/bg-pagehead.jpg');
 	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .titlebar__head {
@@ -523,6 +524,8 @@ quote {
 .table_s .itembrief {
 	background-color: #dabbe8;
 	min-width: 7.13em;
+	font-size: 1.0em;
+	font-weight: bold;
 }
 .table_s .itemdetail {
 	background-color: #dad0e8;
@@ -711,7 +714,7 @@ quote {
 		margin: 0.41em;
 	}
 	
-	@media (min-width: 1200px)
+	@media (min-width: 1280px)
 	{
 		:root {
 			--sidecol-width: var(--sidecol-width_w2);
