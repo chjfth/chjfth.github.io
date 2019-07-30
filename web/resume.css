@@ -544,6 +544,9 @@ quote {
 	padding: 0.372em 0em;
 }
 
+.itemdetail li {
+    margin: 0.46em;
+}
 
 .mainlang-cn .careertable__date::before {
 	content: "时间线";
