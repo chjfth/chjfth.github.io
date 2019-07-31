@@ -654,7 +654,7 @@ function prepare_toc_syncing() {
 					ele.style = "";
 					ele.style.display = old_display;
 					
-					ele.innerHTML = '<span class="toc_seqs">{0}</span> {1}'.format(
+					ele.innerHTML = '<span class="toc_seqs">{0}</span> {1} <span class="toc_pct">(00%)</span>'.format(
 						seqs_str, 
 						ele.innerHTML
 						);
@@ -689,23 +689,30 @@ function prepare_toc_syncing() {
 	window.addEventListener("scroll", function() {
 //		var pagepos = get_scrollTop();
 		
+		var margin_thres = 33; // 33 is casual to make a section straddle "margin" (may be 0)
+		
 		// Find out which hx is now in the viewport(at top of viewport).
 		var prev_hx_idstem = "0";
+		var prev_hx_pos = 0, next_hx_pos = window.innerHeight;
 		for(var idstem of ar_hx_seqs) {
 			var id = hx_section_id(idstem); // idstem sample: "4.1", return: id="sec-4.1"
 			var ele = document.getElementById(id);
 			var hxpos = ele.getBoundingClientRect().top; 
 				// An hx scrolled beyond viewport top will have hxpos<0 .
 				// An hx visible in viewport or far beyond viewport bottom will have hxpos>=0 .
-			if(hxpos<0+33) // 33 is casual
+			if(hxpos < margin_thres) {
 				prev_hx_idstem = idstem;
-			else
+				prev_hx_pos = hxpos;
+			}
+			else {
 				break;
+				next_hx_pos = hxpos;
+			}
 		}
 		
 		var toc_id = hx_thumbnail_id(prev_hx_idstem);
 //		console.log("toc-id="+ toc_id); //debug
-		
+
 		var toctext = document.querySelector(".toctext");
 		var tocfocus = document.getElementById(toc_id); // strange, here I cannot use querySelector("#toc-4.1") etc
 		
@@ -719,6 +726,17 @@ function prepare_toc_syncing() {
 		
 		tocfocus.classList.add("focus");
 		prev_tocfocus = tocfocus;
+
+		// Update percent value for current TOC-entry:
+		//
+		var prev_pct_f = (margin_thres-prev_hx_pos)/(next_hx_pos-prev_hx_pos)*100;
+		var prev_pct = Math.min(99, parseInt(prev_pct_f)); // Don't want to see "100%"
+//		console.log("prev_pct="+ prev_pct+"%"); // debug
+		var pct_eles = tocfocus.querySelectorAll(".toc_pct"); // typically get two(cn & en)
+		for(var pct_ele of pct_eles) {
+			pct_ele.innerText = "({0}%)".format(prev_pct);
+		}
+		
 	});
 	
 }

@@ -294,10 +294,15 @@ body .tocframe [class^="lang-"] {
 	/* Use body prefix so to override the selector of `.duallang.bounding:hover`  */
 	color: #e2e2e2;
 }
-
 body .tocframe .focus [class^="lang-"] {
 	color: yellow;
 	font-weight: bold;
+}
+body .tocframe .toctext .toc_pct {
+	visibility: hidden;
+}
+body .tocframe .toctext .focus .toc_pct {
+	visibility: visible;
 }
 
 .tocframe .toctitle {
