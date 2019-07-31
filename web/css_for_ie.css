@@ -58,8 +58,8 @@ tt {
 
 .maincol {
 /*	margin: 0.8rem 1rem;
-*/
 	border: 1px solid #888;
+*/
 	padding-left:  var(--maincol-padding-leftright);
 	padding-right: var(--maincol-padding-leftright);
 
@@ -178,4 +178,181 @@ tt {
 	background-image: repeating-linear-gradient(45deg, #57b 0px, #249 20px, #57b 40px);
 }
 
+.masscontent .duallang {
+	padding: 0.3em;
+}
 
+.h2title {
+	display: inline-block;
+}
+.h2title .stripe {
+	width: 100%;
+	height: 0.4rem;
+	background-image: repeating-linear-gradient(45deg, #cb5 0px, #a83 20px, #cb5 40px);
+}
+
+.ques{
+	font-weight: bold;
+}
+
+.ans ul {
+	padding-left: 1.12em;
+}
+
+quote {
+	display: block;
+	padding-left: 1.78em;
+	padding-top: 0.28em;
+	padding-bottom: 0.28em;
+}
+
+.careerbanner {
+	display: table-row;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.careerb__orgname {
+	display: table-cell;
+	width: 60%;
+	text-align: left;
+}
+.careerb__jobtitle {
+	display: table-cell;
+	width: 25%;
+}
+.careerb__date {
+	display: table-cell;
+}
+
+.companyinfo,
+.h1intro {
+	border: 1px solid grey;
+	border-radius: 0.5em;
+	margin: 1em;
+	padding: 1em;
+}
+
+.careertable {
+	display: table;
+}
+
+.careertable .duallang {
+	padding: 0.32em;
+}
+
+.careertable__row {
+	display: table-row;
+	margin-top: 0.8rem;
+	margin-bottom: 0.8rem;
+}
+
+.careertable__row > * {
+	display: table-cell;
+	border-bottom: 1px solid;
+}
+
+
+.careertable__date , .careertable__year {
+	border-left: 0px;
+	padding-left: 0em;
+}
+
+.careertable__date {
+	font-size: 0.8rem;
+	kk-width: 10%;
+	width: 9.88em;
+	word-break: break-word;
+}
+.careertable__year {
+	font-size: 0.8rem;
+	kk-width: 10%;
+	width: 8.22em;
+	word-break: break-word;
+}
+.careertable__achievement {
+	font-size: 0.9rem;
+	width: 80%;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+.careertable__skill {
+	width: 10%;
+	font-size: 0.7rem;
+	width: 7.88em;
+}
+
+/*.careertable__headrow {
+	display: table-row;
+}
+*/
+.careertable__headrow .headtext {
+	font-weight: bold;
+	font-size: 1rem;
+	text-align: center;
+}
+
+.careertable__headrow > * {
+	/* headrow cell background color */
+	background-color: lightskyblue;
+}
+
+.careertable__skill ul {
+	padding-left: 0px;
+}
+.careertable__skill li {
+	list-style-type: none;
+	
+	display: inline-block;
+	padding: 0.2em;
+	line-height: 1.2;
+	border: 1px grey solid;
+	border-radius: 0.5em;
+	margin: 0.2em;
+}
+
+.imagerow {
+	display: table-row;
+}
+.imagerow > * {
+	display: table-cell;
+}
+.imagerow img {
+	width: 300px;
+}
+
+.imagerow--textandimage > div {
+	border: 1px solid;
+}
+
+.table_s { /* _s implies: with a smaller font */
+	margin-left: 1em;
+	display: table;
+	font-size: 0.9em;
+	border-spacing: 0.244em;
+
+}
+.table_s .table__row {
+	display: table-row;
+}
+.table_s .table__cell {
+	display: block;  /* would be table-cell for desktop */
+	padding: 0.5em;
+}
+.table_s .itemname {
+	background-color: #80c0dd;
+	min-width: 6.13em;
+}
+.table_s .itemvalue {
+	background-color: #d0d7e4;
+}
+
+.table_s .itembrief {
+	background-color: #dabbe8;
+	min-width: 7.13em;
+	font-size: 1.0em;
+	font-weight: bold;
+}
+.table_s .itemdetail {
+	background-color: #dad0e8;
+}
