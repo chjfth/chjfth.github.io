@@ -1,0 +1,181 @@
+.maincol a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #6767b4;
+}
+a:hover {
+	color: #252590;
+}
+
+pre {
+	border: 1px solid #bde;
+	border-radius: 0.34em;
+	padding: 0.5em;
+	line-height: 1.37;
+	white-space: pre-wrap;
+}
+
+tt {
+	color: #252590;
+}
+
+.globalframe {
+	/* inner frame of double container pattern. */
+	margin: auto;
+	max-width: var(--globalframe-max-width);
+
+/*	border: 1px dashed cyan;
+*/
+	border-radius: 1em;
+}
+
+.imgbox-float-right {
+	display: block;
+	margin: 0.41em;
+	text-align: center;
+}
+
+.imgbox-float-right__foottext {
+	font-size: 0.8em;
+	text-align: center;
+	color: #666;
+	background-image: linear-gradient(to bottom, #fff, #ccc);
+}
+
+.mainlang-cn [class^="lang-cn"] , 
+.mainlang-en [class^="lang-en"] {
+	color: black; 
+} 
+.mainlang-cn [class^="lang-en"] , 
+.mainlang-en [class^="lang-cn"] {
+	color: #999; /* For non-main language, I use a pale color for text. */
+} 
+
+.mainlang-cn .langsel #btn-cn ,
+.mainlang-en .langsel #btn-en  {
+	text-decoration: underline;
+} 
+
+.maincol {
+/*	margin: 0.8rem 1rem;
+*/
+	border: 1px solid #888;
+	padding-left:  var(--maincol-padding-leftright);
+	padding-right: var(--maincol-padding-leftright);
+
+	background-color: var(--maincol-bgcolor);
+/*	border-radius: 1em;
+*/
+}
+
+.maincol.titlebar {
+	background-image: url('res/bg-pagehead.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.titlebar__head {
+	text-align: center;
+	font-size: 2em;
+    letter-spacing: 0.5em;
+    font-family: 楷体;
+}
+
+.titlebar__myname .chenjun {
+    font-family: 楷体;
+	font-size: 3em;
+}
+
+.titlebar__myname .career {
+	font-size: 0.8em;
+}
+
+.sidecol {
+/*	margin: 0.8rem 18px;
+	// Enable margin to see fix_sidebar_position() can cope with margins.
+*/	
+	position: static;
+	display: block; /* `block` in mobile layout, will change to "fixed" in desktop layout */
+	
+	border: 1px dashed;
+	border-radius: 0.5em;
+	
+	background-color: #7890c0; /* night blue */
+	overflow: hidden; /* Delete this prop may sometimes help diagnose layout problem. */
+}
+
+.langsel {
+	display: table;
+	width: 100%;
+	height: 2.21em;
+}
+.langsel .langbtn {
+	width: 50%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	background-color: #57b;
+	background-image: linear-gradient(to bottom, #57b, #012);
+}
+.langbtn__left {
+	border: 1px solid;
+	border-radius: 0.5em 0 0 0.5em
+}
+.langbtn__right {
+	border: 1px solid;
+	border-radius: 0 0.5em 0.5em 0 
+}
+
+.portrait {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.811em;
+	margin-bottom: 0.811em;
+	width: 160px;
+	height: 160px;
+	border-radius: 80px;
+	box-shadow: 0em 0.11em 0.811em white;
+	background-image: url('res/me2019.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.profile_list {
+	display: table;
+	margin: auto; /* horizontal centered */
+}
+
+.profile__item {
+	display: table-row;
+}
+
+.item__name {
+	display: table-cell;
+	font-weight: bold;
+	border-bottom: 1px dashed;
+}
+.item__value {
+	display: table-cell;
+	border-bottom: 1px dashed;
+}
+
+.tocframe {
+	display: none;
+}
+
+
+.h1title {
+	display: inline-block;
+/*	padding-bottom: 0.2em;
+	margin-bottom: 0.3em;
+*/
+}
+
+.h1title .stripe {
+	width: 100%;
+	height: 0.5rem;
+	background-image: repeating-linear-gradient(45deg, #57b 0px, #249 20px, #57b 40px);
+}
+
+

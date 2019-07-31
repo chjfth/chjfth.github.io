@@ -44,10 +44,10 @@ var LangState =
 		else
 			this.is_cn_main = this.is_cn_on ? true : false;
 		
-		this.refresh_ui();
+		this.refresh_ui(true);
 	},
 	
-	refresh_ui : function (is_delay_hide=true) {
+	refresh_ui : function (is_delay_hide) {
 		if(is_delay_hide)
 			refresh_cn_en_display_delayed(this.is_cn_on, this.is_en_on, this.is_cn_main, true);
 		else
@@ -104,7 +104,7 @@ function prepare_langbtn_callback() {
 		
 		var ele_clicked = event.target;
 		
-		LangState.toggle(has_ancestor(ele_clicked, btn_cn));
+		LangState.toggle(has_ancestor(ele_clicked, btn_cn, true));
 	}
 	
 	btn_cn.addEventListener("click", on_langbtn_click);
@@ -166,7 +166,7 @@ function refresh_cn_en_display_delayed(is_cn_on, is_en_on, is_cn_main) {
 	}, 1);
 }
 
-function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide=true) {
+function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide) {
 	
 	// If is_cn_on && is_en_on are both true, lang-cn0 and lang-en0 will compete
 	// according to is_cn_main.
@@ -499,7 +499,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	parent_wrapper.addEventListener("click", function(event) {
 		// event.target can be <path> or <svg>, so I use has_ancestor() check.
 		// console.log(">>> "+event.target.tagName);
-		if( has_ancestor(event.target, parent_wrapper) ) { // nob
+		if( has_ancestor(event.target, parent_wrapper, true) ) { // nob
 			// Restore parent_wrapper's natural height, and remove curtain.
 			parent_wrapper.style.height = "auto";
 			curtain.style.display = "none";
@@ -908,7 +908,9 @@ function prepare_langrefresh_on_resize() {
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function(){
-   
+
+//	alert("AAA");
+
 	chj_check_strict_mode();
 	
 	check_cn_en_pairing();
