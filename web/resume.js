@@ -705,8 +705,8 @@ function prepare_toc_syncing() {
 				prev_hx_pos = hxpos;
 			}
 			else {
-				break;
 				next_hx_pos = hxpos;
+				break;
 			}
 		}
 		
