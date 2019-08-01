@@ -1,3 +1,12 @@
+/* This CSS is only for IE, not for Chrome and Firefox. */
+
+.iewarn {
+	background-color: #ffffa0;
+	color: #7e7020 !important;
+	border: 2px solid;
+	padding: 0.644em;
+}
+
 .maincol a {
 	text-decoration: none;
 	font-weight: bold;

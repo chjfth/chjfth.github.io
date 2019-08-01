@@ -200,7 +200,8 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 		// Enable/Disable cn/en text display according to input-params.
 
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
-		for(var ele of eles) {
+		for(var i=0; i<eles.length; i++) {
+			var ele = eles[i];
 //			if(ele.textContent=="目录列表" || ele.textContent=="Table of Content") // debug
 //				console.log((is_display?"[*]":"[ ]") + ">>> "+ ele.textContent);
 
