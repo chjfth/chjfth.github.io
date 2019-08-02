@@ -129,6 +129,28 @@ function get_background_parent(ele) {
 	return ele; // ele is the <html>, document.documentElement
 }
 
+function is_ancestor_class_rematch(ele0, regex) {
+
+	var ele = ele0.parentElement;
+	while(ele) {
+		for(var cls of ele.classList) {
+			if( regex.test(cls) )
+				return true;
+		}
+		ele = ele.parentElement;
+	}
+	return false;
+}
+
+function is_in_langcn(ele) {
+	var ret = is_ancestor_class_rematch(ele, /^lang-cn/);
+	return ret;
+}
+function is_in_langen(ele) {
+	var ret = is_ancestor_class_rematch(ele, /^lang-en/);
+	return ret;
+}
+
 function has_ancestor(child, ancestor_ele, is_match_self) {
 	// Check if child-element has given ancestor-element.
 	
@@ -400,3 +422,11 @@ var FBRunning =
 		this.prevy = ypos;
 	},
 }
+
+function isStartsWith(str, substr) {
+	if(str.indexOf(substr)==0)
+		return true;
+	else
+		return false;
+}
+

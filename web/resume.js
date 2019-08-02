@@ -905,6 +905,74 @@ function prepare_langrefresh_on_resize() {
 	});
 }
 
+function external_links_prepend_arrow() {
+	
+	var eles = document.getElementsByTagName("a");
+	for(var a of eles) {
+		
+		// For <a href="res/cf-chenjun-2013.png">...</a> ,
+		// a.href or a["href"] will return sth like "http://192.168.31.84:88/chjfth.github.io/web/res/cf-chenjun-2013.png",
+		// a.getAttribute("href"); will return "res/cf-chenjun-2013.png" -- this is what I need here.
+		
+		var rawhref = a.getAttribute("href");
+		
+		if(isStartsWith(rawhref, "http") || isStartsWith(rawhref, "https")) {
+			a.classList.add("external");
+		}
+	}
+}
+
+function collect_links_for_final_section() {
+	
+	var cn_tbody = document.querySelector(".linksummary .lang-cn0 tbody");
+	var en_tbody = document.querySelector(".linksummary .lang-en0 tbody");
+	
+	var cn_tr0 = cn_tbody.firstElementChild;
+	var en_tr0 = en_tbody.firstElementChild;
+	
+	cn_tbody.removeChild(cn_tr0);
+	en_tbody.removeChild(en_tr0);
+
+	var maincol = document.querySelector(".maincontent");
+	var eles = maincol.getElementsByTagName("a");
+	var count = eles.length;
+	for(var i=0; i<count; i++) { 
+		
+		// [2019-08-02] Note: Don't use `for(var a of eles) {...}` to iterate, 
+		// because `eles` are *live*, and we are adding *new* <a>s in this for cycle.
+		
+		var a = eles[i];
+		var cnadd= true, enadd = true;
+		
+		// Check whether the <a> is from lang-cn or lang-en, then add it to cn/en table respectively.
+		// If none of lang-cn/lang-en, add to both.
+		if(is_in_langcn(a)) {
+			enadd = false;
+		}
+		else if(is_in_langen) {
+			cnadd = false;
+		}
+		
+		function tr_setcontent(trnew, a) {
+			trnew.firstElementChild.textContent = a.textContent;
+			
+			var href = a.getAttribute("href");
+			trnew.lastElementChild.innerHTML = '<a href="{0}">{0}</a>'.format(href);
+		}
+		
+		if(cnadd) {
+			var trnew = cn_tr0.cloneNode(true);
+			tr_setcontent(trnew, a);
+			cn_tbody.appendChild(trnew);
+		}
+		if(enadd) {
+			var trnew = en_tr0.cloneNode(true);
+			tr_setcontent(trnew, a);
+			en_tbody.appendChild(trnew);
+		}
+	}
+}
+
 function refresh_initial_langui() {
 	
 	if(navigator.languages && navigator.languages[0]=="zh-CN")
@@ -912,7 +980,10 @@ function refresh_initial_langui() {
 	else
 		LangState.is_cn_main = false;
 		
-	LangState.refresh_ui(false);
+	LangState.refresh_ui(false); 
+		// is_delay_hide=false should be used here, 
+		// otherwise, setup_expandable_blocks() will see wrong `height`(height of duallang),
+		// actually what we need is text heights of a single lang.
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -928,9 +999,9 @@ document.addEventListener("DOMContentLoaded", function(){
 	assert_langtext_0edge();
 	
 	refresh_initial_langui();
+	prepare_duallang_hilight();
 
 	prepare_langbtn_callback();
-	prepare_duallang_hilight();
 	
 	setup_transitionend();
 
@@ -946,6 +1017,10 @@ document.addEventListener("DOMContentLoaded", function(){
 	prepare_toc_popup();
 	
 	prepare_langrefresh_on_resize();
+	
+	collect_links_for_final_section();
+	external_links_prepend_arrow();
+
 	
 //	_AssertIt_fixedpos();
 //	AssertInfo(IsSafari() ? "isSafari=true" : "isSafari=false");
