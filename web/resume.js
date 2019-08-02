@@ -949,8 +949,11 @@ function collect_links_for_final_section() {
 
 	var maincol = document.querySelector(".maincontent");
 	var eles = maincol.getElementsByTagName("a");
-	var count = eles.length;
-	for(var i=0; i<count; i++) { 
+	var cycles = eles.length;
+	var cnidx = 0, enidx = 0;
+	var id_adv = 0;
+	//
+	for(var i=0; i<cycles; i++) { 
 		
 		// [2019-08-02] Note: Don't use `for(var a of eles) {...}` to iterate, 
 		// because `eles` are *live*, and we are adding *new* <a>s in this for cycle.
@@ -963,8 +966,14 @@ function collect_links_for_final_section() {
 		if(imgs.length>0)
 			continue;
 		
+		// This is a valid <a>, and I'll add auto anchor id to it for summary link-back.
+		//
+		a.id = ++id_adv + "";
+		a.classList.add("refback");
+		
 		// Check whether the <a> is from lang-cn or lang-en, then add it to cn/en table respectively.
 		// If none of lang-cn/lang-en, add to both.
+		//
 		if(is_in_langcn(a)) {
 			enadd = false;
 		}
@@ -972,27 +981,33 @@ function collect_links_for_final_section() {
 			cnadd = false;
 		}
 		
-		function tr_setcontent(trnew, a) {
+		function tr_setcontent(trnew, a, idx) {
+			
+			var tds = trnew.querySelectorAll("td");
+			
+			tds[0].innerHTML = '<a href="#{0}">^{1}</a>'.format(a.id, idx+1);
 			
 			var brief = a.getAttribute("brief");
 			if(brief)
-				trnew.firstElementChild.innerHTML = '<b style="color: gray">{0}</b>'.format(brief);
+				tds[1].innerHTML = '<b style="color: gray">{0}</b>'.format(brief);
 			else
-				trnew.firstElementChild.innerHTML = a.textContent;
+				tds[1].innerHTML = a.textContent;
 			
 			var href = a.getAttribute("href");
-			trnew.lastElementChild.innerHTML = '<a href="{0}" target="_blank">{0}</a>'.format(href);
+			tds[2].innerHTML = '<a href="{0}" target="_blank">{0}</a>'.format(href);
 		}
 		
 		if(cnadd) {
 			var trnew = cn_tr0.cloneNode(true);
-			tr_setcontent(trnew, a);
+			tr_setcontent(trnew, a, cnidx);
 			cn_tbody.appendChild(trnew);
+			cnidx++;
 		}
 		if(enadd) {
 			var trnew = en_tr0.cloneNode(true);
-			tr_setcontent(trnew, a);
+			tr_setcontent(trnew, a, enidx);
 			en_tbody.appendChild(trnew);
+			enidx++;
 		}
 	}
 }

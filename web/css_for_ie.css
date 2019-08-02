@@ -191,6 +191,10 @@ tt {
 	padding: 0.3em;
 }
 
+.masscontent .itembrief {
+	font-weight: bold;
+}
+
 .h2title {
 	display: inline-block;
 }
@@ -364,4 +368,8 @@ quote {
 }
 .table_s .itemdetail {
 	background-color: #dad0e8;
+}
+
+.linksummary_maincol {
+	display: none;
 }
