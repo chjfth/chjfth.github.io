@@ -958,6 +958,11 @@ function collect_links_for_final_section() {
 		var a = eles[i];
 		var cnadd= true, enadd = true;
 		
+		// Exclude <a>s with <img> tag.
+		var imgs = a.querySelectorAll("img");
+		if(imgs.length>0)
+			continue;
+		
 		// Check whether the <a> is from lang-cn or lang-en, then add it to cn/en table respectively.
 		// If none of lang-cn/lang-en, add to both.
 		if(is_in_langcn(a)) {
