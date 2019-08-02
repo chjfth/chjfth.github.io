@@ -49,7 +49,7 @@ var LangState =
 	
 	refresh_ui : function (is_delay_hide) {
 		if(is_delay_hide)
-			refresh_cn_en_display_delayed(this.is_cn_on, this.is_en_on, this.is_cn_main, true);
+			refresh_cn_en_display_animate(this.is_cn_on, this.is_en_on, this.is_cn_main, true);
 		else
 			refresh_cn_en_display_now(this.is_cn_on, this.is_en_on, this.is_cn_main, false);
 	}
@@ -143,7 +143,7 @@ function hide_if_zeroheight(ele) {
 		ele.style.display = "block";
 }
 
-function refresh_cn_en_display_delayed(is_cn_on, is_en_on, is_cn_main) {
+function refresh_cn_en_display_animate(is_cn_on, is_en_on, is_cn_main) {
 
 	// Purpose: We have to change .height's "auto" value to actual px value so that 
 	// CSS transition works. So I scan for all "auto" values here and make the change.
@@ -156,7 +156,14 @@ function refresh_cn_en_display_delayed(is_cn_on, is_en_on, is_cn_main) {
 
 	var eles = document.querySelectorAll('[class^="lang-"]');
 	eles.forEach(function(ele, idx){
-		if(ele.style.height=="auto") {
+		
+		// Set animation "starting" state:
+		ele.style.display = "block";
+		
+		if(ele.style.display=="none") {
+			ele.style.height = "0px";
+		}
+		else if(ele.style.height=="auto") {
 			ele.style.height = ele.scrollHeight+"px";
 		}
 	});
@@ -166,7 +173,7 @@ function refresh_cn_en_display_delayed(is_cn_on, is_en_on, is_cn_main) {
 	}, 1);
 }
 
-function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide) {
+function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_animate) {
 	
 	// If is_cn_on && is_en_on are both true, lang-cn0 and lang-en0 will compete
 	// according to is_cn_main.
@@ -198,6 +205,12 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 	function batch_cn_en_text(prefix, suffix, is_display) {
 		
 		// Enable/Disable cn/en text display according to input-params.
+		
+		function is_transition_enabled(ele) {
+			var anistr = cs(ele, "transition");
+			var is_height_ani = anistr.indexOf("height")>=0;
+			return is_height_ani ? true : false;
+		}
 
 		var eles = document.querySelectorAll('.{0}{1}'.format(prefix, suffix));
 		for(var i=0; i<eles.length; i++) {
@@ -205,28 +218,29 @@ function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_delay_hide
 //			if(ele.textContent=="目录列表" || ele.textContent=="Table of Content") // debug
 //				console.log((is_display?"[*]":"[ ]") + ">>> "+ ele.textContent);
 
-			if(is_display) {
-				// Checking is_display should be done first, otherwise, 
-				// ele.scrollHeight will report 0px for a "display:none" element.
-				ele.style.display = "block";
-			}
-			ele.style.height = is_display ? ele.scrollHeight+"px" : "0px";
+			var is_ele_animate = is_animate;
 			
-			if(is_delay_hide) {
-				var anistr = cs(ele, "transition");
-				var is_height_ani = anistr.indexOf("height")>=0;
-//				AssertIt(is_height_ani, "No css transition/animation set on "+ele.textContent);
-				
-				// Note: If there is css height-transition, we will hide this ele at transitionend.
-				// But if there is no height-transition, we must hide this `ele` immediately,
+			if(!is_transition_enabled(ele)) {
+				// If there is css height-transition, we can hide this ele at transitionend.
+				// But if there is no height-transition, we must hide this ele immediately,
 				// otherwise, we will have no chance to hide it later.
-				if(!is_height_ani)
-					hide_if_zeroheight(ele);
+				is_ele_animate = false;
+			}
+			
+			if(is_ele_animate) {
+				ele.style.height = is_display ? ele.scrollHeight+"px" : "0px";
 			}
 			else {
-				hide_if_zeroheight(ele); // hide now
+				if(is_display) {
+					ele.style.display = "block";
+					ele.style.height = "auto";
+				}
+				else {
+					ele.style.display = "none";
+					ele.style.height = "0px";
+				}
 			}
-		}
+		} // for each targeting ele
 	}
 
 	batch_cn_en_text("lang-cn", "0", !is_en_on || (both_on&& is_cn_main));
@@ -270,7 +284,7 @@ function setup_transitionend() {
 				// Set 'auto' so that ele's .height is auto adjusted when "float:right" img is delay loaded.
 				event.target.style.height = "auto"; 
 				
-				// Note that this "auto" will be changed to actual 21px etc in refresh_cn_en_display_delayed().
+				// Note that this "auto" will be changed to actual 21px etc in refresh_cn_en_display_animate().
 			}
 
 			hide_if_zeroheight(event.target);
