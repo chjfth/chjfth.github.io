@@ -968,10 +968,15 @@ function collect_links_for_final_section() {
 		}
 		
 		function tr_setcontent(trnew, a) {
-			trnew.firstElementChild.textContent = a.textContent;
+			
+			var brief = a.getAttribute("brief");
+			if(brief)
+				trnew.firstElementChild.innerHTML = '<b style="color: gray">{0}</b>'.format(brief);
+			else
+				trnew.firstElementChild.innerHTML = a.textContent;
 			
 			var href = a.getAttribute("href");
-			trnew.lastElementChild.innerHTML = '<a href="{0}">{0}</a>'.format(href);
+			trnew.lastElementChild.innerHTML = '<a href="{0}" target="_blank">{0}</a>'.format(href);
 		}
 		
 		if(cnadd) {

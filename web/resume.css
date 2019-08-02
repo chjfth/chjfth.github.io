@@ -449,7 +449,7 @@ quote {
 		/* Without this, we'll see ugly text overflow when doing cn/en transitioning. */ 
 }
 
-.maincol [class^="lang-"] {
+.maincontent [class^="lang-"] {
 	transition: height 1500ms, color 1500ms;
 }
 
