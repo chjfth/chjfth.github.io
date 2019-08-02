@@ -459,6 +459,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	var curtain = document.createElement('div');
 	curtain.style.position = 'absolute';
 //	curtain.style.backgroundColor = 'red'; // only for test
+	curtain.classList.add("expandable_mask_transparent"); // for future css overriding
 	curtain.style.left = '0px';
 	var top = fixed_height_px; // children[nfixed].getBoundingClientRect().top - parent_ele.getBoundingClientRect().top;
 	curtain.style.top =  top+'px';
@@ -478,6 +479,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 	var nob_height_em = 2, svg_ems = 1.6;
 	var nob = document.createElement('div');
 	nob.style.position = 'absolute';
+	nob.classList.add("expandable_mask_solid"); // for future css overriding
 	nob.style.left = '0px';
 	var top = visible_height_px; // children[nvisibles-xxx].getBoundingClientRect().top - parent_ele.getBoundingClientRect().top;
 	nob.style.top =  top+'px';
@@ -507,6 +509,7 @@ function prepare_expandable_block(parent_ele, fixed_spec, curtain_spec) {
 		parent_wrapper = make_me_child_of(parent_ele, "div");
 	}
 	
+	parent_wrapper.classList.add("expandable_wrapper_div");
 	parent_wrapper.style.height = "calc({0}px + {1}em".format(visible_height_px, nob_height_em);
 	parent_wrapper.style.overflow = "hidden";
 
@@ -968,7 +971,7 @@ function collect_links_for_final_section() {
 		
 		// This is a valid <a>, and I'll add auto anchor id to it for summary link-back.
 		//
-		a.id = ++id_adv + "";
+		a.id = "aa" + (++id_adv);
 		a.classList.add("refback");
 		
 		// Check whether the <a> is from lang-cn or lang-en, then add it to cn/en table respectively.

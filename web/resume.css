@@ -945,3 +945,47 @@ quote {
 
 }
 
+/******************************* @media print *******************************/
+
+@media print 
+{
+	.maincol {
+		margin-left: 0px;
+		margin-right: 0px;
+		background-color: white;
+	}
+
+	.floatbartray {
+		display: none !important;
+	}
+
+	.sidecol {
+		position: static !important;
+		background-color: #fffff8 !important;
+		padding-bottom: 0.5rem;
+		width: 100%;
+		margin: auto;
+	}
+	
+	.portrait {
+		margin-top: 1em !important;
+		margin-bottom: 1em !important;
+		box-shadow: 0em 0.11em 0.811em gray;
+	}
+	
+	.profile_scrollbox {
+		position: static !important;
+	}
+	
+	.expandable_wrapper_div {
+		height: auto !important;
+	}
+	.expandable_mask_transparent {
+		background-color: transparent !important;
+		background-image: none !important;
+	}
+	.expandable_mask_solid {
+		display: none;
+	}
+
+}
