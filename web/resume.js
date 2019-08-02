@@ -16,7 +16,7 @@ var LangState =
 	// lang-cn & lang-en can be both "on", but not both "off"
 	is_cn_on : true,
 	is_en_on : true,
-	is_cn_main : true,
+	is_cn_main : false,
 	
 	toggle : function (is_toggle_cn) {
 	
@@ -905,6 +905,16 @@ function prepare_langrefresh_on_resize() {
 	});
 }
 
+function refresh_initial_langui() {
+	
+	if(navigator.languages && navigator.languages[0]=="zh-CN")
+		LangState.is_cn_main = true;
+	else
+		LangState.is_cn_main = false;
+		
+	LangState.refresh_ui(false);
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -915,12 +925,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	chj_check_strict_mode();
 	
 	check_cn_en_pairing();
+	assert_langtext_0edge();
+	
+	refresh_initial_langui();
 
 	prepare_langbtn_callback();
 	prepare_duallang_hilight();
 	
-	LangState.refresh_ui(false); // TODO: Select one lang according to usr browser lang setting
-
 	setup_transitionend();
 
 	setup_fixed_position_sidecol();
@@ -928,8 +939,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	setup_keypress_switch_lang();
 	
 	setup_expandable_blocks();
-	
-	assert_langtext_0edge();
 	
 	make_img_clickable_for_fullsize();
 	

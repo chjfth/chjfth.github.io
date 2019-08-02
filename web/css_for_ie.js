@@ -46,7 +46,7 @@ function warn_old_browser_ie()
 	divwarn.className = "iewarn";
 	divwarn.style.cssText = "color:red";
 	divwarn.innerHTML = 'This webpage is crippled with Microsoft IE. ' +
-		'Please use newer browsers like Chrome (v74) or Firefox (v67) to obtain fully interactive viewing experience.';
+		'Please use newer browsers like Chrome (v74) or Firefox (v67) to achieve fully interactive viewing experience.';
 	
 	document.body.insertBefore(divwarn, document.body.firstChild);
 }

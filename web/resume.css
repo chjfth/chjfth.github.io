@@ -756,6 +756,8 @@ quote {
 		bottom: var(--toctitle-height);
 		left: 0px;
 		right: 0px;
+		margin-left: 3px;
+		margin-right: 3px;
 		
 		overflow: auto;
 	}
