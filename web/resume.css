@@ -49,6 +49,8 @@
 	
 	--floatbar-corner: 20px;
 	--floatbar-width: 3.66rem;
+	
+	--transition-duration: 1500ms; /* Please use ms bcz resume.js will use this value. */
 }
 
 /*****************************************************************/
@@ -459,12 +461,21 @@ quote {
 }
 
 [class^="lang-"] {
+	/* Without this, we'll see ugly text overflow and overlapping when doing cn/en transitioning. */ 
 	overflow: hidden;
-		/* Without this, we'll see ugly text overflow when doing cn/en transitioning. */ 
+}
+/* -- But Safari is a little buggy, we have to make overflow visible to display bullets in front of <li>. 
+  And, we should turn off overflow(using js code) temporarily when doing animation.
+*/
+.usesafari  [class^="lang-"] {
+	overflow: visible;
+}
+.usesafari.now_animation  [class^="lang-"] {
+	overflow: hidden;
 }
 
 .maincontent [class^="lang-"] {
-	transition: height 1500ms, color 1500ms;
+	transition: height var(--transition-duration), color 1500ms;
 }
 
 .maincol > * {
@@ -577,6 +588,12 @@ quote {
 .itemdetail li {
     margin: 0.46em;
 }
+
+.masscontent ol ,
+.masscontent ul {
+	padding-left: 1.37em;
+}
+
 
 .mainlang-cn .careertable__date::before {
 	content: "时间线";

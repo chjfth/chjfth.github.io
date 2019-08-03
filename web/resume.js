@@ -171,6 +171,23 @@ function refresh_cn_en_display_animate(is_cn_on, is_en_on, is_cn_main) {
 	setTimeout(function() {
 		refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, true);
 	}, 1);
+
+	if(IsSafari()) {
+
+		var ms = parseInt(cs(document.body, "--transition-duration"));
+		var ms2 = 500;
+		var animation_wait_ms = ms + ms2;
+		
+		// This is only a work-around for Safari's <li><div> overflow:hidden bullet hiding bug.
+		
+		console.log("Chj: Safari set overflow:hidden for lang-* <div>s. (timer: {0}+{1}ms)".format(ms, ms2)); // debug
+		document.body.classList.add("now_animation");
+		
+		setTimeout(function(){
+			console.log("Chj: Safari re-enable overflow:visible for lang-* <div>s."); // debug
+			document.body.classList.remove("now_animation");
+		}, animation_wait_ms);
+	}
 }
 
 function refresh_cn_en_display_now(is_cn_on, is_en_on, is_cn_main, is_animate) {
@@ -1022,6 +1039,12 @@ function fill_last_modified() {
 	tsele.textContent = oLastModif;
 }
 
+function fix_for_safari() {
+	if(IsSafari()) {
+		document.body.classList.add("usesafari");
+	}
+}
+
 function refresh_initial_langui() {
 	
 	if(navigator.languages && navigator.languages[0]=="zh-CN")
@@ -1043,6 +1066,8 @@ document.addEventListener("DOMContentLoaded", function(){
 //	alert("AAA");
 
 	chj_check_strict_mode();
+	
+	fix_for_safari();
 	
 	check_cn_en_pairing();
 	assert_langtext_0edge();

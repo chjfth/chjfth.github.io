@@ -1,6 +1,57 @@
 "use strict"
 
-function foobar(){}
+// var g_is_simulate_safari = true; // only enable this to test Safari behavior on Chrome/Firefox 
+
+// Define function IsSafari() .
+var IsSafari = (function() {
+	
+	// according to https://stackoverflow.com/a/31732310/151453
+	var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple')>-1 ;
+
+	if(typeof(g_is_simulate_safari)!=='undefined' && g_is_simulate_safari) {
+		console.log("Chj utility.js: Simulating Safari.");
+		isSafari = true;
+	}
+	
+	return () => isSafari;
+})();
+
+function get_scrollTop() { return my_scrollTop(); }
+function set_scrollTop(val) { my_scrollTop(val); }
+
+var my_scrollTop = (function() {
+	
+	// Use this function to work around [Chrome,Firefox] and [iOS/Safari]'s 
+	// whole-page .scrollTop difference.
+	//
+	// my_scrollTop(): get current .scrollTop value.
+	// my_scrollTop(100): set new .scrollTop value, causing webpage to scroll.
+	
+	// First, we should check whether we'are on Chrome or Safari.
+	// Be aware: Chrome App on Safari is actually using Safari core, and should be 
+	// considered Safari.
+	
+	var isSafari = IsSafari();
+
+	function _scrollTop(val) {
+		if(val==undefined) {
+			if(!isSafari)
+				return document.documentElement.scrollTop;
+			else
+				return document.body.scrollTop;
+		} 
+		else {
+			if(!isSafari)
+				document.documentElement.scrollTop = val;
+			else
+				document.body.scrollTop = val;
+		}
+	}
+	
+	return _scrollTop;
+})(); 
+
+
 
 // Simple sprintf alternative: https://stackoverflow.com/a/4673436
 // Usage:
@@ -104,9 +155,9 @@ function AssertInfo(msg) {
 function cs(element, csspropname, pseudoElt) {
 	var s = window.getComputedStyle(element, pseudoElt);
 	
-	// return s[csspropname]; // This cannot get custom property like '--floatbar-corner'
+	// return s[csspropname]; // This cannot get custom property like '--floatbar-corner'.
 	
-	return s.getPropertyValue(csspropname);
+	return s.getPropertyValue(csspropname); // This can get custom property.
 }
 
 function get_background_parent(ele) {
@@ -273,50 +324,6 @@ var get_millisec = (function() {
 	
 	return in_get_millisec;
 })(); // get_millisec() returns millisec count since program started.
-
-
-function IsSafari() {
-	
-	// according to https://stackoverflow.com/a/31732310/151453
-	
-	var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple')>-1 ;
-	return isSafari;
-}
-
-function get_scrollTop() { return my_scrollTop(); }
-function set_scrollTop(val) { my_scrollTop(val); }
-
-var my_scrollTop = (function() {
-	
-	// Use this function to work around [Chrome,Firefox] and [iOS/Safari]'s 
-	// whole-page .scrollTop difference.
-	//
-	// my_scrollTop(): get current .scrollTop value.
-	// my_scrollTop(100): set new .scrollTop value, causing webpage to scroll.
-	
-	// First, we should check whether we'are on Chrome or Safari.
-	// Be aware: Chrome App on Safari is actually using Safari core, and should be 
-	// considered Safari.
-	
-	var isSafari = IsSafari();
-
-	function _scrollTop(val) {
-		if(val==undefined) {
-			if(!isSafari)
-				return document.documentElement.scrollTop;
-			else
-				return document.body.scrollTop;
-		} 
-		else {
-			if(!isSafari)
-				document.documentElement.scrollTop = val;
-			else
-				document.body.scrollTop = val;
-		}
-	}
-	
-	return _scrollTop;
-})(); 
 
 
 function do_triggerEvent(target, eventType, eventDetail){
