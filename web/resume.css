@@ -277,7 +277,7 @@ tt {
 
 .profile_list {
 	display: table;
-	border-spacing: 1px 2px;
+	border-spacing: 2px 2px;
 	margin: auto; /* horizontal centered */
 }
 
@@ -989,6 +989,10 @@ quote {
 	padding: 1em;
 	font-size: 0.8rem;
 	
+}
+
+.footer > div {
+	padding: 0.352em;
 }
 
 /******************************* @media print *******************************/
