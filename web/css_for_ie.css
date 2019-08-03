@@ -373,3 +373,19 @@ quote {
 .linksummary_maincol {
 	display: none;
 }
+
+.footer {
+	background-color: #3b1d07; /* chocolate color */
+	color: gray;
+	padding: 1em;
+	font-size: 0.8rem;
+	
+}
+
+.cellphone8:before {
+	content: "1 3 7";
+	letter-spacing: -0.11em;
+}
+.qq_com:after { content: "@qq.com"; }
+.gmail_com:after { content: "@gmail.com"; }
+

@@ -1061,6 +1061,12 @@ function inject_age_at_born_field() {
 function fill_last_modified() {
 	
 	var oLastModif = new Date(document.lastModified);
+	
+	if(!oLastModif) {
+		alert("new Date(document.lastModified); got error!");
+		return;
+	}
+	
 	var tsele = document.getElementById("tslastmod");
 	tsele.textContent = oLastModif;
 }
