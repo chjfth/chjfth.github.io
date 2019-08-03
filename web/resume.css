@@ -59,7 +59,7 @@
 body { 
 	/* outter frame of double container pattern. */
 	margin: 0px;
-	font-family: "Segoe UI", "Arial";
+	font-family: "Roboto", "Segoe UI", "Arial";
 }
 
 .maincol a {
@@ -298,13 +298,13 @@ tt {
 .profile__item > .item__name {
 	display: table-cell;
 	font-weight: bold;
-	font-family: "Arial Narrow", "Sans Serif";
+	font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
 }
 
 .profile__item > .item__value {
 	display: table-cell;
 	font-weight: normal;
-	font-family: "Arial", "Sans Serif";
+	font-family: Roboto, "Arial", sans-serif;
 }
 
 
@@ -595,15 +595,14 @@ quote {
 	padding: 0.372em 0em;
 }
 
-.itemdetail li {
-    margin: 0.46em;
-}
-
 .masscontent ol ,
 .masscontent ul {
 	padding-left: 1.37em;
 }
 
+.masscontent li {
+    margin: 0.46em;
+}
 
 .mainlang-cn .careertable__date::before {
 	content: "时间线";
@@ -979,7 +978,7 @@ quote {
 }
 
 .footer {
-	background-color: #3b1d07; /* dark brown */
+	background-color: #3b1d07; /* chocolate color */
 	color: gray;
 	padding: 1em;
 	font-size: 0.8rem;
