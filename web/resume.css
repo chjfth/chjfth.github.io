@@ -277,6 +277,7 @@ tt {
 
 .profile_list {
 	display: table;
+	border-spacing: 1px 2px;
 	margin: auto; /* horizontal centered */
 }
 
@@ -286,18 +287,26 @@ tt {
 */
 }
 
-
 .profile__item {
 	display: table-row;
 }
 
-.item__name {
+.profile__item:hover {
+	background-image: linear-gradient(to bottom, #c6d6e6, #56789a);
+}
+
+.profile__item > .item__name {
 	display: table-cell;
 	font-weight: bold;
+	font-family: "Arial Narrow", "Sans Serif";
 }
-.item__value {
+
+.profile__item > .item__value {
 	display: table-cell;
+	font-weight: normal;
+	font-family: "Arial", "Sans Serif";
 }
+
 
 .tocframe {
 	display: none;

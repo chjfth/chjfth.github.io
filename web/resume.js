@@ -1032,6 +1032,32 @@ function collect_links_for_final_section() {
 	}
 }
 
+function inject_age_at_born_field() {
+	
+	var ele_born = document.getElementById("born");
+	var str_born = ele_born.textContent.trim(); // result should be: "1980.04.29"
+	AssertIt(/[0-9]{4}\.[0-9]{2}\.[0-9]{2}/.test(str_born), '#born string is not valid! Expect: "1980.04.29"');
+	
+	var byear = parseInt(str_born.substring(0, 4));
+	var bmonth = parseInt(str_born.substring(5, 7));
+	var bdate = parseInt(str_born.substring(8, 10));
+	
+	var now = new Date();
+	var now_year = now.getFullYear();
+	var now_month = now.getMonth()+1;
+	var age = now_year - byear;
+	if( now_month*100+now.getDate() < bmonth*100+bdate )
+		age--;
+	
+//	console.log(">>>"+age);
+
+	var tmpl = '\
+		<div class="lang-cn0">{0} ({1} 岁)</div>\
+		<div class="lang-en0">{0} (age {1})</div>\
+		';
+	ele_born.innerHTML = tmpl.format(str_born, age);
+}
+
 function fill_last_modified() {
 	
 	var oLastModif = new Date(document.lastModified);
@@ -1068,6 +1094,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	chj_check_strict_mode();
 	
 	fix_for_safari();
+
+	inject_age_at_born_field();
 	
 	check_cn_en_pairing();
 	assert_langtext_0edge();
