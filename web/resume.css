@@ -32,7 +32,8 @@
 	
 	
 	--maincol-bgcolor: #f0f0f0;
-	--maincol-padding-leftright: 1.03em;
+	--maincol-padding-leftright: 0.33em;
+	--maincol-padding-lr-desktop: 1.03em;
 	
 	/* The three below use `em`(not `rem`) bcz this reflects the character-count of containter's font-size, not the root's. */
 	--date-period-ems: 9.88em;   /* enough width for "2002.07 ~ 2018.06" */ 
@@ -785,6 +786,9 @@ quote {
 	
 	.maincol {
 		margin-right: var(--sidecol-width);
+
+		padding-left:  var(--maincol-padding-lr-desktop);
+		padding-right: var(--maincol-padding-lr-desktop);
 	}
 
 	.sidecol {
@@ -981,6 +985,7 @@ quote {
 		margin-left: 0px;
 		margin-right: 0px;
 		background-color: white;
+		border: 0px;
 	}
 
 	.floatbartray {
@@ -1013,7 +1018,10 @@ quote {
 		background-image: none !important;
 	}
 	.expandable_mask_solid {
-		display: none;
+		display: none !important;
 	}
 
+	.tocframe {
+		display: none !important;
+	}
 }
