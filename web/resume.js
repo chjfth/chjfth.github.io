@@ -1015,6 +1015,13 @@ function collect_links_for_final_section() {
 	}
 }
 
+function fill_last_modified() {
+	
+	var oLastModif = new Date(document.lastModified);
+	var tsele = document.getElementById("tslastmod");
+	tsele.textContent = oLastModif;
+}
+
 function refresh_initial_langui() {
 	
 	if(navigator.languages && navigator.languages[0]=="zh-CN")
@@ -1063,6 +1070,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	collect_links_for_final_section();
 	external_links_prepend_arrow();
 
+	fill_last_modified();
 	
 //	_AssertIt_fixedpos();
 //	AssertInfo(IsSafari() ? "isSafari=true" : "isSafari=false");

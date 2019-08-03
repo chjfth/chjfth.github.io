@@ -54,10 +54,9 @@
 /*****************************************************************/
 
 body { 
-	/* outer frame of double container pattern. */
-	margin: 0px; 
-/*	color: orange;
-*/
+	/* outter frame of double container pattern. */
+	margin: 0px;
+	font-family: "Segoe UI", "Arial";
 }
 
 .maincol a {
@@ -943,6 +942,18 @@ quote {
 		display: none !important;
 	}
 
+}
+
+.linksummary_maincol {
+	padding-bottom: 1em;
+}
+
+.footer {
+	background-color: #3b1d07; /* dark brown */
+	color: gray;
+	padding: 1em;
+	font-size: 0.8rem;
+	
 }
 
 /******************************* @media print *******************************/
