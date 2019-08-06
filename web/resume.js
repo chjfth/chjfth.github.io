@@ -980,10 +980,15 @@ function collect_links_for_final_section() {
 		
 		var a = eles[i];
 		var cnadd= true, enadd = true;
-		
-		// Exclude <a>s with <img> tag.
+
+		// Exclude these things:
+		//	<a>s with <img> tag.
+		//	<a>s with custom attribute collect="no"
 		var imgs = a.querySelectorAll("img");
 		if(imgs.length>0)
+			continue;
+		//
+		if(a.getAttribute("collect")=="no")
 			continue;
 		
 		// This is a valid <a>, and I'll add auto anchor id to it for summary link-back.
@@ -997,7 +1002,7 @@ function collect_links_for_final_section() {
 		if(is_in_langcn(a)) {
 			enadd = false;
 		}
-		else if(is_in_langen) {
+		else if(is_in_langen(a)) {
 			cnadd = false;
 		}
 		

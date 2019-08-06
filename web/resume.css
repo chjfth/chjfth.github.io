@@ -521,7 +521,9 @@ quote {
 .h1intro {
 	border: 1px solid grey;
 	border-radius: 0.5em;
-	padding: 1em;
+	padding: 0.924em;
+	margin-top: 0.524em;
+	margin-bottom: 0.524em;
 }
 
 .careertable {
@@ -571,21 +573,23 @@ quote {
 	padding: 0.5em;
 }
 .table_s .itemname {
-	background-color: #80c0dd;
+	background-color: #c9e0eb;
 	min-width: 6.13em;
+	border-left: 5px solid black;
 }
 .table_s .itemvalue {
-	background-color: #d0d7e4;
+	background-color: #dfe7ed;
 }
 
 .table_s .itembrief {
-	background-color: #dabbe8;
+	background-color: #e4d0eb;
 	min-width: 7.13em;
 	font-size: 1.0em;
 	font-weight: bold;
+	border-left: 5px solid black;
 }
 .table_s .itemdetail {
-	background-color: #dad0e8;
+	background-color: #e8e0ed;
 }
 
 .itembrief {
@@ -714,6 +718,10 @@ quote {
 .imagerow > * img {
 	object-fit: contain;
 	max-width: 100%;
+}
+
+.imagerow .left_align_text {
+	text-align: left;
 }
 
 .floatbartray {
@@ -971,6 +979,13 @@ quote {
 	.table_s .table__cell {
 		display: table-cell;
 		padding: 0.5em;
+	}
+
+	.table_s .itembrief {
+		border-left: 0px;
+	}
+	.table_s .itemname {
+		border-left: 0px;
 	}
 
 	.floatbartray {
