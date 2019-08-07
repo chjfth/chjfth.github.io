@@ -1734,9 +1734,9 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			</div>
 		</div>
 		<div class="duallang">
-			<div class="lang-cn2">你很可能是第一次听说 GMU，这并不奇怪，因为它是我自己开发的一套系统。最早时候我给它起的名字是 GnumakeUniproc，完整意思 GNU make universal process，写起来和念起来都很长，因此后来我就简称它 GMU 了。从名字上可以看出，这个系统是基于 GNU make 的，既然是 "make"，肯定是用来编译一个 C/C++ 工程的。没错，确实如此。那我用了它多久呢？很久，从 2006 年一直到 2008 年 UFCOM 完成。那就其他的替代品吗？呃……我觉得很难找到替代品，因为一路走来我有很多定制化的需求需要用 GMU 来满足。
+			<div class="lang-cn2">你很可能是第一次听说 GMU，这并不奇怪，因为它是我自己开发的一套系统。最早时候我给它起的名字是 GnumakeUniproc，完整意思 GNU make universal process，写起来和念起来都很长，因此后来我就简称它 GMU 了。从名字上可以看出，这个系统是基于 GNU make 的，既然是 "make"，肯定是用来编译一个 C/C++ 工程的。没错，确实如此。那我用了它多久呢？很久，从 2006 年一直到 2018 年 UFCOM 完成。那有其他的替代品吗？呃……我觉得很难找到替代品，因为一路走来我有很多定制化的需求需要用 GMU 来满足。
 			</div>
-			<div class="lang-en2">It is probably the first time you hear GMU, because it is a system developed by me. At the beginning, I gave it the name GnumakeUniproc, with the full meaning "GNU make universal process", long and verbose, right? So I later give it a brief name GMU. As the name implies, this system is based on GNU make. Since it is "make", it must serve the purpose of compiling some C/C++ projects. Right, you get it. Then how long have I used it? Very long, from year 2006 to 2018, the year I finished UFCOM. Can I have some alternatives? I'm afraid not, because so many customized requirements have to be accomplished with GMU.
+			<div class="lang-en2">It is probably the first time you hear about GMU, because it is a system developed by me. At the beginning, I gave it the name GnumakeUniproc, with the full meaning "GNU make universal process", long and verbose, right? So I later give it a brief name GMU. As the name implies, this system is based on GNU make. Since it is "make", it must serve the purpose of compiling some C/C++ projects. Right, you get it. Then how long have I used it? Very long, from year 2006 to 2018, the year I finished UFCOM. Can I use some alternatives? I'm afraid not, because so many customized requirements have to be accomplished with GMU.
 			</div>
 		</div>
 
@@ -1757,7 +1757,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="duallang">
 				<div class="lang-cn2">我可以举出很多理由，但如果一直追溯到最源头，我发现是我的一个本能在驱使我这么做：我希望我写的代码能够在我所遇见过的所有平台上都能运行，这样的话我才能感受到物尽其用。所谓的平台，可以从硬件和软件两个角度进行划分。硬件角度有 Intel x86 and x64, ARM，MIPS, RISC-V 等。软件角度有 Windows, WinCE, Linux, 以及各种专门的嵌入式 OS。从 2003 年开始，我就意识到这个问题了，因为当时 PT-850 的很多代码已经需要同时被编译成 ARM 的和 PC Windows 的，而同时用两套工程管理文件常常出现不同步的问题。而且，接下来的几年中，我们公司的产品还要面对更多样化的平台，比如 ARM-Linux 和 ARM-WinCE 。没错，我的原始动机是，不要为每一个目标平台各自维护一份工程文件，而是共用一份工程文件。
 				</div>
-				<div class="lang-en2">I could cite many reasons. But if I trace them back to origin, I find that it is my "instinct" driving me do this. That is, I hope my code can be run on all platforms I have encountered. So I can feel I have got the most out of my effort writing those code. The so called platforms, can be viewed from two aspects: Hardware, like Intel x86 and x64, ARM, MIPS, RISC-V etc. Software: Windows, WinCE, Linux, and all kinds of embedded OS. Since 2003, I have been aware of such and situation because many of PT-850's code is compiled for both ARM and PC Windows(as I've mentioned before), and using two sets of project management files often went out of sync. Moreover, In the next years, more platforms like ARM-Linux and ARM-WinCE come into play in our company product. Yes, my initiative is: Don't maintain N project files for N platforms, instead, a single project file across all platforms.
+				<div class="lang-en2">I could cite many reasons. But if I trace them back to origin, I find that it is my "instinct" driving me into this. That is, I hope my code can be run on all platforms I have encountered. So I can feel I have got the most out of my effort writing those code. The so called platforms, can be viewed from two aspects: Hardware, like Intel x86 and x64, ARM, MIPS, RISC-V etc. Software: Windows, WinCE, Linux, and all kinds of embedded OS. Since 2003, I have been aware of such a situation because many of PT-850's code is compiled for both ARM and PC Windows(as I've mentioned before), and using two sets of project management files often went out of sync. Moreover, In the next years, more platforms like ARM-Linux and ARM-WinCE come into play in our company products. Yes, my initiative is: Don't maintain N project files for N platforms, instead, a single project file across all platforms.
 				</div>
 			</div>
 			<div class="duallang">
@@ -1769,11 +1769,11 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="duallang">
 				<div class="lang-cn2">GNU make 到底能多大程度地满足我的需求呢？这个需要一番调查。我的许多同事可没像我这么想，因为他们一开始使用 makefile 的姿势就不对。比方说，要编译一些 Linux 工程时，他们会为每一个工程手工编写各自的一个 makefile，然后呢，每次执行 <tt>make</tt> 之前，他们会先敲 <tt>make clean</tt> 来清除掉旧的二进制文件。简直犯傻，如果每次 make 都要清除旧文件，那使用 makefile 的好处在哪里呢？干脆用 Bash 脚本不是更直接吗？
 				</div>
-				<div class="lang-en2">How does GNU make fit well to my needs? I had to investigate it first. Many of my colleagues did not think of it, because they just used makefiles poorly. For example, for Linux C/C++ projects, they handcrafted one makefile for each single project(big one or small one), and for each <tt>make</tt> execution, they run <tt>make clean</tt> first to clean all "stale" binary files. Yuck, what's the benefit of using makefile if he cleans everything before each run. A Bash script could be a better choice then.
+				<div class="lang-en2">How well does GNU make fit to my needs? I had to investigate it first. Many of my colleagues did not think of it, because they just used makefiles poorly. For example, for Linux C/C++ projects, they handcrafted one makefile for each single project(big one or small one), and before each <tt>make</tt> execution, they run <tt>make clean</tt> first to clean all "stale" binary files. Yuck, what's the benefit of using makefile if he cleans everything before each run. A Bash script could be a better choice then.
 				</div>
 			</div>
 			<div class="duallang">
-				<div class="lang-cn2">为了找到正确使用 makefile 的方法，我开始仔细阅读 <a href="https://www.gnu.org/s/make/manual/make.html">GNU make 官方手册</a>，这时我才发现我之前对它的功能了解还不到 10%。剩余 90% 的高级功能让我看到了实现跨平台 makefile 工程文件的希望。
+				<div class="lang-cn2">为了找到正确使用 makefile 的方法，我开始仔细阅读 <a href="https://www.gnu.org/s/make/manual/make.html">GNU make 官方手册</a>（2006 当时的版本是 3.79），这时我才发现我之前对它的功能了解还不到 10%。剩余 90% 的高级功能让我看到了实现跨平台 makefile 工程文件的希望。
 				</div>
 				<div class="lang-en2">To find the correct way of using make, I started reading <a href="https://www.gnu.org/s/make/manual/make.html">official GNU make manual</a>(was version 3.79 back then in 2006), and found that I knew less than 10% of its full features. The remaining 90% feature brought me the hope of accomplishing cross-platform makefiles.
 				</div>
@@ -1812,7 +1812,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="duallang">
 				<div class="lang-cn2">GMU 可以被认为是一套基于 GNU make 的框架，它使得最终用户的 makefile 变得很简洁。GMU 的核心理念是：用户被分为两层。第一层是编译器配置作者以及插件作者，第二层是最终用户。
 				</div>
-				<div class="lang-en2">GMU can be considered as a framework around GNU make, by whom end-user's makefile becomes very concise. The core idea of GMU is, user is two-tiered. Tier one is the complier-config author and the plugin author; tier two is the end-user.
+				<div class="lang-en2">GMU can be considered as a framework around GNU make. With the help of the framework, end-user's makefiles become very concise. The core idea of GMU is, user is two-tiered. Tier one is the complier-config author and the plugin author; tier two is the end-user.
 				</div>
 			</div>
 			<ul>
@@ -1820,7 +1820,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">处于第二层的最终用户，是 C/C++ 程序员。他们需要只编写简单的“GMU makefiles”来告知工程组织必要的信息，比如，.c/.cpp 源码列表、.h 头文件搜索路径、输出文件名等。重复性的脏活累活交由第一层来处理。
 						</div>
-						<div class="lang-en2">The end-user at tier two is the C/C++ programmer who also needs to manage project files. Using GMU, he only needs to create simple "GMU makefiles", providing project unique information in his makefile, such as .c/.cpp file list, .h search paths, output filename etc. Other repetitive dirty works should be handled by tier one.
+						<div class="lang-en2">The end-user at tier two is the C/C++ programmer who also needs to manage project files. Using GMU, he only needs to create simple "GMU makefiles", providing project specific information in his makefile, such as .c/.cpp file list, .h search paths, output filename etc. Other repetitive dirty works should be handled by tier one.
 						</div>
 					</div>
 				</li>
@@ -1828,7 +1828,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">第一层的 GMU 代码懂得构建过程的细节，它们指出构建过程应该调用什么样的编译和链接命令，包括使用什么样的编译和链接开关，将 obj 和 exe 输出放到哪个目录中，如何生成 C/C++ 头文件依赖规则等。
 						</div>
-						<div class="lang-en2">Tier one GMU codes knows every detail of the build process. They determine what compile and link command to apply, including what compile/link options to use, where to place output obj/exe files, how to generate dependency rules for C/C++ header files.
+						<div class="lang-en2">Tier one GMU codes knows every detail of the build process. They determine what compile and link commands to apply, including what compile/link options to use, where to place output obj/exe files, how to generate dependency rules for C/C++ header files.
 						</div>
 					</div>
 				</li>
@@ -1836,19 +1836,19 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="duallang">
 				<div class="lang-cn2">总言之，GMU 核心代码和第一层代码承揽越多的工作，最终用户的 makefile 就能够越简洁同时还能越强大。
 				</div>
-				<div class="lang-en2">In general, more work is done by GMU core and Tier One code, more concise and more power makefiles will end-user achieve.
+				<div class="lang-en2">In general, more work is done by GMU core and tier-one code, more concise and more powerful makefiles will end-users achieve.
 				</div>
 			</div>
 			<div class="duallang">
 				<div class="lang-cn2">现在简要列举几条最终用户能够从 GMU 得到的功能：</div>
-				<div class="lang-en2">Now I will cite several features end-user will get from GMU:</div>
+				<div class="lang-en2">Now I will cite several features end-user can acquire from GMU:</div>
 			</div>
 			<ol>
 				<li>
 					<div class="duallang">
-						<div class="lang-cn2">自动生成头文件依赖关系。意即，如果有某个 .h 被修改，下一次运行 umake 时相关的 .c/.cpp 将被重新编译。注：umake 是 GMU makefile 的启动命令。
+						<div class="lang-cn2">自动生成头文件依赖关系。意即，如果有某个 .h 被修改，下一次运行 <tt>umake</tt> 时相关的 .c/.cpp 将被重新编译。注：umake 是 GMU makefile 的启动命令。
 						</div>
-						<div class="lang-en2">Auto-generate header file dependency. That is, if some .h file is modified, relevant .c/.cpp will get re-compiled on next umake. Memo: umake is the startup command for GMU makefile.
+						<div class="lang-en2">Auto-generate header file dependency. That is, if some .h file is modified, relevant .c/.cpp will get re-compiled on next <tt>umake</tt>. Memo: umake is the startup command for GMU makefile.
 						</div>
 					</div>
 				</li>
@@ -1856,7 +1856,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">Debug/Release 的编译输出自动被放在不同目录中，针对不同目标平台的编译输出也会分目录存放。这意味着，切换不同的“构建变体”时，无需 clean 掉其他变体的输出。
 						</div>
-						<div class="lang-en2">Debug/Release output is separated in different folders, so do outputs for different target platform. That means, when switching to a new build-variant, you don't have to clean output of other variants.
+						<div class="lang-en2">Debug/Release outputs are separated into different folders, so do outputs for different target platforms. That means, when switching to a new build-variant, you don't have to clean output of other variants.
 						</div>
 					</div>
 				</li>
@@ -1864,21 +1864,21 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">用 umake 启动参数即可控制是否显示具体的编译/链接命令，而不用修改 makefile 自身。不显示会让屏幕输出显得干净，要求显示则能够帮助诊断问题。
 						</div>
-						<div class="lang-en2">Control whether to show detail compile/link command-line via umake command options, no need for modifying makefile itself. Suppressing it makes screen output concise, and requiring output helps diagnosing.
+						<div class="lang-en2">Control whether to show detail compile/link command-line via umake command options, no need for modifying makefile itself. Suppressing the verbose makes screen output concise, and requiring the verbose helps diagnosing.
 						</div>
 					</div>
 				</li>
 				<li>
 					<div class="duallang">
-						<div class="lang-cn2">父工程自动探测子工程的输出文件名，并正确引用之。假定父工程生成 A.EXE ，子工程生成 B.LIB，父工程需要链接 B.LIB。GMU makefile 能够描述 A 和 B 的父子关系，并且自动链接 B 的输出。B 工程的输出名称由 B 自行决定，A 将自动探测得知。这是 GMU 核心层的一个特色功能，父工程通过一个专门的 "make target" 在运行过程当场查得子工程的输出文件名，这就避免了将子工程的输出文件名硬编码在父工程的 makefile 中。
+						<div class="lang-cn2">父工程自动探测子工程的输出文件名，并正确引用之。假定父工程生成 A.EXE ，子工程生成 B.LIB，父工程需要链接 B.LIB。在 A 的 makefile 中将 B 设定为自己的子工程后，A 就能自动链接 B 的输出。B 工程的输出名称由 B 自行决定，A 将自动探测得知。这是 GMU 核心层的一个特色功能，父工程通过一个专门的 "make target" 在运行过程当场查得子工程的输出文件名，这就避免了将子工程的输出文件名硬编码在父工程的 makefile 中。
 						</div>
-						<div class="lang-en2">The parent project can detect child project's output filename, and refers to that name correctly. For example, the parent project generates A.EXE, the child generates B.LIB. GMU makefile has a way to describe parent-child relationship between the two, and have A automatically links B's output. B's output filename is determined solely by B's makefile, and A will detect it automatically. This is a special feature from GMU core. The parent project queries child project's output filename at runtime via a special "make target", eliminating the requirement of hardcoding child project's output filename inside parent project's makefile.
+						<div class="lang-en2">The parent project can detect child project's output filename, and refers to that name correctly. For example, the parent project generates A.EXE, the child generates B.LIB. Now we have A's makefile refer to B as sub-project, then A will automatically links B's output. B's output filename is determined solely by B's makefile, and A will detect it automatically. This is a special feature from GMU core. The parent project queries child project's output filename at runtime via a special "make target", eliminating the requirement of hardcoding child project's output filename inside parent project's makefile.
 						</div>
 					</div>
 					<div class="duallang">
-						<div class="lang-cn2">我一直认为这个输出文件名自动查询功能非常有用。想想看下面的情况：如果一个 LIB 工程要被十个父工程引用如何？如果子工程有四种输出变体（由 x86/x64 和 Debug/Release）组合而成，父工程要用四个不同的文件名来引用子工程的输出，将导致 makefile 变得多么繁琐？
+						<div class="lang-cn2">我一直认为这个输出文件名自动探测功能非常有用。想想看下面的情况：如果一个 LIB 工程要被十个父工程引用如何？如果子工程有四种输出变体（由 x86/x64 和 Debug/Release）组合而成，父工程要用四个不同的文件名来引用子工程的输出，将导致 makefile 变得多么繁琐？
 						</div>
-						<div class="lang-en2">I always deem this output-name-query feature very useful. Please think of the following situations: What if a LIB project is referred to by TEN parent projects? If we need four child project output variants by x86/x64 and Debug/Release, what hard work will it be to refer to those four output filenames in the parent project?
+						<div class="lang-en2">I always deem this output-name-detection feature very useful. Please think of the following situations: What if a LIB project is referred to by TEN parent projects? If we need four child project output variants by x86/x64 and Debug/Release, what hard work will it be to refer to those four output filenames in the parent project?
 						</div>
 					</div>
 				</li>
@@ -1909,19 +1909,19 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 		</div>
 		<div class="itemdetail">
 			<div class="duallang">
-				<div class="lang-cn2">【必要性】 也许我的 C/C++ 代码编译需求太过特殊。在别人眼中，太特殊就显得没有必要。一方面，一个构建系统并不是产品的最终用户能看得到的部分，为了用户看不见的部分投入大量精力似乎不值得；另一方面，为了让代码在多个平台上能够运行也不是眼前的产品需要关注的功能，至于今后是否需要跨平台那是今后的事，为了将来不一定会发生的事现在就投入大量精力，似乎也不值得。如果已经有现成的工具可以满足当前产品的构建（比如直接使用 Visual Studio IDE），为什么还要费力去学习陈军的 GMU 呢？少学一样东西就少了一个环节的复杂性，这看起来没什么不对。
+				<div class="lang-cn2">【必要性】 也许我的 C/C++ 代码编译需求太过特殊。在别人眼中，太特殊就显得没有必要。一方面，一个构建系统并不是产品的最终用户能看得到的部分，为了用户看不见的部分投入大量精力似乎不值得；另一方面，为了让代码在多个平台上能够运行也不是公司眼前需要关注的功能，至于今后是否需要跨平台那是今后的事，为了将来不一定会发生的事现在就投入大量精力，似乎也不值得。如果已经有现成的工具可以满足当前产品的构建（比如直接使用 Visual Studio IDE），为什么还要费力去学习陈军的 GMU 呢？少学一样东西就少了一个环节的复杂性，这看起来没什么不对。
 				</div>
-				<div class="lang-en2">【Necessity】 Maybe my requirements for building C/C++ code is too special. From the eyes of others, being too special means unnecessary. For one, a building system is not what will present to the end-user, then it looks unworthy to  spend so much energy on user-unseeable features. For two, to make current code run on multiple platforms is not we need right now, it is again unworthy to invest so much energy on something contingent in the future. So, if there has been off the rack tool to accomplish current task(using Visual Studio IDE as build tool), why bother learning a new tool from Jimm Chen? One less tool means one less complexity. It is not wrong after all.
+				<div class="lang-en2">【Necessity】 Maybe my requirements for building C/C++ code is too special. From the eyes of others, being too special means unnecessary. For one, a building system is not what will be presented to the end-user, then it looks unworthy to  spend so much energy on user-unseeable features. For two, to make current code run on multiple platforms is not an absolute must for the company right now, it is again unworthy to invest so much energy on something contingent in the future. So, if there has been an off the rack tool to accomplish current task(e.g. using Visual Studio IDE as build tool), why bother learning a new tool from Jimm Chen? One less tool means one less complexity. It is not wrong after all.
 				</div>
 			</div>
 			<div class="duallang">
 				<div class="lang-cn2">【学习门槛】 就像所有基于文本指令的工具那样，GMU 的使用也是有一定门槛的，使用者需要懂得基本的 GNU make 语法，需要一次性将所有 make 语句写正确才能有正确的运行效果。为了达成这个目标，用户需要花费一两小时先阅读我的 GMU 指南。当 umake 运行结果未达期望时，用户还得懂得如何从错误提示中查找错误原因。错误原因可能出现在好几个层次： GMU 本身有 bug，误用了 GMU 的功能，误用了 GNU make 的功能，误用了编译器开关。排查出错原因有时真是个技术活，你通常得精通好几层工具才能准确定位出错误原因。
 				</div>
-				<div class="lang-en2">【Learning Threshold】 Like any text command based tools, GMU enforces some learning threshold. User needs to know basic GNU make grammar, and needs to write correct make commands all at once in order to get correct result. To achieve correct result, user need to spend one or two hours reading my GMU manual. In case the (umake) running result is unexpected, user needs to figure out the error cause from error messages. The error may come from multiple tiers: GMU's bug, misuse of GMU, misuse of GNU make, misuse of compiler commands. Pinpointing the error cause is a technical work, you often have to master tools from that much tiers to get it right.
+				<div class="lang-en2">【Learning Threshold】 Like any text command based tools, GMU enforces some learning threshold. User needs to know basic GNU make syntax, and needs to write correct make commands all at once in order to get correct result. To achieve correct result, user needs to spend one or two hours reading my GMU manual. In case the (umake) running result is unexpected, user needs to figure out the error cause from error messages. An error may come from multiple tiers: GMU's bug, misuse of GMU, misuse of GNU make, misuse of compiler commands. Pinpointing the error cause is a technical work, you often have to master tools from that much tiers to get it right.
 				</div>
 			</div>
 			<div class="duallang">
-				<div class="lang-cn2">我没有开玩笑，程序员的工具对于大多数程序员来说太复杂了。大多数使用 Visual C++ 写代码的程序员，并不知道完整的编译和链接命令行是什么样的，有些人甚至连编译和链接这两个步骤都分不清。很多用 Visual C++ 编写程序多年的程序员，依旧不懂得如何为一个 Visual C++ 工程启用/禁用预编译头，他们总是用系统给的缺省设置。当遇到预编译头错误时，他们的解决方法是让整个工程完全禁用预编译头。
+				<div class="lang-cn2">我没有开玩笑，程序员的工具对于大多数程序员来说太复杂了。大多数使用 Visual C++ 写代码的程序员，并不知道完整的编译和链接命令行是什么样的，有些人甚至连编译和链接这两个步骤都分不清。很多用 Visual C++ 编写程序多年的程序员，依旧不懂得如何为一个 Visual C++ 工程启用/禁用预编译头，他们总是用系统给的缺省设置。当遇到预编译头错误时，他们只会采取最保守的的解决方法，让整个工程完全禁用预编译头。
 				</div>
 				<div class="lang-en2">I'm not kidding. Programmer's tools are too complex for most programmers. Most programmers writing code with Visual C++ do not know the complete compile and link command line, and some are even unaware of the two-step process of compiling and linking. Many Visual C++ programmers do not know how to enable/disable precompiled headers, they always use what is given by default. When encountering precompiled header issues, their best bet is to entirely disable precompiled header feature for the whole project.
 				</div>
@@ -1929,7 +1929,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 			<div class="duallang">
 				<div class="lang-cn2">【对于个人作品的信心】 前面提及，GMU 是我为了满足我自己的需求偏好，从 2006 年开始开发并逐步改进的作品。这意味着，这个项目没有公司层面的支持，它的进度由我自己把控，遇到的所有问题都得我自己设法解决。既然如此，我的同事有什么理由一定要在没有陈军参与的项目中使用 GMU 呢？说不定哪天陈军辞职走人了，那 GMU 出的问题谁来解决？ 我得承认，GMU 头几年确实经历了很频繁的修改，到 2010 年才达到比较稳定的状态。而 2010 之后，我的几乎所有大小软件项目都是独立一个人完成的，因此 GMU 也就没有向其他人渗透的机会。
 				</div>
-				<div class="lang-en2">【Confidence in personal work】 As I have mentioned, GMU is a project I started myself since 2006 according to my own preference. That means, this project has never got company-wide support. I have sole control of its schedule, and any problem encountered should be solved by myself. So, any reason for my colleagues to use GMU in a project without Jimm Chen's involvement? I have to confess, GMU in her first years went through frequent modifications, and it got fair stability in year 2010. However, from 2010 on, nearly all software projects I got involved have only one member, that's me. GMU then has no chance to infiltrate into other's mind.
+				<div class="lang-en2">【Confidence in personal work】 As I have mentioned, GMU is a project I started myself since 2006 according to my own preference. That means, this project has never got company-wide support. I have sole control of its schedule, and any problem encountered should be solved by myself. So, any reason for my colleagues to use GMU in a project without Jimm Chen's involvement? I have to confess, GMU in its first years went through frequent modifications, and it got fair stability in year 2010. However, from 2010 on, nearly all software projects I got involved have only one member, that's me. GMU then has no chance to infiltrate into other's mind.
 				</div>
 			</div>
 		</div>
@@ -1945,7 +1945,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 		<div class="duallang">
 			<div class="lang-cn2">对于我来说，“社交活动”其实是名词误用。我的朋友很少，因此我很少打扰别人，也不希望被别人无计划地打扰。不过呢，当偶尔有人邀请我参加一些现场活动，我还是会打起精神鼓励自己去参加，因为我觉得到一个新的场所、遇见一些陌生的人，也许能让我收获一些新的信息。换言之，我总是抱着获取新知的心态来参加社会活动的；如果只是聚会吃饭、不痛不痒地闲聊一通，那是很没意思的，我在整个聚会中也会显得很不安，特别是和很多半生不熟的朋友同处这样的聚会中时。从这个意义上说，我认为公司每年的年终全员宴会聚餐必要性不大。宴会上喝掉那么多酒，根本谈不了正事，而且太早离开又是个很尴尬的举动。
 			</div>
-			<div class="lang-en2">For me, "social activity" is a misnomer. I have few friends, so I seldom disturb others, and is uncomfortable with unscheduled disturbance. However, if someone invites me to a live event, I will brace myself up to attend it, because I think some new places and new persons my bring me some new knowledge. In other words, I bear a mind of learning when attending social activities. If all that involves is dining together and chitchatting, I'll feel quite upset, especially in such gathering with many unfamiliar friends. In this sense, I feel that the whole company's end-of-year whole-staff banquet is not a must. With so much drink, we cannot talk about actual issues, and it becomes embarrassed to leave too early. 
+			<div class="lang-en2">For me, "social activity" is a misnomer. I have few friends, so I seldom disturb others, and is uncomfortable with unscheduled disturbance. However, if someone invites me to a live event, I will brace myself up to attend it, because I think some new places and new persons may bring me some new knowledge. In other word, I bear a mind of learning when attending social activities. If all that involves is dining together and chitchatting, I'll feel quite upset, especially in such gathering with many unfamiliar friends. In this sense, I feel that the whole company's end-of-year whole-staff banquet is not a must. With so much drink, we cannot talk about actual issues, and it becomes embarrassed to leave too early. 
 			</div>
 		</div>
 
@@ -1975,7 +1975,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 				<div class="duallang">
 					<div class="lang-cn2">从新大陆自动识别公司辞职后，<a href="https://www.zhihu.com/people/chenjun80/posts" target="_blank">我在知乎上发表了一些文章</a> 。当然，我有自己的风格，如果仅仅是网络上简单搜索就能得到的信息，我就不发表了。我倾向于发表有洞察力的文章，来解释常见的表面现象背后深藏的道理。
 					</div>
-					<div class="lang-en2">Since my resign from Newland Auto-ID, I have <a href="https://www.zhihu.com/people/chenjun80/posts" target="_blank" brief="Articles I post on zhihu.com">posted some articles on zhihu.com</a>(a Chinese native site similar to Quora). I have my own trends on my articles. If some information can be easily obtained by simple Internet search, I will not post them. I tends to post articles with insight, that is, to reveal hidden or secret rules that hide beneath the surface. 
+					<div class="lang-en2">Since my resign from Newland Auto-ID, I have <a href="https://www.zhihu.com/people/chenjun80/posts" target="_blank" brief="Articles I post on zhihu.com">posted some articles on zhihu.com</a>(a Chinese native site similar to Quora). I have my own trends on my articles. If some information can be easily obtained by simple Internet search, I will not post them. I tend to post articles with insights, that is, to reveal hidden or secret rules that hide beneath the surface. 
 					</div>
 				</div>
 			</li>
@@ -2022,9 +2022,9 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 		</div>
 		<div class="itemdetail">
 			<div class="duallang">
-				<div class="lang-cn2">事实上，我的工作时间有 20～40% 是花费在编写各种文字材料上的，确切花费的时间占比我没有准确统计，但总体而言应该是有相当大的比例。我书写的内容包括包括产品设计文档、产品使用指南、对具体问题的思考过程，分享技术经验等等。进行高质量的写作很多时候并不轻松，而且很烧脑，但这么多年下来我认定它带给我的好处足以弥补它所耗费的心力。好处总结如下：
+				<div class="lang-cn2">事实上，我的工作时间有 20～40% 是花费在编写各种文字材料上的，确切花费的时间占比我没有准确统计，但总体而言应该是有相当大的比例。我书写的内容包括包括产品设计文档、产品使用指南、对具体问题的思考过程、分享技术经验等等。进行高质量的写作很多时候并不轻松，而且很烧脑，但这么多年下来我认定它带给我的好处足以弥补它所耗费的心力。好处总结如下：
 				</div>
-				<div class="lang-en2">Actually, about 20~40% percent of my work time is spent on all kinds of writing. The exact time allocation my not be accurate, but is surely considerable. My writing materials include product design, product user guide, my thinking on concrete problems, and sharing of my technical knowledge and experiences. High quality writing is not leisure, and is often braining burning. With so many years of practice, anyway, I believe its accumulative advantages overwhelm sufferings. Summary below:
+				<div class="lang-en2">Actually, about 20~40% percent of my work time is spent on all kinds of writing. The exact time allocation my not be accurate, but is surely considerable. My writing materials include product design, product user guide, my thought on concrete problems, and sharing of my technical knowledge and experiences. High quality writing is not leisure, and is often brain-burning. With so many years of practice, anyway, I believe its accumulative advantages overwhelm sufferings. Summary below:
 				</div>
 			</div>
 			<ol>
@@ -2038,9 +2038,9 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 				</li>
 				<li>
 					<div class="duallang">
-						<div class="lang-cn2">写作是训练自己的表达能力的好方法。我非常认同一种说法，当人们没有办法用语言来表达一种想法或情绪时，人的心情就会变得很压抑。提高自己的表达能力，应该有助于缓解压抑。
+						<div class="lang-cn2">写作是训练自己的表达能力的好方法。我非常认同一种说法，当人们没有办法用语言来表达一种想法或情绪时，人的心情就会变得不安和压抑。提高自己的表达能力，应该有助于缓解压抑。
 						</div>
-						<div class="lang-en2">Writing is a good way to train my ability to express myself. I agree with one saying that when a person cannot express some kind of idea or feeling with language, he will feel depressed. So, improving my ability to express myself should help relief myself from such bad mood.
+						<div class="lang-en2">Writing is a good way to train my ability to express myself. I agree with one saying that when a person cannot express some kind of idea or feeling with language, he will feel upset and depressed. So, improving my ability to express myself should help relief myself from such bad mood.
 						</div>
 					</div>
 				</li>
@@ -2052,15 +2052,15 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 						</div>
 					</div>
 					<div class="duallang">
-						<div class="lang-cn2">当有人向我询问一个问题时，如果我将回答认真地写下来，当同一个问题被第二次问及时，我就不用重新回答一遍、只需要将链接发给第二个人就行了。问问题的人越多，我剩下的时间就越多。|| 我为什么不用电子邮件呢？因为 Email 只是一对一、或一对少量 N 的传播，而 Web 形式的信息发布是一对“潜在无穷多”的传播。从长远看，哪个的传播成本更低不言自明。
+						<div class="lang-cn2">当有人向我询问一个问题时，如果我将回答认真地写下来，当同一个问题被第二次问及时，我就不用重新回答一遍、只需要将链接发给第二个人就行了。问问题的人越多，我省下的时间就越多。
 						</div>
 						<div class="lang-en2">When someone asks me a question, and if I write down the answer seriously, then when the same question is asked by a second person, I won't have to answer it once again, instead, it is enough to send the link to the second person. More asking persons, more time savings.
 						</div>
 					</div>
 					<div class="duallang">
-						<div class="lang-cn2">我更倾向于使用 Web 的方式来发布我的信息，而非通过电子邮件(Email)。我为什么讨厌 Email 呢？因为 Email 只能进行低效的一对一、或一对少量 N 的传播，而 Web 形式的信息发布是一对“潜在无穷多”的传播。从长远看，哪个的传播成本更低不言自明。因此，当有同事用 Email 向我询问一个问题时，如果这个问题稍微有些复杂，我总是会将回答发表在 Confluence 上，然后将回答的链接发给同事。这么做好处多多，简要说三点。（一）Confluence 文章的图文表现能力比电子邮件强大得多。（二）Confluence 文章发表后，其他用户通过全文搜索就能发现这篇文章，相当于我给未来潜在的提问者提前做了回答。（三）如果我稍后需要补充和完善我的回答，我可以方便地更新我的 Confluence 文章，Confluence 的修改历史功能能够清晰地指明我做了哪些修改。Web 协作平台的这些功能让 Email 看起来就像石器时代的笨拙工具那般难用。
+						<div class="lang-cn2">我更倾向于使用 Web 的方式来发布我的信息，而非通过电子邮件(E-mail)。我为什么讨厌 Email 呢？因为 Email 只能进行低效的一对一、或一对少量 N 的传播，而 Web 形式的信息发布是一对“潜在无穷多”的传播。从长远看，哪个的传播成本更低不言自明。因此，当有同事用 Email 向我询问一个问题时，如果这个问题稍微有些复杂，我总是会将回答发表在 Confluence 上，然后将回答的链接（网址）作为邮件回复内容。这么做好处多多，简要说三点。（一）Confluence 文章的图文表现能力比电子邮件强大得多。（二）Confluence 文章发表后，其他用户通过全文搜索就能发现这篇文章，相当于我给未来潜在的提问者提前做了回答。（三）如果我稍后需要补充和完善我的回答，我可以方便地更新我的 Confluence 文章，Confluence 的修改历史功能能够清晰地指明我做了哪些修正和补充。Web 协作平台的这些功能让 Email 看起来就像石器时代的工具那般笨拙难用。
 						</div>
-						<div class="lang-en2">I prefer to publish my messages on Web-based platform, instead of using Email. Why do I hate Email? That's because Email is a low-efficiency tool that can only do one-to-one or one-to-small-N communications, while Web-based platform is one-to-infinite publishing. Who is more efficient in the long run? There is no doubt. Therefore, when a colleague asks me a question(especially one with some complexity), I will always post my answer on Confluence, and send the link as reply. This is much more optimal, three points in brief: (1) Confluence articles has much richer tex/image format than Email. (2) All users can get access to my articles via full-text searching on Confluence, so I have prepared the answer for future askers. (3) If I need to improve my answer later, I can conveniently update my Confluence article, and the history feature of Confluence can clearly show what I have changed. These advanced features of a Web collaboration platform renders Email a clunky stone-age tool. 
+						<div class="lang-en2">I prefer to publish my messages on Web-based platform, instead of using E-mail. Why do I hate Email? That's because Email is a low-efficiency tool that can only do one-to-one or one-to-small-N communications, while Web-based platform is one-to-infinite publishing. Which is more efficient in the long run? There is no doubt. Therefore, when a colleague asks me a question(especially one with some complexity), I will always post my answer on Confluence, and send the link(web address) as reply. This is much more optimal, three points in brief: (1) Confluence articles has much richer tex/image format than Email. (2) All users can get access to my articles via full-text searching on Confluence, so I have prepared the answer for future askers. (3) If I need to improve my answer later, I can conveniently update my Confluence article, and the history feature of Confluence can clearly show what I have revised. These advanced features of a Web collaboration platform renders Email a clunky stone-age tool. 
 						</div>
 					</div>
 				</li>
@@ -2074,7 +2074,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">Context 是软件行业中的常用术语，一份 context 通常表示一段约定好格式的数据。软件代码被程序员编写出来后就是固定不变的了，但是配上不同的内容的 context，固定的代码就能表现出多彩斑斓的行为，多么让人惊叹。这里，我借用 context 来表示人与人之间共同的认知，团队需要处理的事情越复杂，他们就需要越丰富的 context。为了让 context 易于被提取，最好的方法是事先将它们用书面形式记录下来。
 						</div>
-						<div class="lang-en2">Context is a well-known terminology in software industry. A piece of context usually means a piece of data in an agreed-on form. Software code is invariant once the programmer has done it, but with different context data, the invariant code can produce a kaleidoscope of behaviors, so amazing. Here, I borrow the word context to represent shared information and knowledge among a team of people. More complicated matters to deal for a team, more context they need. To make context easy to fetch, the best way is to record them beforehand in written form.
+						<div class="lang-en2">Context is a well-known terminology in software industry. A piece of context usually means a piece of data in an agreed-on form. Software code is invariant once the programmer has done with it, but with different context data, the invariant code can produce a kaleidoscope of behaviors, so amazing. Here, I borrow the word context to represent shared information and knowledge among a team of people. More complicated matters to deal for a team, more context they need. To make context easy to fetch, the best way is to record them beforehand in written form.
 						</div>
 					</div>
 				</li>
@@ -2082,7 +2082,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">将自己放在所有人的监督之下，逼迫自己将话说对，将事做对。
 						</div>
-						<div class="lang-en2">Put myself under everybody's supervision, and this forces my to speak correctly and do things correctly.
+						<div class="lang-en2">Put myself under everybody's supervision, and this forces me to speak correctly and do things correctly.
 						</div>
 					</div>
 					<div class="duallang">
@@ -2197,7 +2197,7 @@ UFCOM 提供的功能和 Windows 系统自带的通用虚拟串口驱动 usbser.
 					<div class="duallang">
 						<div class="lang-cn2">我希望信息平台上的信息是经过整理的。错误的信息能够及时被修正，过时的信息能够及时被标记，重要的和次要的信息能够被明显地区分开。这需要信息平台的参与者花一定精力来维护，但我想这是难以避免的，就像我们得时常整理自己硬盘上的文件夹来让文件便于查找那般。
 						</div>
-						<div class="lang-en2">I hope that information on the platform is kept well organized. Wrong information can be fixed in short time, outdated information can be marked out of date, and important an unimportant information can be identified with ease. This requires extra efforts from all participators, and I think it inevitable, just like we have to reorganize files and folder on our own harddisk every now and then.
+						<div class="lang-en2">I hope that information on the platform is kept well organized. Wrong information can be fixed in short time, outdated information can be marked out of date, and important as well as unimportant information can be identified with ease. This requires extra efforts from all participators, and I think it inevitable, just like we have to reorganize files and folder on our own harddisk every now and then.
 						</div>
 					</div>
 				</li>

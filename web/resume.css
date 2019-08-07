@@ -586,7 +586,6 @@ quote {
 	min-width: 7.13em;
 	font-size: 1.0em;
 	font-weight: bold;
-	border-left: 5px solid black;
 }
 .table_s .itemdetail {
 	background-color: #e8e0ed;
@@ -598,6 +597,9 @@ quote {
 	color: brown;  /* will be overridden by duallang color switch */
 	font-size: 1.2em;
 	font-weight: bold;
+	
+	border-left: 5px solid #668;
+	padding-left: 0.233em;
 }
 .itemdetail {
 /*	margin-left: 2em;
