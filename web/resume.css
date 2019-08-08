@@ -119,6 +119,10 @@ tt {
 	line-height: 1px;
 }
 
+.paper_print_only {
+	display: none; /* Will be visible in @media print. */
+}
+
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
@@ -175,10 +179,11 @@ tt {
 }
 
 .titlebar__head {
+	padding-top: 5px;
 	text-align: center;
 	font-size: 2em;
-    letter-spacing: 0.5em;
-    font-family: 楷体;
+	letter-spacing: 0.5em;
+	font-family: 楷体;
 }
 
 .titlebar__myname .chenjun {
@@ -1022,6 +1027,20 @@ quote {
 
 @media print 
 {
+	.paper_print_only {
+		display: block;
+		margin-top: 1px;
+		margin-bottom: 1px;
+		border: 1px solid #6767b4 !important;
+		padding: 0.5em;
+		color: #6767b4;
+		border-color: black;
+		text-align: center;
+	}
+	.paper_print_only a {
+		color: inherit !important;
+	}
+
 	.maincol {
 		margin-left: 0px;
 		margin-right: 0px;
@@ -1065,4 +1084,5 @@ quote {
 	.tocframe {
 		display: none !important;
 	}
+
 }
