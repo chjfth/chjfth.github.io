@@ -308,6 +308,7 @@ tt {
 
 .profile__item > .item__name {
 	display: table-cell;
+	min-width: 6em;
 	font-weight: bold;
 	font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
 }
@@ -316,6 +317,21 @@ tt {
 	display: table-cell;
 	font-weight: normal;
 	font-family: Roboto, "Arial", sans-serif;
+}
+
+.profile__item ul.skills {
+	padding-left: 0px;
+	margin-bottom: 0px;
+}
+.profile__item .skills li {
+    list-style-type: none;
+    display: inline-block;
+    background-color: #d8d8c8;
+    color: black;
+    padding: 0.1em 0.2em;
+    line-height: 1.2;
+    border: 1px grey solid;
+    border-radius: 0.5em;
 }
 
 .cellphone8:before {
