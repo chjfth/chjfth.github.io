@@ -81,9 +81,12 @@ tt {
 	background-image: url('res/bg-pagehead.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
+
+	position: relative;
 }
 
 .titlebar__head {
+	padding-top: 5px;
 	text-align: center;
 	font-size: 2em;
     letter-spacing: 0.5em;
@@ -98,6 +101,23 @@ tt {
 .titlebar__myname .career {
 	font-size: 0.8em;
 }
+
+.maincol.titlebar .qrcode {
+	display: initial;
+	position: absolute;
+	margin-right: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background-image: url('res/url-qrcode.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-x: right;
+}
+.maincol.titlebar .qrcode img {
+	visibility: hidden; /* This <img> acts as width placeholder, the background-image shows it. */
+}
+
 
 .sidecol {
 /*	margin: 0.8rem 18px;
@@ -157,6 +177,21 @@ tt {
 
 .profile__item {
 	display: table-row;
+}
+.profile__item ul.skills {
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.profile__item .skills li {
+    list-style-type: none;
+    display: inline-block;
+    background-color: #d8d8c8;
+    color: black;
+    padding: 0.1em 0.2em;
+    line-height: 1.2;
+    border: 1px grey solid;
+    border-radius: 0.5em;
 }
 
 .item__name {
@@ -393,3 +428,6 @@ quote {
 .qq_com:after { content: "@qq.com"; }
 .gmail_com:after { content: "@gmail.com"; }
 
+.paper_print_only {
+	display: none;
+}
