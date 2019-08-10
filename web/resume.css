@@ -179,6 +179,9 @@ tt {
 	padding-right: 0px;
 	position: relative;
 }
+.maincol.titlebar .qrcode {
+	display: none; /* only show in @media print{} */
+}
 
 .titlebar__head {
 	padding-top: 5px;
@@ -1063,6 +1066,7 @@ quote {
 		position: relative;
 	}
 	.maincol.titlebar .qrcode {
+		display: initial;
 		position: absolute;
 		margin-right: 0px;
 		right: 0px;
@@ -1118,7 +1122,8 @@ quote {
 	}
 
 	.tocframe {
-		display: none !important;
+/*		display: none !important;
+*/
 	}
 
 }
