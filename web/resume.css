@@ -176,6 +176,8 @@ tt {
 	background-image: url('res/bg-pagehead.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
+	padding-right: 0px;
+	position: relative;
 }
 
 .titlebar__head {
@@ -1055,6 +1057,24 @@ quote {
 	}
 	.paper_print_only a {
 		color: inherit !important;
+	}
+
+	.maincol.titlebar {
+		position: relative;
+	}
+	.maincol.titlebar .qrcode {
+		position: absolute;
+		margin-right: 0px;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		background-image: url('res/url-qrcode.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position-x: right;
+	}
+	.maincol.titlebar .qrcode img {
+		visibility: hidden; /* This <img> acts as width placeholder, the background-image shows it. */
 	}
 
 	.maincol {
