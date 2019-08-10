@@ -52,6 +52,8 @@
 	--floatbar-width: 3.66rem;
 	
 	--transition-duration: 1500ms; /* Please use ms bcz resume.js will use this value. */
+	
+	--link-text-color: #6767b4;
 }
 
 /*****************************************************************/
@@ -65,7 +67,7 @@ body {
 .maincol a {
 	text-decoration: none;
 	font-weight: bold;
-	color: #6767b4;
+	color: var(--link-text-color);
 }
 a:hover {
 	color: #252590;
@@ -792,7 +794,7 @@ quote {
 
 /************************ Desktop Web Layout Override  ************************/
 
-                   /*** REMEMBER TO change the two 799.1px below SIMULTANEOUSLY. ***/
+       /*** REMEMBER TO *sync* the two 799.1px below SIMULTANEOUSLY. ***/
 
 @media (max-width: 799.1px) 
 {
@@ -1044,7 +1046,10 @@ quote {
 	padding: 0.352em;
 }
 
+
+/****************************************************************************/
 /******************************* @media print *******************************/
+/****************************************************************************/
 
 @media print 
 {
@@ -1052,9 +1057,9 @@ quote {
 		display: block;
 		margin-top: 1px;
 		margin-bottom: 1px;
-		border: 1px solid #6767b4 !important;
+		border: 1px solid var(--link-text-color) !important;
 		padding: 0.5em;
-		color: #6767b4;
+		color: var(--link-text-color);
 		border-color: black;
 		text-align: center;
 	}
@@ -1094,6 +1099,7 @@ quote {
 
 	.sidecol {
 		position: static !important;
+		left: 0px;
 		background-color: #fffff8 !important;
 		padding-bottom: 0.5rem;
 		width: 100%;
@@ -1121,8 +1127,52 @@ quote {
 		display: none !important;
 	}
 
-	.tocframe {
-		display: none !important;
+	.flexcntr_on_print {
+		display: flex;
+	}
+	
+	.flexcntr_on_print .fi_leftside {
+		flex-basis: 400px; /* temp */
+		flex-grow: 1;
+	}
+	.flexcntr_on_print .fi_rightside {
+		flex-basis: var(--sidecol-width);
+		flex-grow: 0;
+		
+		position: relative; /* act as parentElement of the .tocframe */
+		
+		margin-top: 0.5rem;
+		margin-right: 0.5rem;
 	}
 
+	/* For .tocframe, use light background and dark text when printing, to save ink. */
+	.tocframe {
+		display: block !important;
+		position: static;
+		height: 100% !important;
+		background-color: #eee;
+		border: 1px solid gray;
+		box-shadow: 0.1em 0.1em 0.5em gray;
+	}
+	.tocframe .toctitle {
+		position: static;
+	}
+	.tocframe .toctitle  [class^="lang-"] {
+		color: #333;
+		font-weight: bold;
+		text-shadow: #9494c4 1px 1px 3px;
+	}
+	.tocframe .toctext {
+		position: static;
+	}
+	.tocframe .toctext  [class^="lang-"] {
+		color: var(--link-text-color) !important;
+		font-weight: bold;
+	}
+	.toctitle_arrow {
+		display: none;
+	}
+	.toc_pct {
+		display: none !important;
+	}
 }
