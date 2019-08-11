@@ -792,6 +792,31 @@ quote {
 	background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>');
 }
 
+.linksummary_maincol {
+	padding-bottom: 1em;
+}
+
+.footer {
+	background-color: #3b1d07; /* chocolate color */
+	color: gray;
+	padding: 1em;
+	font-size: 0.8rem;
+	
+}
+
+.footer > div {
+	padding: 0.352em;
+}
+
+.footer_qr {
+	width: 120px;
+	float: left;
+}
+.footer_qr img {
+	width: 100%;
+}
+
+
 /************************ Desktop Web Layout Override  ************************/
 
        /*** REMEMBER TO *sync* the two 799.1px below SIMULTANEOUSLY. ***/
@@ -1030,22 +1055,6 @@ quote {
 
 }
 
-.linksummary_maincol {
-	padding-bottom: 1em;
-}
-
-.footer {
-	background-color: #3b1d07; /* chocolate color */
-	color: gray;
-	padding: 1em;
-	font-size: 0.8rem;
-	
-}
-
-.footer > div {
-	padding: 0.352em;
-}
-
 
 /****************************************************************************/
 /******************************* @media print *******************************/
@@ -1179,4 +1188,8 @@ quote {
 	.footer {
 		border-top: 2px solid;
 	}
+	.footer_qr {
+		display: none; /* because the QR has been shown on titlebar */
+	}
 }
+
