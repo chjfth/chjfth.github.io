@@ -54,6 +54,7 @@
 	--transition-duration: 1500ms; /* Please use ms bcz resume.js will use this value. */
 	
 	--link-text-color: #6767b4;
+	--mindset-bullet-size: 2.2rem;
 }
 
 /*****************************************************************/
@@ -814,6 +815,33 @@ quote {
 }
 .footer_qr img {
 	width: 100%;
+}
+
+.mindsets {
+	counter-reset: mindset 0;
+}
+.mindsets [class~="duallang"] {
+	position: relative; /* As basebox for the round numbers  */
+	counter-increment: mindset 1;
+	min-height: var(--mindset-bullet-size);
+}
+.mindsets [class~="duallang"] > * {
+	padding-left: calc( var(--mindset-bullet-size) + 0.4rem );
+}
+.mindsets [class~="duallang"]:before {
+	content: counter(mindset);
+	position: absolute;
+	display: inline-block;
+	top: 0px;
+	left: 0px;
+	width: var(--mindset-bullet-size);
+	height: var(--mindset-bullet-size);
+	font-size: calc(var(--mindset-bullet-size) * 0.8);
+	text-align: center;
+	color: #9c9ccc; /* some dark blue */
+	text-shadow: #9ccc9c 1px 1px 6px;
+/*	background-color: orange;
+*/	border-radius: 50%;
 }
 
 

@@ -7,6 +7,25 @@
 	padding: 0.644em;
 }
 
+:root {
+    box-sizing: border-box;
+}
+
+*, 
+::before, 
+::after {
+    box-sizing: inherit;
+}
+
+.clearfix::before, .clearfix::after {
+	/* Suppress margin-top/bottom merging  */
+	display: table;
+	content: " ";
+}
+.clearfix::after {
+	clear: both;
+}
+
 .maincol a {
 	text-decoration: none;
 	font-weight: bold;
@@ -31,7 +50,7 @@ tt {
 .globalframe {
 	/* inner frame of double container pattern. */
 	margin: auto;
-	max-width: var(--globalframe-max-width);
+	max-width: 1600px;
 
 /*	border: 1px dashed cyan;
 */
@@ -69,10 +88,10 @@ tt {
 /*	margin: 0.8rem 1rem;
 	border: 1px solid #888;
 */
-	padding-left:  var(--maincol-padding-leftright);
-	padding-right: var(--maincol-padding-leftright);
+	padding-left:  0.33em;
+	padding-right: 0.33em;
 
-	background-color: var(--maincol-bgcolor);
+	background-color: #f0f0f0;
 /*	border-radius: 1em;
 */
 }
@@ -430,4 +449,40 @@ quote {
 
 .paper_print_only {
 	display: none;
+}
+
+.footer_qr {
+	width: 120px;
+	float: left;
+}
+.footer_qr img {
+	width: 100%;
+}
+
+
+.mindsets {
+	counter-reset: mindset 0;
+}
+.mindsets [class~="duallang"] {
+	position: relative; /* As basebox for the round numbers  */
+	counter-increment: mindset 1;
+	min-height: 2.2rem;
+}
+.mindsets [class~="duallang"] > * {
+	padding-left: 2.6rem;
+}
+.mindsets [class~="duallang"]:before {
+	content: counter(mindset);
+	position: absolute;
+	display: inline-block;
+	top: 0px;
+	left: 0px;
+	width: 2.2rem;
+	height: 2.2rem;
+	font-size: 1.8rem;
+	text-align: center;
+	color: #9c9ccc; /* some dark blue */
+	text-shadow: #9ccc9c 1px 1px 6px;
+/*	background-color: orange;
+*/	border-radius: 50%;
 }
