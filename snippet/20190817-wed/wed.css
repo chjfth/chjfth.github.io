@@ -1,0 +1,92 @@
+/* Best practices from CSSID book: */
+:root {
+    box-sizing: border-box;
+}
+
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: " ";
+}
+
+:root {
+    --arrow-left-to-right: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-right" class="svg-inline--fa fa-long-arrow-alt-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(166,166,166)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>');
+}
+
+body {
+	background-color: white;
+}
+
+.table1 {
+    font-size: 2rem;
+/*	border: 1px solid;
+*/	border-collapse: collapse;
+}
+
+.table1 td {
+	width: 1.8em;
+	height: 1.8em;
+	border: 1px solid;
+	text-align: center;
+	
+	position: relative;
+}
+
+.agcanvas {
+	border: 1px dashed;
+}
+
+.lettercells {
+	background-color: #aaa;
+}
+
+.initvalues {
+	background-color: #ffd;
+}
+
+td.hidden {
+	background-color: white;
+	border-top: 0px;
+	border-left: 0px;
+}
+
+.arrow {
+	display: block;
+	position: absolute;
+	width: 0.8em;
+	height: 0.8em;
+	
+/*	border: 1px dashed;
+*/
+}
+
+.arrowL {
+	left: -0.3em;
+	top: 0.5em;
+/*	background-color: yellow;
+*/	background-position-x: center;
+	background-repeat: no-repeat;
+	background-image: var(--arrow-left-to-right);
+}
+.arrowD {
+	left: -0.3em;
+	top: -0.3em;
+/*	background-color: cyan;
+*/	background-position-x: center;
+	background-repeat: no-repeat;
+	background-image: var(--arrow-left-to-right);
+	transform: rotate(0.125turn) scale(1.15);
+}
+.arrowT {
+	left: 0.5em;
+	top: -0.3em;
+/*	background-color: green;
+*/	background-position-x: center;
+	background-repeat: no-repeat;
+	background-image: var(--arrow-left-to-right);
+	transform: rotate(0.25turn);
+}
+
