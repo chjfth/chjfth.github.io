@@ -641,9 +641,9 @@
 					</div>
 				</div>
 				<div class="duallang">
-					<div class="lang-cn2">我有录制电视节目的习惯，用视频捕捉卡、采集盒等，有时也用 iPad 和手机拍摄视频。然而，这些设备录下的视频文件原始尺寸都太大了(H.264 10Kbit/秒的位率)，太占用硬盘空间，因此我得让它们的尺寸小一些以便长期留存。而且，留存前通常还需要将电视广告等无意义的画面给裁掉。这些重复性的工作通常会消耗很多人力时间，因此我需要设计一套工具来让人力开销最少。
+					<div class="lang-cn2">我有录制电视节目的习惯，用视频捕捉卡、采集盒等，有时也用 iPad 和手机拍摄视频。然而，这些设备录下的视频文件原始尺寸都太大了(H.264 10兆位/秒的位率)，太占用硬盘空间，因此我得让它们的尺寸小一些以便长期留存。而且，留存前通常还需要将电视广告等无意义的画面给裁掉。这些重复性的工作通常会消耗很多人力时间，因此我需要设计一套工具来让人力开销最少。
 					</div>
-					<div class="lang-en2">I have the habit of saving TV programs with a video capturing/recording device, and sometimes shot video with my iPad or cellphone. However, the initially recorded file size is very large(H.264 video bitrate 10Kbit/sec), too hard-disk space consuming, so I need to make it smaller for long-term preserving. Furthermore, the captured video needs some trimming, for example, cutting off TV ads and some meaningless scenes. These are repetitive human actions, so that I have to design a tool to reduce human labor to a minimum.
+					<div class="lang-en2">I have the habit of saving TV programs with a video capturing/recording device, and sometimes shot video with my iPad or cellphone. However, the initially recorded file size is very large(H.264 video bitrate 10Mbits/sec), too hard-disk space consuming, so I need to make it smaller for long-term preserving. Furthermore, the captured video needs some trimming, for example, cutting off TV ads and some meaningless scenes. These are repetitive human actions, so that I have to design a tool to reduce human labor to a minimum.
 					</div>
 				</div>
 				<div class="duallang">
@@ -656,9 +656,9 @@
 					<pre>transcode_hdtv.py -o final.mp4 -b 900 I:\201906102312250.ts[-1629][1736-]</pre>
 				</div>
 				<div class="duallang">
-					<div class="lang-cn2">意思是，将 201906102312250.ts 文件从 <u>00:00~16:29</u> 和 <u>17:36~结束</u>这两段内容转码成 900kbps 的 final.mp4 。显然，16:29~17:36 是被我裁掉的广告内容。命令行格式是我自己设计的，以符合我的效率需要，我的 Python 包装器内部，真正的转码工作是借助 <a href="https://ffmpeg.org/" target="_blank" collect="no">ffmpeg</a> 和 <a href="https://handbrake.fr/" target="_blank" collect="no">HandbrakeCLI</a> 来完成的。
+					<div class="lang-cn2">意思是，将 201906102312250.ts 文件从 <u>00:00~16:29</u> 和 <u>17:36~结束</u> 这两段内容转码成 900Kbps 的 final.mp4 ，900Kbps 意味着 91% 的视频流码率节省。显然，16:29~17:36 是被我裁掉的广告内容。命令行格式是我自己设计的，以符合我的效率需要，我的 Python 包装器内部，真正的转码工作是借助 <a href="https://ffmpeg.org/" target="_blank" collect="no">ffmpeg</a> 和 <a href="https://handbrake.fr/" target="_blank" collect="no">HandbrakeCLI</a> 来完成的。
 					</div>
-					<div class="lang-en2">It means, transcode two parts of the input 201906102312250.ts (<u>00:00~16:29</u> and <u>17:36~end</u>) into a single final.mp4, with video bitrate of 900kbps. You can imagine that content between 16:29~17:36 is the TV ad to reject. I design command-line format to meet my own efficiency requirements; inside my python wrapper, I call <a href="https://ffmpeg.org/" target="_blank" collect="no">ffmpeg</a> and <a href="https://handbrake.fr/" target="_blank" collect="no">HandbrakeCLI</a> to carry out the actual transcoding work.
+					<div class="lang-en2">It means, transcode two parts of the input 201906102312250.ts (<u>00:00~16:29</u> and <u>17:36~end</u>) into a single final.mp4, with video bitrate of 900Kbps. With 900Kbps, it means 91% saving in video bitrate. You can imagine that content between 16:29~17:36 is the TV ad to reject. I design command-line format to meet my own efficiency requirements; inside my python wrapper, I call <a href="https://ffmpeg.org/" target="_blank" collect="no">ffmpeg</a> and <a href="https://handbrake.fr/" target="_blank" collect="no">HandbrakeCLI</a> to carry out the actual transcoding work.
 					</div>
 				</div>
 				<div class="duallang">
