@@ -13,7 +13,7 @@
 }
 
 :root {
-    --arrow-left-to-right: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-right" class="svg-inline--fa fa-long-arrow-alt-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(166,166,166)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>');
+	--highlight-color: orange;
 }
 
 body {
@@ -29,10 +29,22 @@ body {
 .table1 td {
 	width: 1.8em;
 	height: 1.8em;
-	border: 1px solid;
+	border: 1px solid black;
 	text-align: center;
 	
 	position: relative;
+}
+
+.table1 td.highlight {
+	color: var(--highlight-color);
+/*	font-weight: bold;
+*/
+}
+
+.table1 td.hidden {
+	background-color: white;
+	border-top: 0px;
+	border-left: 0px;
 }
 
 .agcanvas {
@@ -47,11 +59,6 @@ body {
 	background-color: #ffd;
 }
 
-td.hidden {
-	background-color: white;
-	border-top: 0px;
-	border-left: 0px;
-}
 
 .arrow {
 	display: block;
@@ -66,27 +73,23 @@ td.hidden {
 .arrowL {
 	left: -0.3em;
 	top: 0.5em;
-/*	background-color: yellow;
-*/	background-position-x: center;
-	background-repeat: no-repeat;
-	background-image: var(--arrow-left-to-right);
 }
 .arrowD {
 	left: -0.3em;
 	top: -0.3em;
-/*	background-color: cyan;
-*/	background-position-x: center;
-	background-repeat: no-repeat;
-	background-image: var(--arrow-left-to-right);
 	transform: rotate(0.125turn) scale(1.15);
 }
 .arrowT {
 	left: 0.5em;
 	top: -0.3em;
-/*	background-color: green;
-*/	background-position-x: center;
-	background-repeat: no-repeat;
-	background-image: var(--arrow-left-to-right);
 	transform: rotate(0.25turn);
 }
 
+.arrow svg {
+	/* todo: I don't know why I need this ajustment to cut-off some of the arrow <svg>'s margins. */
+	transform: translateY(-0.22em);
+}
+
+.arrow.highlight svg path {
+	fill: var(--highlight-color);
+}

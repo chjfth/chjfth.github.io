@@ -74,6 +74,11 @@ function get_cell(table, idxsrc, idxdst) {
 
 function cell_value(table, idxsrc, idxdst) {
 	
+	if(idxsrc==-2 || idxdst==-2) {
+		// out-of-bound, we return a very big number for later easy coding
+		return 10000; 
+	}
+	
 	var td_ele = get_cell(table, idxsrc, idxdst);
 	
 	if(td_ele.textContent.trim()=="")
@@ -89,11 +94,16 @@ function run_algorithm(table, srcword, dstword) {
 	var srclen = srcword.length;
 	var dstlen = dstword.length;
 
-	for(var isrc=0; isrc<srclen; isrc++)
+	for(var isrc=-1; isrc<srclen; isrc++)
 	{	
-		for(var idst=0; idst<dstlen; idst++)
+		for(var idst=-1; idst<dstlen; idst++)
 		{
 			var td_now = get_cell(table, isrc, idst);
+
+			if(isrc==-1 && idst==-1) {
+				td_now.textContent = "0";
+				continue;
+			}
 
 			var leftv = cell_value(table, isrc, idst-1); //left-side cell value
 			var diagv = cell_value(table, isrc-1, idst-1); // diagonal cell value
@@ -113,13 +123,13 @@ function run_algorithm(table, srcword, dstword) {
 			
 			var pathchars = "";
 			if(leftcost==minval) {
-				pathchars += "L"; // Left
+				pathchars += 'L'; // Left
 			}
 			if(diagcost==minval) {
-				pathchars += "D"; // Diagonal
+				pathchars += 'D'; // Diagonal
 			}
 			if(topcost==minval) {
-				pathchars += "T"; // Top
+				pathchars += 'T'; // Top
 			}
 			
 			td_now.setAttribute("pathchars", pathchars);
@@ -128,7 +138,7 @@ function run_algorithm(table, srcword, dstword) {
 	} // outer for
 }
 
-function td_draw_path_arrows(td_ele) {
+function td_draw_path_arrows(td_ele) { // operate one <td>
 	
 	var arrow_letters = td_ele.getAttribute("pathchars"); // e.g. "LDT", "LD"
 	if(!arrow_letters)
@@ -142,16 +152,97 @@ function td_draw_path_arrows(td_ele) {
 		var arrow_dir_class = "arrow" + arrow_letter;
 		
 		var arrow_ele = document.createElement("div");
+		
+		arrow_ele.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-right" class="svg-inline--fa fa-long-arrow-alt-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(202,202,202)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>'
+			// the svg graph is a left-to-right pointing arrow
+		
 		arrow_ele.className = "arrow " + arrow_dir_class;
 		
 		td_ele.appendChild(arrow_ele);
 	}
 }
 
-function draw_edw_table(srcword, dstword) {
+function *find_editing_paths(table_ele, idxsrc, idxdst) {
+	// Find a editing path from srcword[0:idxsrc+1] to dstword[0:idxdst+1] .
+	//
+	// This should be called AFTER td_draw_path_arrows() for table_ele,
+	// bcz it relies on "pathchars" attributes on <td> eles in table_ele.
+	//
+	// May return multiple paths, bcz pathchars may contain more than one char("LDT" etc).
+	// Each yield returns a path.
+	//
+	// A path is an array of pathchars, like ['T','D','D','T','D','L'] .
+	// The array content is in forward order.
 	
-	var srclen = srcword.length;
-	var dstlen = dstword.length;
+	if(idxsrc==-1 && idxdst==-1) {
+		yield [];
+		return;
+	}
+	else if(idxdst==-1) {
+		// We're at one of the left-most yellow cells.
+		yield fillArray('T', idxsrc+1);
+		return;
+	}
+	else if(idxsrc==-1) {
+		// We're at one of the top-most yellow cells.
+		yield fillArray('L', idxdst+1);
+		return;
+	}
+
+	// We're at one of the "normal" white cells.
+	// There may be multiple arrows pointing to this cell, so we need to collect them all.
+	
+	var td_ele = get_cell(table_ele, idxsrc, idxdst);
+	var pathchars = td_ele.getAttribute("pathchars");
+	
+	for(var i=0; i<pathchars.length; i++) {
+		
+		var pathchar = pathchars[i];
+		var offset_src=0, offset_dst=0;
+		
+		if(pathchar=='L')
+			offset_dst = -1;
+		else if(pathchar=='D')
+			offset_dst = -1, offset_src = -1;
+		else if(pathchar=='T')
+			offset_src = -1;
+		else
+			alert("pathchars error!");
+		
+		var pathgen = find_editing_paths(table_ele, idxsrc+offset_src, idxdst+offset_dst);
+		for(let path of pathgen) {
+			path.push(pathchar);
+			yield path;
+		}
+	}
+}
+
+function draw_highlight_path(table_ele, stepchars) {
+	
+	// stepchars sample: ['T','D','D','T','D','L']
+	// It describes the editing steps from (-1,-1) to the end.
+	
+	var idxsrc=-1, idxdst=-1;
+	for(var stepchar of stepchars) {
+		
+		if(stepchar=='L') 
+			idxdst++;
+		else if(stepchar=='D')
+			idxsrc++, idxdst++;
+		else if(stepchar=='T')
+			idxsrc++;
+		else
+			alert("stepchar error in draw_highlight_path()");
+		
+		var nextcell = get_cell(table_ele, idxsrc, idxdst);
+		nextcell.classList.add("highlight");
+		
+		var arrow_ele = nextcell.querySelector(".arrow"+stepchar); // ".arrowL" etc
+		arrow_ele.classList.add("highlight");
+	}
+}
+
+function draw_edw_table(srcword, dstword) {
 	
 	var table = create_table_skeleton(srcword, dstword); // table is the HTML <table> ele
 	
@@ -161,7 +252,19 @@ function draw_edw_table(srcword, dstword) {
 	for(var td of tds) {
 		td_draw_path_arrows(td);
 	}
+
+	var paths = [];
+	var pathgen = find_editing_paths(table, 4, 3);
+	for(let path of pathgen) {
+//		console.log(path);
+		paths.push(path);
+	}
+
+	draw_highlight_path(table, paths[0]);
+	// todo: user can choose a path to highlight.
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
@@ -171,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function(){
 //	alert("AAA");
 
 	draw_edw_table("GCTAC", "CTCA");
+//	draw_edw_table("Washington", "Wasingdon");
 	
 });
 
