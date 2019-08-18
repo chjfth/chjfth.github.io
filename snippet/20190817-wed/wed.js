@@ -261,7 +261,107 @@ function startnew_from_editbox() {
 		alert("Invalid input.");
 	}
 }
+
+function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
 	
+	var msgs = [];
+	for(var i=0; i<arcs.length; i++) {
+		var old = arcs[i].old, cur = arcs[i].cur;
+		
+		var msg = "";
+		
+		// Comment hint: Assume old='x' and cur='y'
+		
+		if(old==cur) // S1
+			msg += old;                         // x
+		else if(cur=='') // S2 
+			msg += old+"[]";                    // x[]
+		else if(old!='' && old!=cur) // S3
+			msg += "{0}[{1}]".format(old, cur); // x[y]
+		else if(old=='') // S4
+			msg += "[{0}]".format(cur);         // [y]
+		
+		var suffix = i==_csadv ? "*" : ""; // use * to mark current advancing mark into arcs[]
+		msgs.push( (msg+suffix).padEnd(5) );
+	}
+	
+	console.log( "ExplainStep-{0}: ".format(istep) + msgs.join(" ") );
+}
+
+function explain_each_Step(srcword, dstword, path) {
+
+	// We need a Charstate(cs) object for each char during our path run.
+	// Total Charstates may be longer than srcword(exactly + count of 'L's).
+	// For example, aaa1234 -> 1234bbb needs 10 Charstates.
+	
+	// Input path sample: ['T', 'd', 'T', 'd', 'D', 'L']
+	
+	var arcs = []; // array of Charstate
+	
+	// Initialize arcs[] with srcword.
+	for(var c of srcword) {
+		arcs.push( {old:c, cur:c} ); // init state: all chars from srcword (S1)
+		// Four cases('x' or 'y' represent any non-null char):
+		// (S1) old='x' and cur='x' : 'x' is from srcword
+		// (S2) old='x' and cur=''  : 'x' from srcword is delete(not exist in dstword)
+		// (S3) old='x' and cur='y' : 'x' from srcword is replaced by 'y' from dstword
+		// (S4) old='' and cur='y'  : 'y' is inserted from dstword
+	}
+	
+	log_Charstates(arcs, -1, 0);
+
+	//
+	// Iterate each path step.
+	//
+	var idxdst =0; 
+	var csadv = 0; // index into arcs[]
+	var istep = 0;
+	for(var i=0; i<path.length; i++) {
+		
+		// Will modify arcs[]'s content according to stepchar.
+		
+		var stepchar = path[i];
+		
+		if(stepchar=='d') {
+			idxdst++;
+			csadv++;
+			continue;
+		}
+		else if(stepchar=='D') {
+			arcs[csadv].cur = dstword[idxdst]; // S3
+			idxdst++;
+			csadv++;
+		}
+		else if(stepchar=='L') {
+			// insert a char from dstword at csadv location
+			arcs.splice(csadv, 0, {old:'', cur:dstword[idxdst]}); // S4
+			idxdst++;
+			csadv++;
+		}
+		else if(stepchar=='T') {
+			arcs[csadv].cur = ''; // S2
+			csadv++;
+		}
+		
+		istep++;
+		log_Charstates(arcs, csadv-1, istep);
+	}
+	
+	/* Sample log_Charstates() output from this function:
+	
+ExplainStep-0: G     T     A     C     C    
+ExplainStep-1: G[]*  T     A     C     C    
+ExplainStep-2: G[]   T     A[]*  C     C    
+ExplainStep-3: G[]   T     A[]   C     C[A]*
+ExplainStep-4: G[]   T     A[]   C     C[A]  [G]* 
+
+	Memo: For ExplainStep-2, the '*' in A[]* means, when this (big)Step is done,
+	the algorithm has processed this far for srcword. 
+	
+	Note: A big-Step means a true edit-distance Step, a small-step means an arrow in canvas table.
+	*/
+}
+
 function draw_edw_table(srcword, dstword) {
 	
 //	var agcanvas = $(".agcanvas");
@@ -287,6 +387,7 @@ function draw_edw_table(srcword, dstword) {
 	}
 
 	draw_highlight_path(table, paths[0]);
+	explain_each_Step(srcword, dstword, paths[0]);
 	
 	// Fill result into right pane.
 	$1(".rev_minsteps").textContent = minsteps;
@@ -310,6 +411,7 @@ function draw_edw_table(srcword, dstword) {
 	chpath.addEventListener("change", function(event) {
 		var idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
+		explain_each_Step(srcword, dstword, paths[idxpath]);
 	});
 }
 
