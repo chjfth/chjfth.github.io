@@ -45,7 +45,8 @@ body {
 
 .agcanvas {
 	margin: 0.5em 0.8em;
-	border: 1px dashed cyan; /* temp */
+/*	border: 1px dashed cyan;
+*/
 }
 .result {
 	margin: 0.5em 0.8em;
@@ -137,7 +138,8 @@ body {
 		flex-grow: 0;
 		flex-shrink: 0; /* so that table cells width/height keep proportional */
 		flex-basis: auto;
-		border: 1px dashed;
+/*		border: 1px dashed;
+*/	
 	}
 
 	.result {

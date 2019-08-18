@@ -290,8 +290,14 @@ function draw_edw_table(srcword, dstword) {
 	$1(".rev_minsteps").textContent = minsteps;
 	$1(".rev_pathcount").textContent = paths.length;
 
+	// We need to create a NEW combobox(replacing the old), so that the NEW combobox 
+	// will always refer to the NEW `table` ele.
 	var chpath = $1(".choosepath");
-	chpath.innerHTML = "";
+	var chpath_new = document.createElement("select");
+	chpath_new.classList.add("choosepath");
+	chpath.parentElement.replaceChild(chpath_new, chpath);
+	chpath = chpath_new;
+	
 	for(var i=0; i<paths.length; i++) {
 		var opt = document.createElement("option");
 		opt.value = i;
@@ -343,3 +349,4 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 
+// from=GCTACC&to=CTCAG
