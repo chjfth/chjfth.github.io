@@ -286,12 +286,6 @@ function draw_edw_table(srcword, dstword) {
 
 	draw_highlight_path(table, paths[0]);
 	
-	var startbtn = document.getElementById("startbtn"); // todo: move to outer function.
-	startbtn.addEventListener("click", function(event){
-		event.preventDefault();
-		startnew_from_editbox();
-	});
-
 	// Fill result into right pane.
 	$1(".rev_minsteps").textContent = minsteps;
 	$1(".rev_pathcount").textContent = paths.length;
@@ -338,6 +332,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	draw_edw_table(wordfrom, wordto);
 //	draw_edw_table("Washington", "Wasingdon");
 	
+	// Setup [Start] button so that user can refresh with a new pair of words.
+	//
+	var startbtn = document.getElementById("startbtn");
+	startbtn.addEventListener("click", function(event){
+		event.preventDefault();
+		startnew_from_editbox();
+	});
+
 });
 
 

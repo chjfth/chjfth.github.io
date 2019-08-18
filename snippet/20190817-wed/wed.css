@@ -135,6 +135,7 @@ body {
 
 	.agcanvas {
 		flex-grow: 0;
+		flex-shrink: 0; /* so that table cells width/height keep proportional */
 		flex-basis: auto;
 		border: 1px dashed;
 	}
