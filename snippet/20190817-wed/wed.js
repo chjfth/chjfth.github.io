@@ -110,8 +110,10 @@ function run_algorithm(table, srcword, dstword) {
 			var diagv = cell_value(table, isrc-1, idst-1); // diagonal cell value
 			var topv  = cell_value(table, isrc-1, idst); // top-side cell value
 			
+			var meet_equal = srcword[isrc]==dstword[idst];
+			
 			var leftcost = leftv + 1;
-			var diagcost = diagv + (srcword[isrc]==dstword[idst] ? 0 : 1);
+			var diagcost = diagv + (meet_equal ? 0 : 1);
 			var topcost  = topv + 1;
 			
 			// Now we'll pick the minimum ones from the three cost values.
@@ -127,7 +129,7 @@ function run_algorithm(table, srcword, dstword) {
 				pathchars += 'L'; // Left
 			}
 			if(diagcost==minval) {
-				pathchars += 'D'; // Diagonal
+				pathchars += meet_equal ? 'd' : 'D'; // Diagonal
 			}
 			if(topcost==minval) {
 				pathchars += 'T'; // Top
@@ -147,7 +149,7 @@ function td_draw_path_arrows(td_ele) { // operate one <td>
 	
 	for(var arrow_letter of arrow_letters) {
 		
-		if( "LDT".indexOf(arrow_letter)<0 )
+		if( "LDdT".indexOf(arrow_letter)<0 )
 			continue; // not a valid arrow letter
 		
 		var arrow_dir_class = "arrow" + arrow_letter;
@@ -172,7 +174,7 @@ function *find_editing_paths(table_ele, idxsrc, idxdst) {
 	// May return multiple paths, bcz pathchars may contain more than one char("LDT" etc).
 	// Each yield returns a path.
 	//
-	// A path is an array of pathchars, like ['T','D','D','T','D','L'] .
+	// A path is an array of pathchars, like ['T', 'd', 'T', 'd', 'D', 'L'] .
 	// The array content is in forward order.
 	
 	if(idxsrc==-1 && idxdst==-1) {
@@ -203,7 +205,7 @@ function *find_editing_paths(table_ele, idxsrc, idxdst) {
 		
 		if(pathchar=='L')
 			offset_dst = -1;
-		else if(pathchar=='D')
+		else if(pathchar=='D' || pathchar=='d')
 			offset_dst = -1, offset_src = -1;
 		else if(pathchar=='T')
 			offset_src = -1;
@@ -220,7 +222,7 @@ function *find_editing_paths(table_ele, idxsrc, idxdst) {
 
 function draw_highlight_path(table_ele, stepchars) {
 	
-	// stepchars sample: ['T','D','D','T','D','L']
+	// stepchars sample: ['T', 'd', 'T', 'd', 'D', 'L']
 	// It describes the editing steps from (-1,-1) to the end.
 	
 	var allarrows = $("*");
@@ -233,7 +235,7 @@ function draw_highlight_path(table_ele, stepchars) {
 		
 		if(stepchar=='L') 
 			idxdst++;
-		else if(stepchar=='D')
+		else if(stepchar=='D' || stepchar=='d')
 			idxsrc++, idxdst++;
 		else if(stepchar=='T')
 			idxsrc++;
@@ -280,7 +282,7 @@ function draw_edw_table(srcword, dstword) {
 	var paths = [];
 	var pathgen = find_editing_paths(table, srclen-1, dstlen-1);
 	for(let path of pathgen) {
-//		console.log(path);
+//		console.log(path); // debug
 		paths.push(path);
 	}
 
@@ -319,8 +321,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
 //	alert("AAA");
 
-	var wordfrom = "GCTAC"; // default
-	var wordto = "CTCA"; // default
+	var wordfrom = "GTACC"; // default
+	var wordto = "TCAG"; // default
 
 	var wordfrom_url = get_url_variable("from");
 	var wordto_url = get_url_variable("to");
