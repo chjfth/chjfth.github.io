@@ -844,6 +844,19 @@ quote {
 */	border-radius: 50%;
 }
 
+.linksummary table {
+	font-size: 0.8em;
+	border-spacing: 0.3rem 0.2rem;
+}
+.linksummary td {
+    vertical-align: top;
+    background-color: rgb(232, 219, 208);
+}
+.linksummary td:last-child {
+	background-color: rgb(226, 224, 220)
+}
+
+
 
 /************************ Desktop Web Layout Override  ************************/
 
@@ -856,18 +869,6 @@ quote {
 		padding: 1.02em;
 		height: auto !important;
 	}
-}
-
-.linksummary table {
-	font-size: 0.8em;
-	border-spacing: 0.3rem 0.2rem;
-}
-.linksummary td {
-    vertical-align: top;
-    background-color: rgb(232, 219, 208);
-}
-.linksummary td:last-child {
-	background-color: rgb(226, 224, 220)
 }
 
 @media (min-width: 799.1px) 
