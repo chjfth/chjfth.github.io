@@ -860,18 +860,19 @@ quote {
 
 /************************ Desktop Web Layout Override  ************************/
 
-       /*** REMEMBER TO *sync* the two 799.1px below SIMULTANEOUSLY. ***/
+  /*** REMEMBER TO manually *sync* the two 799.1px below SIMULTANEOUSLY. ***/
 
-@media (max-width: 799.1px) 
+@media (max-width: 799.1px) /* when window width < 799.1px */
 {
 	.tocframe {
-		/* For mobile layout, I use !important to override js-code's calculated ele.style.height. */
-		padding: 1.02em;
+		/* For mobile layout, I use !important here to override js-code's calculated ele.style.height. */
 		height: auto !important;
+
+		padding: 1.02em;
 	}
 }
-
-@media (min-width: 799.1px) 
+/**/
+@media (min-width: 799.1px) /* when window width > 799.1px */
 {
 	/* Desktop layout side-column styles. Whole side-column is fixed at viewport right-side. */
 
