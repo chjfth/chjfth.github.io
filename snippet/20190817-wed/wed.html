@@ -10,12 +10,36 @@
 </style>
 </head>
 
-<!-- ====================================================================== -->
-
 <body>
 
-<div class="agcanvas">
+<div class="headbar">
+	<div class="title">Find minimum editing distance between two words <span class="jimmchen">presented by <a href="https://www.linkedin.com/in/jimm-chen/" target="_blank">Jimm Chen</a></span>
+	</div>
+	<form class="userinput">
+		<label>From:</label><input type="text" id="wordfrom"/>
+		
+		<label>To:</label><input type="text" id="wordto"/>
+		
+		<input type="submit" value="Start" id="startbtn"/>
+	</form>
+</div>
+
+<div class="content">
+
+	<div class="agcanvas">
+	</div>
+
+	<div class="result">
+		<div class="re_minsteps">Minimum editing steps is: <span class="rev_minsteps">-</span>
+		</div>
+		<div class="re_pathcount">Total path count is: <span class="rev_pathcount">-</span>
+		</div>
+		
+		<label>Choose a path to highlight:</label>
+		<select class="choosepath"></select> <!-- will fill by js -->
+	</div>
 
 </div>
+
 
 </body>

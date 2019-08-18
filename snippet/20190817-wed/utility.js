@@ -33,3 +33,30 @@ function fillArray(value, len) {
   if (a.length < len) a = a.concat(a.slice(0, len - a.length));
   return a;
 }
+
+// https://css-tricks.com/snippets/javascript/get-url-variables/
+// If the URL ends with ?param=val , get_url_variable("param") will return "val".
+function get_url_variable(variable)
+{
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i=0;i<vars.length;i++) {
+		var pair = vars[i].split("=");
+		if(pair[0] == variable){return pair[1];}
+	}
+	return(false);
+}
+
+//
+// querySelector wrapper from https://plainjs.com/javascript/selecting/select-dom-elements-by-css-selector-4/
+//
+// select a list of matching elements, context is optional
+function $(selector, context) {
+    return (context || document).querySelectorAll(selector);
+}
+
+// select the first match only, context is optional
+function $1(selector, context) {
+    return (context || document).querySelector(selector);
+}
+

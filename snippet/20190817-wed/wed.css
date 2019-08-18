@@ -20,6 +20,37 @@ body {
 	background-color: white;
 }
 
+.headbar .title {
+	font-size: 1.6rem;
+	font-weight: bold;
+}
+.headbar .jimmchen {
+	color: gray;
+	font-size: 0.7rem;
+}
+.jimmchen a {
+	color: inherit;
+}
+
+.userinput {
+	padding: 1rem 0.2rem;
+}
+.userinput input {
+	margin: auto 0.5em;
+}
+
+.content {
+	display: block;
+}
+
+.agcanvas {
+	margin: 0.5em 0.8em;
+	border: 1px dashed cyan; /* temp */
+}
+.result {
+	margin: 0.5em 0.8em;
+}
+
 .table1 {
     font-size: 2rem;
 /*	border: 1px solid;
@@ -47,10 +78,6 @@ body {
 	border-left: 0px;
 }
 
-.agcanvas {
-	border: 1px dashed;
-}
-
 .lettercells {
 	background-color: #aaa;
 }
@@ -65,7 +92,6 @@ body {
 	position: absolute;
 	width: 0.8em;
 	height: 0.8em;
-	
 /*	border: 1px dashed;
 */
 }
@@ -92,4 +118,30 @@ body {
 
 .arrow.highlight svg path {
 	fill: var(--highlight-color);
+}
+
+.rev_minsteps,
+.rev_pathcount {
+	font-weight: bold;
+}
+
+/************************ Desktop Web Layout Override  ************************/
+
+@media (min-width: 799.1px) /* when window width > 799.1px */
+{
+	.content {
+		display: flex;
+	}
+
+	.agcanvas {
+		flex-grow: 0;
+		flex-basis: auto;
+		border: 1px dashed;
+	}
+
+	.result {
+		flex-grow: 1;
+		flex-basis: 18rem;
+		border: 1px dashed;
+	}
 }

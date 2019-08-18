@@ -51,6 +51,7 @@ function create_table_skeleton(srcword, dstword) {
 	}
 	
 	var agcanvas = document.querySelector(".agcanvas"); // algorithm canvas
+	agcanvas.innerHTML = ""; // clear canvas
 	agcanvas.appendChild(table)
 		
 	return table;
@@ -222,6 +223,11 @@ function draw_highlight_path(table_ele, stepchars) {
 	// stepchars sample: ['T','D','D','T','D','L']
 	// It describes the editing steps from (-1,-1) to the end.
 	
+	var allarrows = $("*");
+	for(var arrow of allarrows) {
+		arrow.classList.remove("highlight");
+	}
+	
 	var idxsrc=-1, idxdst=-1;
 	for(var stepchar of stepchars) {
 		
@@ -242,7 +248,23 @@ function draw_highlight_path(table_ele, stepchars) {
 	}
 }
 
+function startnew_from_editbox() {
+	var ed_wordfrom = document.getElementById("wordfrom");
+	var ed_wordto = document.getElementById("wordto");
+	
+	if(ed_wordfrom.value && ed_wordto.value) {
+		draw_edw_table(ed_wordfrom.value, ed_wordto.value);
+	}
+	else {
+		alert("Invalid input.");
+	}
+}
+	
 function draw_edw_table(srcword, dstword) {
+	
+//	var agcanvas = $(".agcanvas");
+	var srclen = srcword.length;
+	var dstlen = dstword.length;
 	
 	var table = create_table_skeleton(srcword, dstword); // table is the HTML <table> ele
 	
@@ -253,17 +275,41 @@ function draw_edw_table(srcword, dstword) {
 		td_draw_path_arrows(td);
 	}
 
+	var minsteps = cell_value(table, srclen-1, dstlen-1); // return number
+
 	var paths = [];
-	var pathgen = find_editing_paths(table, 4, 3);
+	var pathgen = find_editing_paths(table, srclen-1, dstlen-1);
 	for(let path of pathgen) {
 //		console.log(path);
 		paths.push(path);
 	}
 
 	draw_highlight_path(table, paths[0]);
-	// todo: user can choose a path to highlight.
-}
+	
+	var startbtn = document.getElementById("startbtn"); // todo: move to outer function.
+	startbtn.addEventListener("click", function(event){
+		event.preventDefault();
+		startnew_from_editbox();
+	});
 
+	// Fill result into right pane.
+	$1(".rev_minsteps").textContent = minsteps;
+	$1(".rev_pathcount").textContent = paths.length;
+
+	var chpath = $1(".choosepath");
+	chpath.innerHTML = "";
+	for(var i=0; i<paths.length; i++) {
+		var opt = document.createElement("option");
+		opt.value = i;
+		opt.textContent = "Path #{0}".format(i+1); // todo: tells howmany L,D,T respectively
+		chpath.appendChild(opt);
+	}
+
+	chpath.addEventListener("change", function(event) {
+		var idxpath = event.target.value;
+		draw_highlight_path(table, paths[idxpath]);
+	});
+}
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -273,7 +319,23 @@ document.addEventListener("DOMContentLoaded", function(){
 
 //	alert("AAA");
 
-	draw_edw_table("GCTAC", "CTCA");
+	var wordfrom = "GCTAC"; // default
+	var wordto = "CTCA"; // default
+
+	var wordfrom_url = get_url_variable("from");
+	var wordto_url = get_url_variable("to");
+	
+	if(wordfrom_url && wordto_url) {
+		wordfrom = wordfrom_url;
+		wordto = wordto_url;
+	}
+	
+	var ed_wordfrom = document.getElementById("wordfrom");
+	var ed_wordto = document.getElementById("wordto");
+	ed_wordfrom.value = wordfrom;
+	ed_wordto.value = wordto;
+	
+	draw_edw_table(wordfrom, wordto);
 //	draw_edw_table("Washington", "Wasingdon");
 	
 });
