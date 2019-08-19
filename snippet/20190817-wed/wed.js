@@ -269,7 +269,7 @@ function attach_step_numbering_div(cell, iStep, opcode) {
 	// In UI:
 	// 		From: [G][T][A][C][C][ ]
 	// 
-	// If cell points to second [C] above, iStep=2, and opcode="S3", then we'll get:
+	// If cell points to second [C] above, iStep=2, and opcode="Rplc", then we'll get:
 	//
 	//		From: [G][T][A][C][C][ ]
 	//		                  (2)
@@ -295,11 +295,11 @@ function attach_step_numbering_div(cell, iStep, opcode) {
 	
 	var opcode_div = document.createElement("div");
 	opcode_div.className = "opcode";
-	if(opcode=="S2")
+	if(opcode=="Del")
 		opcode_div.classList.add("opcode_Del");
-	else if(opcode=="S3")
+	else if(opcode=="Rplc")
 		opcode_div.classList.add("opcode_Rplc");
-	else if(opcode=="S4")
+	else if(opcode=="Ins")
 		opcode_div.classList.add("opcode_Ins");
 	gate.appendChild(opcode_div);
 }
@@ -345,16 +345,16 @@ function create_diff_chart(arcs) {
 		cell.textContent = cs.old;
 		
 		cell.className ="expcell incenter";
-		if(cs.code=="S1" || cs.code=="S2" || cs.code=="S3")
+		if(cs.code=="Keep" || cs.code=="Del" || cs.code=="Rplc")
 			cell.classList.add("solidx");
-		else if(cs.code=="S4")
+		else if(cs.code=="Ins")
 			cell.classList.add("blankc");
 		else
 			alert("Error. Wrong cs.code in create_diff_chart()");
 
 		from_flexbox.appendChild(cell);
 		
-		if(cs.code!="S1") {
+		if(cs.code!="Keep") {
 			iStep++;
 			attach_step_numbering_div(cell, iStep, cs.code);
 		}
@@ -365,11 +365,11 @@ function create_diff_chart(arcs) {
 		cell.textContent = cs.cur;
 		
 		cell.className ="expcell incenter";
-		if(cs.code=="S1")
+		if(cs.code=="Keep")
 			cell.classList.add("solidx");
-		else if(cs.code=="S2")
+		else if(cs.code=="Del")
 			cell.classList.add("blankc");
-		else if(cs.code=="S3" || cs.code=="S4")
+		else if(cs.code=="Rplc" || cs.code=="Ins")
 			cell.classList.add("solidy");
 		else
 			alert("Error. Wrong cs.code in create_diff_chart()");
@@ -390,13 +390,13 @@ function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
 		
 		// Comment hint: Assume old='x' and cur='y'
 		
-		if(old==cur) // S1
+		if(old==cur) // Keep
 			msg += old;                         // x
-		else if(cur=='') // S2 
+		else if(cur=='') // Del 
 			msg += old+"[]";                    // x[]
-		else if(old!='' && old!=cur) // S3
+		else if(old!='' && old!=cur) // Rplc
 			msg += "{0}[{1}]".format(old, cur); // x[y]
-		else if(old=='') // S4
+		else if(old=='') // Ins
 			msg += "[{0}]".format(cur);         // [y]
 		
 		var suffix = i==_csadv ? "*" : ""; // use * to mark current advancing mark into arcs[]
@@ -418,12 +418,12 @@ function explain_edw_steps(srcword, dstword, path) {
 	
 	// Initialize arcs[] with srcword.
 	for(var c of srcword) {
-		arcs.push( {old:c, cur:c, code:"S1"} ); // init state: all chars from srcword (S1)
+		arcs.push( {old:c, cur:c, code:"Keep"} ); // init state
 		// Four cases('x' or 'y' represent any non-null char):
-		// (S1) old='x' and cur='x' : 'x' is from srcword
-		// (S2) old='x' and cur=''  : 'x' from srcword is delete(not exist in dstword)
-		// (S3) old='x' and cur='y' : 'x' from srcword is replaced by 'y' from dstword
-		// (S4) old='' and cur='y'  : 'y' is inserted from dstword
+		// (S1,Keep) old='x' and cur='x' : 'x' is from srcword
+		// (S2,Del ) old='x' and cur=''  : 'x' from srcword is delete(not exist in dstword)
+		// (S3,Rplc) old='x' and cur='y' : 'x' from srcword is replaced by 'y' from dstword
+		// (S4,Ins ) old='' and cur='y'  : 'y' is inserted from dstword
 	}
 	
 	log_Charstates(arcs, -1, 0);
@@ -446,7 +446,7 @@ function explain_edw_steps(srcword, dstword, path) {
 			continue;
 		}
 		else if(stepchar=='D') {
-			arcs[csadv].code = "S3";
+			arcs[csadv].code = "Rplc";
 			arcs[csadv].cur = dstword[idxdst];
 			idxdst++;
 			csadv++;
@@ -454,12 +454,12 @@ function explain_edw_steps(srcword, dstword, path) {
 		else if(stepchar=='L') {
 			// insert a char from dstword at csadv location
 			arcs.splice(csadv, 0, {old:'', cur:dstword[idxdst]});
-			arcs[csadv].code = "S4";
+			arcs[csadv].code = "Ins";
 			idxdst++;
 			csadv++;
 		}
 		else if(stepchar=='T') {
-			arcs[csadv].code = "S2";
+			arcs[csadv].code = "Del";
 			arcs[csadv].cur = '';
 			csadv++;
 		}
