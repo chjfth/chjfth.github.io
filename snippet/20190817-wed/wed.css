@@ -20,6 +20,13 @@ body {
 	background-color: white;
 }
 
+.incenter {
+	/* the below three is to make the text within perfectly centered */
+	display: flex;
+	justify-content: center; /* horizontal center */
+	align-items: center;     /* vertical center */
+}
+
 .headbar .title {
 	font-size: 1.6rem;
 	font-weight: bold;
@@ -157,12 +164,6 @@ body {
 	padding-right: 12px;
 }
 
-/*
-.exprow.fromrow {
-	margin-bottom: 6.66em;
-}
-*/
-
 /* exp: explain */
 .expflex {
 	display: flex;
@@ -178,11 +179,6 @@ body {
 	height: var(--expcell-width);
 	
 	border-radius: 0.32em;
-
-	/* the below three is to make the text within perfectly centered */
-	display: flex;
-	justify-content: center; /* horizontal center */
-	align-items: center;     /* vertical center */
 }
 .expflex .solidx {
 	border: 1px solid black;
@@ -197,7 +193,42 @@ body {
 
 .fromgraph .expflex {
 	/* make room for algoritm "Step" remark. */
-	margin-bottom: 4.32em;
+	margin-bottom: 6.66em;
+}
+
+.step_gate {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: var(--expcell-width); /* can be -1px or -0px ? */
+}
+
+.step_gate .step_circle {
+	border: 1px solid red;
+	border-radius: 50%;
+	width: calc(var(--expcell-width) * 0.8);
+	height: calc(var(--expcell-width) * 0.8);
+	margin: 0.3em auto;
+}
+
+.step_gate .down_arrow_div {
+	margin: auto;
+	width: 50%;
+	transform: translateX(-0.12em) rotate(0.25turn);
+}
+
+.step_gate .opcode {
+	margin: auto;
+	width: 50%;
+}
+.step_gate .opcode_Del {
+	content: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="minus" class="svg-inline--fa fa-minus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(156,156,204)" d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>');
+}
+.step_gate .opcode_Ins {
+	content: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(156,156,204)" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>');
+}
+.step_gate .opcode_Rplc {
+	content: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sync-alt" class="svg-inline--fa fa-sync-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(156,156,204)" d="M370.72 133.28C339.458 104.008 298.888 87.962 255.848 88c-77.458.068-144.328 53.178-162.791 126.85-1.344 5.363-6.122 9.15-11.651 9.15H24.103c-7.498 0-13.194-6.807-11.807-14.176C33.933 94.924 134.813 8 256 8c66.448 0 126.791 26.136 171.315 68.685L463.03 40.97C478.149 25.851 504 36.559 504 57.941V192c0 13.255-10.745 24-24 24H345.941c-21.382 0-32.09-25.851-16.971-40.971l41.75-41.749zM32 296h134.059c21.382 0 32.09 25.851 16.971 40.971l-41.75 41.75c31.262 29.273 71.835 45.319 114.876 45.28 77.418-.07 144.315-53.144 162.787-126.849 1.344-5.363 6.122-9.15 11.651-9.15h57.304c7.498 0 13.194 6.807 11.807 14.176C478.067 417.076 377.187 504 256 504c-66.448 0-126.791-26.136-171.315-68.685L48.97 471.03C33.851 486.149 8 475.441 8 454.059V320c0-13.255 10.745-24 24-24z"></path></svg>');
 }
 
 /************************ Desktop Web Layout Override  ************************/

@@ -1,5 +1,6 @@
 "use strict"
 
+const g_svg_right_arrow = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-right" class="svg-inline--fa fa-long-arrow-alt-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(202,202,202)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>'
 
 function create_table_skeleton(srcword, dstword) {
 	
@@ -156,7 +157,7 @@ function td_draw_path_arrows(td_ele) { // operate one <td>
 		
 		var arrow_ele = document.createElement("div");
 		
-		arrow_ele.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-right" class="svg-inline--fa fa-long-arrow-alt-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(202,202,202)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>'
+		arrow_ele.innerHTML = g_svg_right_arrow;
 			// the svg graph is a left-to-right pointing arrow
 		
 		arrow_ele.className = "arrow " + arrow_dir_class;
@@ -262,6 +263,47 @@ function startnew_from_editbox() {
 	}
 }
 
+function attach_step_numbering_div(cell, iStep, opcode) {
+	
+	// Context:
+	// In UI:
+	// 		From: [G][T][A][C][C][ ]
+	// 
+	// If cell points to second [C] above, iStep=2, and opcode="S3", then we'll get:
+	//
+	//		From: [G][T][A][C][C][ ]
+	//		                  (2)
+	//		                   ↓
+	//		                   #
+	//
+	// I call the new div "gate" which is a absolute-positioned ele relative to `cell`.
+	cell.style.position = "relative";
+	
+	var gate = document.createElement("div");
+	gate.className = "step_gate"; // see css for its trait.
+	cell.appendChild(gate);
+	
+	var step_circle = document.createElement("div");
+	step_circle.className = "step_circle incenter";
+	step_circle.textContent = iStep;
+	gate.appendChild(step_circle);
+	
+	var down_arrow_div = document.createElement("div");
+	down_arrow_div.className = "down_arrow_div";
+	down_arrow_div.innerHTML = g_svg_right_arrow;
+	gate.appendChild(down_arrow_div);
+	
+	var opcode_div = document.createElement("div");
+	opcode_div.className = "opcode";
+	if(opcode=="S2")
+		opcode_div.classList.add("opcode_Del");
+	else if(opcode=="S3")
+		opcode_div.classList.add("opcode_Rplc");
+	else if(opcode=="S4")
+		opcode_div.classList.add("opcode_Ins");
+	gate.appendChild(opcode_div);
+}
+
 function create_diff_chart(arcs) {
 	
 	// Yes, all info we need to create a diff-chart has been included in arcs[].
@@ -292,16 +334,17 @@ function create_diff_chart(arcs) {
 	fromgraph.appendChild(from_flexbox);
 	tograph.appendChild(to_flexbox);
 	
+	var iStep = 0; // big Step count
 	for(var i=0; i<arcs.length; i++) {
 		
 		var cs = arcs[i];
 		
-		// create flex item(cell) for "From".
+		// create flex item(cell) for "From:".
 
 		var cell = document.createElement("div");
 		cell.textContent = cs.old;
 		
-		cell.classList.add("expcell");
+		cell.className ="expcell incenter";
 		if(cs.code=="S1" || cs.code=="S2" || cs.code=="S3")
 			cell.classList.add("solidx");
 		else if(cs.code=="S4")
@@ -310,13 +353,18 @@ function create_diff_chart(arcs) {
 			alert("Error. Wrong cs.code in create_diff_chart()");
 
 		from_flexbox.appendChild(cell);
+		
+		if(cs.code!="S1") {
+			iStep++;
+			attach_step_numbering_div(cell, iStep, cs.code);
+		}
 
-		// create flex item(cell) for "To".
+		// create flex item(cell) for "To:".
 		
 		var cell = document.createElement("div");
 		cell.textContent = cs.cur;
 		
-		cell.classList.add("expcell");
+		cell.className ="expcell incenter";
 		if(cs.code=="S1")
 			cell.classList.add("solidx");
 		else if(cs.code=="S2")
@@ -528,4 +576,3 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 
-// from=GCTACC&to=CTCAG
