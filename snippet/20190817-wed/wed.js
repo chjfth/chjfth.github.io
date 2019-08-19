@@ -320,9 +320,9 @@ function create_diff_chart(arcs) {
 //	to_flexbox.innerHTML = "";
 //	to_flexbox.className = "expflex";
 
-	var ag_explain = $1(".ag_explain");
-	var fromgraph = $1(".fromgraph", ag_explain);
-	var tograph = $1(".tograph", ag_explain);
+	var draw_diff = $1(".draw_diff");
+	var fromgraph = $1(".fromgraph", draw_diff);
+	var tograph = $1(".tograph", draw_diff);
 	fromgraph.innerHTML = "";
 	tograph.innerHTML = "";
 	
