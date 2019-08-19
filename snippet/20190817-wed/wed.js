@@ -226,10 +226,7 @@ function draw_highlight_path(table_ele, stepchars) {
 	// stepchars sample: ['T', 'd', 'T', 'd', 'D', 'L']
 	// It describes the editing steps from (-1,-1) to the end.
 	
-	var allarrows = $("*");
-	for(var arrow of allarrows) {
-		arrow.classList.remove("highlight");
-	}
+	InEle_remove_matching_class(table_ele, "highlight");
 	
 	var idxsrc=-1, idxdst=-1;
 	for(var stepchar of stepchars) {
@@ -485,6 +482,33 @@ ExplainStep-4: G[]   T     A[]   C     C[A]  [G]*
 	var div_chart = create_diff_chart(arcs);
 }
 
+function find_td_by_idxStep(table_ele, path, idxStep) {
+	
+	// Input path sample: ['T', 'd', 'T', 'd', 'D', 'L']
+	// Note: the idxStep is the big-Step, which means we will skip 'd's.
+	
+	if(!idxStep) // should start with 1
+		alert("idxStep wrong input in find_td_by_idxStep() !");
+	
+	var idxsrc=-1, idxdst=-1, advStep=0;
+	for(var i=0; i<path.length; i++) {
+		var stepchar = path[i];
+		if(stepchar=='L')
+			idxdst++;
+		else if(stepchar=='T')
+			idxsrc++;
+		else if(stepchar=='D' || stepchar=='d')
+			idxsrc++, idxdst++;
+		
+		if(stepchar!='d')
+			advStep++;
+		
+		if(advStep==idxStep)
+			return get_cell(table_ele, idxsrc, idxdst);
+	}
+	return null;
+}
+	
 function draw_edw_table(srcword, dstword) {
 	
 //	var agcanvas = $(".agcanvas");
@@ -509,8 +533,10 @@ function draw_edw_table(srcword, dstword) {
 		paths.push(path);
 	}
 
-	draw_highlight_path(table, paths[0]);
-	explain_edw_steps(srcword, dstword, paths[0]);
+	var idxpath = 0;
+
+	draw_highlight_path(table, paths[idxpath]);
+	explain_edw_steps(srcword, dstword, paths[idxpath]);
 	
 	// Fill result into right pane.
 	$1(".rev_minsteps").textContent = minsteps;
@@ -532,9 +558,52 @@ function draw_edw_table(srcword, dstword) {
 	}
 
 	chpath.addEventListener("change", function(event) {
-		var idxpath = event.target.value;
+		idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
+		
+		InEle_remove_matching_class(table, "Step_flashing");
+	});
+	
+	//
+	// Prepare for Step circle clicking.
+	//
+	var td_flashing_prev, circle_flashing_prev;
+	//
+	var draw_diff = $1(".draw_diff");
+	draw_diff.addEventListener("click", function(event) {
+		
+		var circle_ele = event.target;
+		if(!circle_ele.classList.contains("step_circle"))
+			return;
+		
+		if(td_flashing_prev) {
+			td_flashing_prev.classList.remove("Step_flashing");
+		}
+		if(circle_flashing_prev) {
+			circle_flashing_prev.classList.remove("Step_flashing");
+		}
+
+		if(circle_ele==circle_flashing_prev) {
+			// user clicks it again, it means turning off the flashing, so return
+			td_flashing_prev = null;
+			circle_flashing_prev = null;
+			return;
+		}
+		
+		var idxStep = parseInt(circle_ele.textContent);
+		if(!idxStep) // should >0
+			alert("Wrong idxStep value in Step circle click listener!");
+
+		console.log("Click on Step #{0}-{1}".format(idxpath+1, idxStep));
+			
+		var td_flashing = find_td_by_idxStep(table, paths[idxpath], idxStep);
+		td_flashing.classList.add("Step_flashing");
+		
+		circle_ele.classList.add("Step_flashing");
+		
+		td_flashing_prev = td_flashing;
+		circle_flashing_prev = circle_ele;
 	});
 }
 

@@ -14,6 +14,7 @@
 
 :root {
 	--highlight-color: orange;
+	--flashing-dim-color: #f0f0f0;
 	--stepcircle-color: rgb(156,156,204);
 }
 
@@ -243,6 +244,19 @@ body {
 .result .click_hint {
 	color: grey;
 }
+
+.Step_flashing {
+	font-weight: bold;
+	text-shadow: 0 0 3px black;
+	animation: letter-flash 1s infinite;
+}
+@keyframes letter-flash {
+    0% { color: var(--flashing-dim-color); }
+    50% { color: var(--highlight-color); }
+    100% { color: var(--flashing-dim-color); }
+}
+
+
 
 /************************ Desktop Web Layout Override  ************************/
 

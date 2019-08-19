@@ -60,3 +60,9 @@ function $1(selector, context) {
     return (context || document).querySelector(selector);
 }
 
+function InEle_remove_matching_class(parent_ele, classname) {
+	var childs = $("."+classname, parent_ele);
+	for(var child of childs)
+		child.classList.remove(classname);
+}
+
