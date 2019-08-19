@@ -262,6 +262,76 @@ function startnew_from_editbox() {
 	}
 }
 
+function create_diff_chart(arcs) {
+	
+	// Yes, all info we need to create a diff-chart has been included in arcs[].
+	//
+	// We'll fill two flexbox here, each for one visual line.
+	//   From: [ ][ ][ ][ ][ ][ ]...
+	//   To:   [ ][ ][ ][ ][ ][ ]...
+
+//	var explain_steps_ele = $1(".explain_steps");
+//	var from_flexbox = $1(".fromcells", explain_steps_ele);
+//	var to_flexbox = $1(".tocells", explain_steps_ele);
+//	from_flexbox.innerHTML = "";
+//	from_flexbox.className = "expflex";
+//	to_flexbox.innerHTML = "";
+//	to_flexbox.className = "expflex";
+
+	var ag_explain = $1(".ag_explain");
+	var fromgraph = $1(".fromgraph", ag_explain);
+	var tograph = $1(".tograph", ag_explain);
+	fromgraph.innerHTML = "";
+	tograph.innerHTML = "";
+	
+	var from_flexbox = document.createElement("div");
+	var to_flexbox = document.createElement("div");
+	from_flexbox.className = "expflex";
+	to_flexbox.className = "expflex";
+	
+	fromgraph.appendChild(from_flexbox);
+	tograph.appendChild(to_flexbox);
+	
+	for(var i=0; i<arcs.length; i++) {
+		
+		var cs = arcs[i];
+		
+		// create flex item(cell) for "From".
+
+		var cell = document.createElement("div");
+		cell.textContent = cs.old;
+		
+		cell.classList.add("expcell");
+		if(cs.code=="S1" || cs.code=="S2" || cs.code=="S3")
+			cell.classList.add("solidx");
+		else if(cs.code=="S4")
+			cell.classList.add("blankc");
+		else
+			alert("Error. Wrong cs.code in create_diff_chart()");
+
+		from_flexbox.appendChild(cell);
+
+		// create flex item(cell) for "To".
+		
+		var cell = document.createElement("div");
+		cell.textContent = cs.cur;
+		
+		cell.classList.add("expcell");
+		if(cs.code=="S1")
+			cell.classList.add("solidx");
+		else if(cs.code=="S2")
+			cell.classList.add("blankc");
+		else if(cs.code=="S3" || cs.code=="S4")
+			cell.classList.add("solidy");
+		else
+			alert("Error. Wrong cs.code in create_diff_chart()");
+		
+		to_flexbox.appendChild(cell);
+	}
+	
+//	explain_steps_ele.appendChild(div_chart);
+}
+
 function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
 	
 	var msgs = [];
@@ -288,7 +358,7 @@ function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
 	console.log( "ExplainStep-{0}: ".format(istep) + msgs.join(" ") );
 }
 
-function explain_each_Step(srcword, dstword, path) {
+function explain_edw_steps(srcword, dstword, path) {
 
 	// We need a Charstate(cs) object for each char during our path run.
 	// Total Charstates may be longer than srcword(exactly + count of 'L's).
@@ -300,7 +370,7 @@ function explain_each_Step(srcword, dstword, path) {
 	
 	// Initialize arcs[] with srcword.
 	for(var c of srcword) {
-		arcs.push( {old:c, cur:c} ); // init state: all chars from srcword (S1)
+		arcs.push( {old:c, cur:c, code:"S1"} ); // init state: all chars from srcword (S1)
 		// Four cases('x' or 'y' represent any non-null char):
 		// (S1) old='x' and cur='x' : 'x' is from srcword
 		// (S2) old='x' and cur=''  : 'x' from srcword is delete(not exist in dstword)
@@ -328,18 +398,21 @@ function explain_each_Step(srcword, dstword, path) {
 			continue;
 		}
 		else if(stepchar=='D') {
-			arcs[csadv].cur = dstword[idxdst]; // S3
+			arcs[csadv].code = "S3";
+			arcs[csadv].cur = dstword[idxdst];
 			idxdst++;
 			csadv++;
 		}
 		else if(stepchar=='L') {
 			// insert a char from dstword at csadv location
-			arcs.splice(csadv, 0, {old:'', cur:dstword[idxdst]}); // S4
+			arcs.splice(csadv, 0, {old:'', cur:dstword[idxdst]});
+			arcs[csadv].code = "S4";
 			idxdst++;
 			csadv++;
 		}
 		else if(stepchar=='T') {
-			arcs[csadv].cur = ''; // S2
+			arcs[csadv].code = "S2";
+			arcs[csadv].cur = '';
 			csadv++;
 		}
 		
@@ -347,7 +420,7 @@ function explain_each_Step(srcword, dstword, path) {
 		log_Charstates(arcs, csadv-1, istep);
 	}
 	
-	/* Sample log_Charstates() output from this function:
+	/* Sample log_Charstates() output from this function: (each call prints one line)
 	
 ExplainStep-0: G     T     A     C     C    
 ExplainStep-1: G[]*  T     A     C     C    
@@ -360,6 +433,8 @@ ExplainStep-4: G[]   T     A[]   C     C[A]  [G]*
 	
 	Note: A big-Step means a true edit-distance Step, a small-step means an arrow in canvas table.
 	*/
+	
+	var div_chart = create_diff_chart(arcs);
 }
 
 function draw_edw_table(srcword, dstword) {
@@ -387,7 +462,7 @@ function draw_edw_table(srcword, dstword) {
 	}
 
 	draw_highlight_path(table, paths[0]);
-	explain_each_Step(srcword, dstword, paths[0]);
+	explain_edw_steps(srcword, dstword, paths[0]);
 	
 	// Fill result into right pane.
 	$1(".rev_minsteps").textContent = minsteps;
@@ -411,7 +486,7 @@ function draw_edw_table(srcword, dstword) {
 	chpath.addEventListener("change", function(event) {
 		var idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
-		explain_each_Step(srcword, dstword, paths[idxpath]);
+		explain_edw_steps(srcword, dstword, paths[idxpath]);
 	});
 }
 
