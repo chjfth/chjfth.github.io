@@ -73,10 +73,16 @@ body {
 */
 }
 
-.table1 td.hidden {
-	background-color: white;
+.table1 td.corner {
 	border-top: 0px;
 	border-left: 0px;
+	
+	background-color: white;
+	/* background-image: url('icons8-forward-arrow-96.png'); */
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAAAmJLR0QA/4ePzL8AAAF+SURBVHja7Zk9TkJBFEZPIRS0oBQsgMZKQ3QfWlAaJbHRWFBA6Q5gE+yBLdAYW4lbkPiHiT8RC2NiZh4V90Ju8h364Zw3w7zHPBBCCCHEivQ5iKx/zYJHDiPrL+Im/OkHTfivHzChn+j/JgT6Oe/xUJgQaBaUoAQlKEEJkRPqtBkyZsqMj4Kvtvo4JFS5ZMK3o7TjA0aDAfO1qRvPQokrntcubzYLTW43JG8ScMxLZP0TPiPrn29Q3kD/iK8lQz8xokOLGiWDLWKfmYd+c8nav+OMiuG9xUm/XLjzvNE1uebu+tArGHbKrvGd3U2/wWs27A07UfRhULDyt+PoV7PrP4+zeAAusoG7kfRhki2frUj69ex5/9T4+jsfLbazu24Fa3qef1yGyeAjPOj5HeyOk4AOuCaYn0vfJwEtcExwOFZPjzhq+OHyku89CSgTjHSDC4cCFKAABShAAQpQgAIUoAAFKEABClCAAhSgAAUoQAEKUIACFCCEEEIIIRJ+AHE9or1indxcAAAAAElFTkSuQmCC');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 80% 80%;	
 }
 
 .lettercells {

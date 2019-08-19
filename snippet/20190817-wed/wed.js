@@ -14,7 +14,7 @@ function create_table_skeleton(srcword, dstword) {
 			<col class="lettercells"></col><col class="initvalues"></col>
 		</colgroup>
 		<tr class="lettercells">
-			<td class="hidden"></td><td>·</td> <!-- dstlen <td>s later -->
+			<td class="corner"></td><td>·</td> <!-- dstlen <td>s later -->
 		</tr>
 		<tr class="initvalues"> <!-- this row for dstword -->
 			<td class="lettercells">·</td> <!-- dstword initvalues <td>s later -->
