@@ -66,3 +66,18 @@ function InEle_remove_matching_class(parent_ele, classname) {
 		child.classList.remove(classname);
 }
 
+
+function get_ele_xydiff(from1, to2) {
+    var rect1 = from1.getBoundingClientRect();
+	var rect2 = to2.getBoundingClientRect();
+	
+	return { x: rect2.x-rect1.x , y: rect2.y-rect1.y };
+}
+
+// cs: get computed (css) style 
+function cs(element, csspropname, pseudoElt) {
+	var s = window.getComputedStyle(element, pseudoElt);
+	return s.getPropertyValue(csspropname); // This can get custom property as well.
+
+	// Hint: To get a value from :root{...}, use cs(document.documentElement, "--floatbar-corner")
+}

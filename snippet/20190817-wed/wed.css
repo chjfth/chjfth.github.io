@@ -13,6 +13,10 @@
 }
 
 :root {
+	--agtable-fontsize-base: 2.0rem; /* must be in rem */
+	--agtable-td-size: 1.8em; /* must be in em, not rem */
+	--agtable-hilight2x2: calc(var(--agtable-td-size) * 2 + 2px);
+	
 	--highlight-color: orange;
 	--flashing-dim-color: #f0f0f0;
 	--stepcircle-color: rgb(156,156,204);
@@ -56,34 +60,59 @@ body {
 	margin: 0.5em 0.8em;
 /*	border: 1px dashed cyan;
 */
+	position: relative; /* base-frame for highlight2x2 div */
 }
+
+.hilight2x2 {
+	position: absolute; /* relative to the agtable */
+	z-index: 2;
+	top: 0em;
+	left: 0em;
+	visibility: hidden; /* will show when flashing a Step circle */
+	
+	font-size: var(--agtable-fontsize-base);
+	width: var(--agtable-hilight2x2);
+	height: var(--agtable-hilight2x2);
+	border: 3px var(--highlight-color) solid;
+/*	animation: box-flash 1s infinite;
+*/
+}
+@keyframes box-flash {
+    0% { border-color: var(--flashing-dim-color); }
+    50% { border-color: var(--highlight-color); }
+    100% { border-color: var(--flashing-dim-color); }
+}
+
+
 .result {
 	margin: 0.5em 0.8em;
 	padding: 0.2em;
 }
 
-.table1 {
-    font-size: 2rem;
+
+
+.agtable {
+    font-size: var(--agtable-fontsize-base);
 /*	border: 1px solid;
 */	border-collapse: collapse;
 }
 
-.table1 td {
-	width: 1.8em;
-	height: 1.8em;
+.agtable td {
+	width: var(--agtable-td-size);
+	height: var(--agtable-td-size);
 	border: 1px solid black;
 	text-align: center;
 	
 	position: relative;
 }
 
-.table1 td.highlight {
+.agtable td.highlight {
 	color: var(--highlight-color);
 /*	font-weight: bold;
 */
 }
 
-.table1 td.corner {
+.agtable td.corner {
 	border-top: 0px;
 	border-left: 0px;
 	

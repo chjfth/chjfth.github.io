@@ -21,7 +21,7 @@ function create_table_skeleton(srcword, dstword) {
 			<td class="lettercells">·</td> <!-- dstword initvalues <td>s later -->
 		</tr>
 	`
-	table.className= "table1";
+	table.className= "agtable";
 	
 	// fill dstword to table's first row
 	var dstword_tr = table.querySelector("tr.lettercells");
@@ -51,9 +51,11 @@ function create_table_skeleton(srcword, dstword) {
 		table.appendChild(tr);
 	}
 	
-	var agcanvas = document.querySelector(".agcanvas"); // algorithm canvas
-	agcanvas.innerHTML = ""; // clear canvas
-	agcanvas.appendChild(table)
+//	var agcanvas = $1(".agcanvas"); // algorithm canvas
+	var old_table = $1(".agtable");
+	old_table.parentElement.replaceChild(table, old_table);
+								//		agcanvas.innerHTML = ""; // clear canvas
+								// agcanvas.appendChild(table)
 		
 	return table;
 }
@@ -503,12 +505,40 @@ function find_td_by_idxStep(table_ele, path, idxStep) {
 		if(stepchar!='d')
 			advStep++;
 		
-		if(advStep==idxStep)
-			return get_cell(table_ele, idxsrc, idxdst);
+		if(advStep==idxStep) {
+			var td = get_cell(table_ele, idxsrc, idxdst);
+			return { td:td, idxsrc:idxsrc, idxdst:idxdst };
+		}
 	}
 	return null;
 }
+
+function show_hilight2x2_box(td_ele, idxsrc, idxdst) {
 	
+	// show the hilight2x2 box at td_ele's position
+	
+	if(idxsrc<0 || idxdst<0) {
+		hide_hilight2x2_box();
+		return; // no need to show the box
+	}
+	
+	var hibox = $1(".hilight2x2");
+	var agcanvas = $1(".agcanvas");
+	var posdiff = get_ele_xydiff(agcanvas, td_ele);
+	
+	hibox.style.left = "calc( {0}px - var(--agtable-td-size) )".format(posdiff.x);
+	hibox.style.top = "calc( {0}px - var(--agtable-td-size) )".format(posdiff.y);
+	
+	hibox.style.visibility = "visible";
+}
+
+function hide_hilight2x2_box() {
+	var hibox = $1(".hilight2x2");
+	hibox.style.left = "0px";
+	hibox.style.top = "0px";
+	hibox.style.visibility = "hidden";
+}
+
 function draw_edw_table(srcword, dstword) {
 	
 //	var agcanvas = $(".agcanvas");
@@ -563,6 +593,7 @@ function draw_edw_table(srcword, dstword) {
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
 		
 		InEle_remove_matching_class(table, "Step_flashing");
+		hide_hilight2x2_box();
 	});
 	
 	//
@@ -588,6 +619,7 @@ function draw_edw_table(srcword, dstword) {
 			// user clicks it again, it means turning off the flashing, so return
 			td_flashing_prev = null;
 			circle_flashing_prev = null;
+			hide_hilight2x2_box();
 			return;
 		}
 		
@@ -597,12 +629,14 @@ function draw_edw_table(srcword, dstword) {
 
 		console.log("Click on Step #{0}-{1}".format(idxpath+1, idxStep));
 			
-		var td_flashing = find_td_by_idxStep(table, paths[idxpath], idxStep);
-		td_flashing.classList.add("Step_flashing");
+		var flashing = find_td_by_idxStep(table, paths[idxpath], idxStep);
+		flashing.td.classList.add("Step_flashing");
+		
+		show_hilight2x2_box(flashing.td, flashing.idxsrc, flashing.idxdst);
 		
 		circle_ele.classList.add("Step_flashing");
 		
-		td_flashing_prev = td_flashing;
+		td_flashing_prev = flashing.td;
 		circle_flashing_prev = circle_ele;
 	});
 }
