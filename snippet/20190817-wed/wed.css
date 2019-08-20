@@ -104,6 +104,8 @@ body {
 	text-align: center;
 	
 	position: relative;
+	
+	transition: color 500ms;
 }
 
 .agtable td.highlight {
@@ -285,7 +287,12 @@ body {
     100% { color: var(--flashing-dim-color); }
 }
 
-
+.agcanvas .agtable .hide0 {
+	color: transparent;
+}
+.agcanvas .agtable .hide0 svg path {
+	fill: transparent;
+}
 
 /************************ Desktop Web Layout Override  ************************/
 

@@ -539,6 +539,26 @@ function hide_hilight2x2_box() {
 	hibox.style.visibility = "hidden";
 }
 
+function hide_trailing_tds(table_ele, srclen, dstlen, idxsrc, idxdst) {
+	// Hide <td>s after [idxsrc,idxdst].
+	// We do this when user is focusing on a Step by [idxsrc,idxdst] bcz 
+	// trailing/remaining cells are unrelated to current Step.
+	
+	for(var y=-2; y<srclen; y++) { // not optimal yet
+		for(var x=-2; x<dstlen; x++) {
+			if(y<=idxsrc && x<=idxdst)
+				continue;
+				
+			var td = get_cell(table_ele, y, x);
+			td.classList.add("hide0");
+		}
+	}
+}
+
+function cancel_hide_trailing_tds(table_ele) {
+	InEle_remove_matching_class(table_ele, "hide0");
+}
+
 function draw_edw_table(srcword, dstword) {
 	
 //	var agcanvas = $(".agcanvas");
@@ -594,6 +614,7 @@ function draw_edw_table(srcword, dstword) {
 		
 		InEle_remove_matching_class(table, "Step_flashing");
 		hide_hilight2x2_box();
+		cancel_hide_trailing_tds();
 	});
 	
 	//
@@ -614,6 +635,7 @@ function draw_edw_table(srcword, dstword) {
 		if(circle_flashing_prev) {
 			circle_flashing_prev.classList.remove("Step_flashing");
 		}
+		cancel_hide_trailing_tds();
 
 		if(circle_ele==circle_flashing_prev) {
 			// user clicks it again, it means turning off the flashing, so return
@@ -635,6 +657,8 @@ function draw_edw_table(srcword, dstword) {
 		show_hilight2x2_box(flashing.td, flashing.idxsrc, flashing.idxdst);
 		
 		circle_ele.classList.add("Step_flashing");
+		
+		hide_trailing_tds(table, srclen,dstlen, flashing.idxsrc,flashing.idxdst);
 		
 		td_flashing_prev = flashing.td;
 		circle_flashing_prev = circle_ele;
