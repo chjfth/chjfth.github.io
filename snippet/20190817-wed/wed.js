@@ -320,7 +320,7 @@ function create_diff_chart(arcs) {
 //	to_flexbox.className = "expflex";
 
 	var draw_diff = $1(".draw_diff");
-	var fromgraph = $1(".fromgraph", draw_diff);
+	var fromgraph = replace_old_ele_by_class("fromgraph", draw_diff); // $1(".fromgraph", draw_diff);
 	var tograph = $1(".tograph", draw_diff);
 	fromgraph.innerHTML = "";
 	tograph.innerHTML = "";
@@ -586,6 +586,7 @@ function draw_edw_table(srcword, dstword) {
 	var idxpath = 0;
 
 	draw_highlight_path(table, paths[idxpath]);
+	
 	explain_edw_steps(srcword, dstword, paths[idxpath]);
 	
 	// Fill result into right pane.
@@ -593,21 +594,17 @@ function draw_edw_table(srcword, dstword) {
 	$1(".rev_pathcount").textContent = paths.length;
 
 	// We need to create a NEW combobox(replacing the old), so that the NEW combobox 
-	// will always refer to the NEW `table` ele.
-	var chpath = $1(".choosepath");
-	var chpath_new = document.createElement("select");
-	chpath_new.classList.add("choosepath");
-	chpath.parentElement.replaceChild(chpath_new, chpath);
-	chpath = chpath_new;
+	// will always refer to the NEW `table` ele. (Same for draw_diff below)
+	var pathcombo = replace_old_ele_by_class("choosepath");
 	
 	for(var i=0; i<paths.length; i++) {
 		var opt = document.createElement("option");
 		opt.value = i;
 		opt.textContent = "Path #{0}".format(i+1); // todo: tells howmany L,D,T respectively
-		chpath.appendChild(opt);
+		pathcombo.appendChild(opt);
 	}
 
-	chpath.addEventListener("change", function(event) {
+	pathcombo.addEventListener("change", function(event) {
 		idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
@@ -622,7 +619,7 @@ function draw_edw_table(srcword, dstword) {
 	//
 	var td_flashing_prev, circle_flashing_prev;
 	//
-	var draw_diff = $1(".draw_diff");
+	var draw_diff = $1(".draw_diff .fromgraph"); // .fromgraph will always be a fresh one
 	draw_diff.addEventListener("click", function(event) {
 		
 		var circle_ele = event.target;

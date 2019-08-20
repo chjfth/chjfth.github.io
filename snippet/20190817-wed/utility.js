@@ -81,3 +81,16 @@ function cs(element, csspropname, pseudoElt) {
 
 	// Hint: To get a value from :root{...}, use cs(document.documentElement, "--floatbar-corner")
 }
+
+function replace_old_ele_by_class(classname, parent_ele) {
+
+	// Note: All content inside old_ele will be "lost", i.e. not copied to new_ele.
+
+	var old_ele = $1("."+classname, parent_ele);
+	
+	var new_ele = document.createElement(old_ele.tagName);
+	new_ele.classList.add(classname);
+	old_ele.parentElement.replaceChild(new_ele, old_ele);
+	
+	return new_ele;
+}
