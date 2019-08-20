@@ -320,7 +320,7 @@ function create_diff_chart(arcs) {
 //	to_flexbox.className = "expflex";
 
 	var draw_diff = $1(".draw_diff");
-	var fromgraph = replace_old_ele_by_class("fromgraph", draw_diff); // $1(".fromgraph", draw_diff);
+	var fromgraph = $1(".fromgraph", draw_diff);
 	var tograph = $1(".tograph", draw_diff);
 	fromgraph.innerHTML = "";
 	tograph.innerHTML = "";
@@ -565,6 +565,8 @@ function draw_edw_table(srcword, dstword) {
 	var srclen = srcword.length;
 	var dstlen = dstword.length;
 	
+	hide_hilight2x2_box();
+	
 	var table = create_table_skeleton(srcword, dstword); // table is the HTML <table> ele
 	
 	run_algorithm(table, srcword, dstword);
@@ -587,6 +589,12 @@ function draw_edw_table(srcword, dstword) {
 
 	draw_highlight_path(table, paths[idxpath]);
 	
+	var draw_diff = $1(".draw_diff"); 
+	var fromgraph_new = replace_old_ele_by_class("fromgraph", draw_diff);
+		// Always get a fresh-new .fromgraph element here.
+		// This must be called *before* explain_edw_steps(), so that 
+		// explain_edw_steps() will see a fresh-new .fromgraph element.
+	
 	explain_edw_steps(srcword, dstword, paths[idxpath]);
 	
 	// Fill result into right pane.
@@ -607,11 +615,11 @@ function draw_edw_table(srcword, dstword) {
 	pathcombo.addEventListener("change", function(event) {
 		idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
-		explain_edw_steps(srcword, dstword, paths[idxpath]);
-		
 		InEle_remove_matching_class(table, "Step_flashing");
 		hide_hilight2x2_box();
 		cancel_hide_trailing_tds();
+
+		explain_edw_steps(srcword, dstword, paths[idxpath]);
 	});
 	
 	//
@@ -619,8 +627,7 @@ function draw_edw_table(srcword, dstword) {
 	//
 	var td_flashing_prev, circle_flashing_prev;
 	//
-	var draw_diff = $1(".draw_diff .fromgraph"); // .fromgraph will always be a fresh one
-	draw_diff.addEventListener("click", function(event) {
+	fromgraph_new.addEventListener("click", function(event) {
 		
 		var circle_ele = event.target;
 		if(!circle_ele.classList.contains("step_circle"))
