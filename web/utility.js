@@ -158,6 +158,8 @@ function cs(element, csspropname, pseudoElt) {
 	// return s[csspropname]; // This cannot get custom property like '--floatbar-corner'.
 	
 	return s.getPropertyValue(csspropname); // This can get custom property.
+	
+	// Hint: To get a value from :root{...}, use cs(document.documentElement, "--floatbar-corner")
 }
 
 function get_background_parent(ele) {
