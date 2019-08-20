@@ -13,7 +13,8 @@
 }
 
 :root {
-	--agtable-fontsize-base: 2.0rem; /* must be in rem */
+	--agtable-fontsize-base: 2.0rem; /* must be in rem, use this as global agcanvas size */
+	
 	--agtable-td-size: 1.8em; /* must be in em, not rem */
 	--agtable-hilight2x2: calc(var(--agtable-td-size) * 2 + 2px);
 	
@@ -179,8 +180,9 @@ body {
 }
 
 .draw_diff {
-	margin: 1em 1em;
 	display: table;
+	margin: 1em 1em;
+	font-size: 1.24em;
 }
 
 .exprow {
@@ -192,7 +194,7 @@ body {
 }
 .exprow > *:first-child {
 	vertical-align: top;
-	font-size: 125%;
+	font-size: 0.87em;
 	color: gray;
 	text-align: right;
 	padding-right: 12px;
@@ -202,7 +204,7 @@ body {
 .expflex {
 	display: flex;
 
-	--expcell-width: 2.66em;
+	--expcell-width: 2.26em;
 }
 .expflex .expcell {
 /*	flex-basis: 3.52em;
@@ -227,7 +229,7 @@ body {
 
 .fromgraph .expflex {
 	/* make room for algoritm "Step" remark. */
-	margin-bottom: 6.66em;
+	margin-bottom: calc(var(--expcell-width) * 2.56);
 }
 
 .step_gate {
