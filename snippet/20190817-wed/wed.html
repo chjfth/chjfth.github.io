@@ -18,7 +18,7 @@
 	<form class="userinput">
 		<label>From:</label><input type="text" id="wordfrom"/>
 		
-		<label>To:</label><input type="text" id="wordto"/>
+		<label>To:</label><input type="text" id="wordto" autofocus/>
 		
 		<input type="submit" value="Start" id="startbtn"/>
 	</form>
@@ -52,7 +52,117 @@
 		</div>
 		
 		<div class="Step_explain">
-			<div class="click_hint">Hint: Click a step circle above to display/hide detail explanation. (pending)</div>
+			
+			<div class="click_hint">Hint: Click a step circle above to display/hide detail explanation.</div>
+			
+			<!-- Four cases for any one Step explain: "EdgeL", "EdgeT", "Diag0", "Diag1".
+
+			EdgeL: Current Step is focusing on a cell at left yellow edge. That is the case of "foo" → "".
+			
+			EdgeT: Current Step is focusing on a cell at top yellow edge. That is the case of "" → "foo" .
+
+			Diag0: Focusing on a normal white cell, and the top-left corner cell costs extra 0 step.
+			
+			Diag1: Focusing on a normal white cell, and the top-left corner cell costs extra 1 step.
+			
+			Any of the following <div> will tell in its class= whether it should appear for Edge, Diag0 or Diag1.
+			
+			 -->
+			<div class="EdgeL">
+				The flashing <span class="stepcount">@</span> 
+				means, from "<span class="_srcword_">@</span>" 
+				to "" (empty string), it costs <span class="stepcount">@</span> 
+				Steps, that is, delete all source word letters.
+			</div>
+			
+			<div class="EdgeT">
+				The flashing <span class="stepcount">@</span> 
+				means, from "" (empty string) to "<span class="_srcword_">@</span>" 
+				it costs <span class="stepcount">@</span> 
+				Steps, that is, insert all destination word letters.
+			</div>
+
+			<div class="Diag0 Diag1">
+				The flashing <span class="stepcount">_</span> 
+				means, from <span class="_srcword_">@</span> 
+				to <span class="_dstword_">@</span>, 
+				it costs <span class="stepcount">_</span> 
+				Steps, but how is this value determined?
+			</div>
+			
+			<div class="Diag0 Diag1">
+				That Step count is determined by comparing the total costs from three directions, and we will choose the one with the <u>minimum</u> cost.
+			</div>
+		
+			<div class="Diag0 Diag1">
+				<dl>
+					<dt>Direction one, via <b>Top</b></dt>
+					<dd>
+						Look at the value <span class="stepcountT">@</span> 
+						at adjacent top, it says, going from "<span class="_srcword">@</span>"
+						to "<span class="_dstword_">@</span>" 
+						costs <span class="stepcountT">@</span> Steps (we assume this to be true).
+						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						to "<span class="_dstword_">@</span>" 
+						costs <span class="stepcountT">@</span>+1=<span class="stepcountTT">@</span> Steps, 
+						that is, <u>delete</u> the final letter <span class="srcword_">@</span> .
+					</dd>
+					
+					<dt>Direction two, via <b>Left</b></dt>
+					<dd>
+						Look at the value <span class="stepcountL">@</span> 
+						at adjacent left, it says, going from "<span class="_srcword_">@</span>"
+						to "<span class="_dstword">@</span>" 
+						costs <span class="stepcountL">@</span> Steps (we assume this to be true).
+						Then, going from "<span class="_srcword_">@</span>" 
+						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
+						costs <span class="stepcountL">@</span>+1=<span class="stepcountLL">@</span> Steps, 
+						that is, <u>insert</u> the letter <span class="dstword_">@</span> at tail.
+					</dd>
+				</dl>
+			</div>
+
+			<div class="Diag0">
+				<dl>
+					<dt>Direction three, via <b>Top-left</b></dt>
+					<dd>
+						Look at the value <span class="stepcountD">@</span> 
+						at adjacent top-left, it says, going from "<span class="_srcword">@</span>"
+						to "<span class="_dstword">@</span>" 
+						costs <span class="stepcountD">@</span> Steps (we assume this to be true).
+						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
+						costs <span class="stepcountD">@</span>+0=<span class="stepcountDD">@</span> Steps, 
+						that is, the same letter from source word and destination word does not increase cost.
+					</dd>
+				</dl>
+			</div>
+
+			<div class="Diag1">
+				<dl>
+					<dt>Direction three, via <b>Top-left</b></dt>
+					<dd>
+						Look at the value <span class="stepcountD">@</span> 
+						at adjacent top-left, it says, going from "<span class="_srcword">@</span>"
+						to "<span class="_dstword">@</span>" 
+						costs <span class="stepcountD">@</span> Steps (we assume this to be true).
+						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
+						costs <span class="stepcountD">@</span>+1=<span class="stepcountDD">@</span> Steps, 
+						that is, <u>replace</u> the tail letter from <span class="srcword_">@</span>
+						to <span class="dstword_">@</span> .
+					</dd>
+				</dl>
+			</div>
+			
+			<div class="Diag0 Diag1">
+				The three directions produce three costs 
+				<span class="stepcountTT">@</span> ,
+				<span class="stepcountLL">@</span> and
+				<span class="stepcountDD">@</span> respectively, among which
+				<span class="stepcount">@</span> is the <u>minimum</u> .
+			</div>
+			
 		</div>
 	</div>
 

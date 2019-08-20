@@ -559,13 +559,85 @@ function cancel_hide_trailing_tds(table_ele) {
 	InEle_remove_matching_class(table_ele, "hide0");
 }
 
-function draw_edw_table(srcword, dstword) {
+function show_click_hint(is_show=true) {
+	var hint = $1(".click_hint");
+	hint.style.visibility = is_show ? "visible" : "hidden";
+}
+
+function hide_step_explain() {
+	show_click_hint(true);
+	
+	var parent = $1(".Step_explain");
+	InEle_remove_matching_class(parent, "expshow");
+}
+
+function explain_single_Step(table, srcword_all, dstword_all, idxsrc, idxdst) {
+	
+	var parent = $1(".Step_explain");
+	
+	var is_same = srcword_all[idxsrc]==dstword_all[idxdst];
+	
+	var expcase;
+	if(idxdst<0)
+		expcase = "EdgeL";
+	else if(idxsrc<0)
+		expcase = "EdgeT";
+	else if(is_same)
+		expcase = "Diag0";
+	else
+		expcase = "Diag1";
+	
+	show_click_hint(false);
+	InEle_remove_matching_class(parent, "expshow"); // hide all first.
+	
+	// Show matching explain <divs> by expcase.
+	var eles = $("*", parent);
+	for(var ele of eles) {
+		if(ele.classList.contains(expcase))
+			ele.classList.add("expshow");
+	}
+	
+	var stepcount = cell_value(table, idxsrc, idxdst);
+	var stepcountT = cell_value(table, idxsrc-1, idxdst);
+	var stepcountTT = stepcountT+1;
+	var stepcountL = cell_value(table, idxsrc, idxdst-1);
+	var stepcountLL = stepcountL+1;
+	var stepcountD = cell_value(table, idxsrc-1, idxdst-1);
+	var stepcountDD = stepcountD + (is_same ? 0 : 1);
+	
+	var _srcword = srcword_all.substring(0, idxsrc); // srcword except the final letter
+	var srcword_ = srcword_all.substring(idxsrc, idxsrc+1);  // srcword's final letter
+	var _srcword_ = _srcword + srcword_; // so they combine into srcword
+	
+	var _dstword = dstword_all.substring(0, idxdst);
+	var dstword_ = dstword_all.substring(idxdst, idxdst+1);
+	var _dstword_ = _dstword + dstword_;
+	
+	InEle_set_html_by_class(parent, "_srcword", _srcword);
+	InEle_set_html_by_class(parent, "srcword_", srcword_);
+	InEle_set_html_by_class(parent, "_srcword_", _srcword_);
+	//
+	InEle_set_html_by_class(parent, "_dstword", _dstword);
+	InEle_set_html_by_class(parent, "dstword_", dstword_);
+	InEle_set_html_by_class(parent, "_dstword_", _dstword_);
+
+	InEle_set_html_by_class(parent, "stepcount", stepcount);
+	InEle_set_html_by_class(parent, "stepcountT", stepcountT);
+	InEle_set_html_by_class(parent, "stepcountTT", stepcountTT);
+	InEle_set_html_by_class(parent, "stepcountL", stepcountL);
+	InEle_set_html_by_class(parent, "stepcountLL", stepcountLL);
+	InEle_set_html_by_class(parent, "stepcountD", stepcountD);
+	InEle_set_html_by_class(parent, "stepcountDD", stepcountDD);
+}
+
+function draw_edw_table(srcword, dstword) { // todo: rename to edw_refresh_all_ui()
 	
 //	var agcanvas = $(".agcanvas");
 	var srclen = srcword.length;
 	var dstlen = dstword.length;
 	
 	hide_hilight2x2_box();
+	hide_step_explain();
 	
 	var table = create_table_skeleton(srcword, dstword); // table is the HTML <table> ele
 	
@@ -617,6 +689,7 @@ function draw_edw_table(srcword, dstword) {
 		draw_highlight_path(table, paths[idxpath]);
 		InEle_remove_matching_class(table, "Step_flashing");
 		hide_hilight2x2_box();
+		hide_step_explain();
 		cancel_hide_trailing_tds();
 
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
@@ -646,6 +719,7 @@ function draw_edw_table(srcword, dstword) {
 			td_flashing_prev = null;
 			circle_flashing_prev = null;
 			hide_hilight2x2_box();
+			hide_step_explain();
 			return;
 		}
 		
@@ -664,6 +738,9 @@ function draw_edw_table(srcword, dstword) {
 		
 		hide_trailing_tds(table, srclen,dstlen, flashing.idxsrc,flashing.idxdst);
 		
+		explain_single_Step(table, srcword, dstword, flashing.idxsrc,flashing.idxdst);
+		
+		////
 		td_flashing_prev = flashing.td;
 		circle_flashing_prev = circle_ele;
 	});

@@ -21,6 +21,10 @@
 	--highlight-color: orange;
 	--flashing-dim-color: #f0f0f0;
 	--stepcircle-color: rgb(156,156,204);
+	
+	--colorT: blue;
+	--colorL: limegreen;
+	--colorD: magenta; 
 }
 
 body {
@@ -51,6 +55,10 @@ body {
 }
 .userinput input {
 	margin: auto 0.5em;
+	font-size: 1.08em;
+}
+.userinput #startbtn {
+	padding: 0.1em 1.55em;
 }
 
 .content {
@@ -294,6 +302,75 @@ body {
 }
 .agcanvas .agtable .hide0 svg path {
 	fill: transparent;
+}
+
+.Step_explain dl {
+	line-height: 1.77;
+}
+
+.Step_explain .stepcount {
+	color: var(--highlight-color);
+	font-weight: bold;
+}
+
+.Step_explain ._srcword ,
+.Step_explain ._dstword {
+	font-weight: bold;
+}
+.Step_explain .srcword_ ,
+.Step_explain .dstword_ {
+	font-weight: bold;
+	text-decoration: underline;
+}
+.Step_explain ._srcword_ ,
+.Step_explain ._dstword_ {
+	font-weight: bold;
+	color: grey;
+}
+
+.Step_explain .stepcountT ,
+.Step_explain .stepcountTT {
+	color: var(--colorT);
+}
+
+.Step_explain .stepcountL ,
+.Step_explain .stepcountLL {
+	color: var(--colorL);
+}
+
+.Step_explain .stepcountD ,
+.Step_explain .stepcountDD {
+	color: var(--colorD);
+}
+
+.Step_explain .stepcountT ,
+.Step_explain .stepcountL ,
+.Step_explain .stepcountD {
+	border: 1px dashed;
+    padding: 0em 0.2em;
+}
+.Step_explain .stepcountTT ,
+.Step_explain .stepcountLL ,
+.Step_explain .stepcountDD {
+	border: 1px solid;
+	font-weight: bold;
+    padding: 0em 0.2em;
+    background-color: #ffe8c0;
+}
+
+.Step_explain .EdgeL ,
+.Step_explain .EdgeT ,
+.Step_explain .Diag0 ,
+.Step_explain .Diag1 {
+	display: none;
+}
+
+.Step_explain .expshow {
+	display: inherit;
+}
+
+.Step_explain div {
+    margin: 0.5em 0.2em;
 }
 
 /************************ Desktop Web Layout Override  ************************/

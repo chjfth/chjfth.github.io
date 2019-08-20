@@ -66,6 +66,12 @@ function InEle_remove_matching_class(parent_ele, classname) {
 		child.classList.remove(classname);
 }
 
+function InEle_set_html_by_class(parent_ele, classname, html) {
+	var childs = $("."+classname, parent_ele);
+	for(var child of childs) {
+		child.innerHTML = html;
+	}
+}
 
 function get_ele_xydiff(from1, to2) {
     var rect1 = from1.getBoundingClientRect();
