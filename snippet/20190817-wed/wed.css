@@ -62,15 +62,32 @@ body {
 }
 
 .content {
-	display: block;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .agcanvas {
 	margin: 0.5em 0.8em;
+	flex-grow: 0;
+	flex-shrink: 0; /* so that table cells width/height keep proportional */
+	flex-basis: auto;
 /*	border: 1px dashed cyan;
 */
 	position: relative; /* base-frame for highlight2x2 div */
 }
+
+.result {
+	
+	/* Use flex-grow:1 so that text in .result pane extends to right window edge,
+	instead of wrapping at the diff graph width . */
+	flex-grow: 1; 
+
+	margin: 0.5em 0.8em;
+	padding: 0.5em;
+	flex-basis: 18rem;
+	border: 1px dashed;
+}
+
 
 .hilight2x2 {
 	position: absolute; /* relative to the agtable */
@@ -92,11 +109,6 @@ body {
     100% { border-color: var(--flashing-dim-color); }
 }
 
-
-.result {
-	margin: 0.5em 0.8em;
-	padding: 0.2em;
-}
 
 
 
@@ -404,25 +416,3 @@ body {
 }
 
 
-/************************ Desktop Web Layout Override  ************************/
-
-@media (min-width: 799.1px) /* when window width > 799.1px */
-{
-	.content {
-		display: flex;
-	}
-
-	.agcanvas {
-		flex-grow: 0;
-		flex-shrink: 0; /* so that table cells width/height keep proportional */
-		flex-basis: auto;
-/*		border: 1px dashed;
-*/	
-	}
-
-	.result {
-		flex-grow: 1;
-		flex-basis: 18rem;
-		border: 1px dashed;
-	}
-}
