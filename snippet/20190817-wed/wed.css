@@ -466,3 +466,13 @@ body {
 {
 	body { font-size: 0.72em; } /* even smaller text/images */
 }
+
+/* * IE WARNING * */
+.iewarn {
+	display: none;
+	background-color: #ffffa0;
+	color: #7e7020 !important;
+	border: 2px solid;
+	margin: 0.2em 0em;
+	padding: 0.644em;
+}

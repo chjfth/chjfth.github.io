@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<div class="iewarn">This webpage does not display correctly on IE browser. Viewing with Chrome 74+ achieves the best result.</div>
 
 <div class="headbar">
 	<div class="title">Find minimum edit distance between two words <span class="jimmchen">presented by <a href="https://www.linkedin.com/in/jimm-chen/" target="_blank">Jimm Chen</a></span>
@@ -179,3 +180,18 @@
 </div>
 
 </body>
+
+<script type="text/javascript">
+	// [2019-08-21] It seems I have to place IE checking and banner-warning code at end of html.
+	// If I place it in wed.js, IE11 will fail on wed.js's syntax error and gives no chance to 
+	// execute any Javascript code there.
+	(function warn_ie_old_browser() {
+//		alert("Checking IE.");
+		// Detect IE now, using code from: https://stackoverflow.com/a/20411654/151453
+
+		if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+			var iewarn = document.querySelector(".iewarn"); // ok with IE8
+			iewarn.style.display = "block"; 
+		}
+	})();
+</script>
