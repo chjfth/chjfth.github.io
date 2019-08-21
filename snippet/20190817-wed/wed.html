@@ -77,7 +77,7 @@
 			
 			<div class="EdgeT">
 				The flashing <span class="stepcount">@</span> 
-				means, from "" (empty string) to "<span class="_srcword_">@</span>" 
+				means, from "" (empty string) to "<span class="_srcword_">@</span>" ,
 				it costs <span class="stepcount">@</span> 
 				Steps, that is, insert all destination word letters.
 			</div>
@@ -102,9 +102,9 @@
 						at adjacent top, it says, going from "<span class="_srcword">@</span>"
 						to "<span class="_dstword_">@</span>" 
 						costs <span class="stepcountT">@</span> Steps (we assume this to be true).
-						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						Via this path, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
 						to "<span class="_dstword_">@</span>" 
-						costs <span class="stepcountT">@</span>+1=<span class="stepcountTT">@</span> Steps, 
+						would cost <span class="stepcountT">@</span>+1=<span class="stepcountTT">@</span> Steps, 
 						that is, <u>delete</u> the final letter <span class="srcword_">@</span> .
 					</dd>
 					
@@ -114,9 +114,9 @@
 						at adjacent left, it says, going from "<span class="_srcword_">@</span>"
 						to "<span class="_dstword">@</span>" 
 						costs <span class="stepcountL">@</span> Steps (we assume this to be true).
-						Then, going from "<span class="_srcword_">@</span>" 
+						Via this path, going from "<span class="_srcword_">@</span>" 
 						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
-						costs <span class="stepcountL">@</span>+1=<span class="stepcountLL">@</span> Steps, 
+						would cost <span class="stepcountL">@</span>+1=<span class="stepcountLL">@</span> Steps, 
 						that is, <u>insert</u> the letter <span class="dstword_">@</span> at tail.
 					</dd>
 				</dl>
@@ -130,9 +130,9 @@
 						at adjacent top-left, it says, going from "<span class="_srcword">@</span>"
 						to "<span class="_dstword">@</span>" 
 						costs <span class="stepcountD">@</span> Steps (we assume this to be true).
-						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						Via this path, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
 						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
-						costs <span class="stepcountD">@</span>+0=<span class="stepcountDD">@</span> Steps, 
+						would cost <span class="stepcountD">@</span>+0=<span class="stepcountDD">@</span> Steps, 
 						that is, the same letter from source word and destination word does not increase cost.
 					</dd>
 				</dl>
@@ -146,9 +146,9 @@
 						at adjacent top-left, it says, going from "<span class="_srcword">@</span>"
 						to "<span class="_dstword">@</span>" 
 						costs <span class="stepcountD">@</span> Steps (we assume this to be true).
-						Then, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
+						Via this path, going from "<span class="_srcword">@</span><span class="srcword_">@</span>" 
 						to "<span class="_dstword">@</span><span class="dstword_">@</span>"" 
-						costs <span class="stepcountD">@</span>+1=<span class="stepcountDD">@</span> Steps, 
+						would cost <span class="stepcountD">@</span>+1=<span class="stepcountDD">@</span> Steps, 
 						that is, <u>replace</u> the tail letter from <span class="srcword_">@</span>
 						to <span class="dstword_">@</span> .
 					</dd>

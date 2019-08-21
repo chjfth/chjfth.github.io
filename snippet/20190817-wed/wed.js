@@ -255,7 +255,7 @@ function startnew_from_editbox() {
 	var ed_wordto = document.getElementById("wordto");
 	
 	if(ed_wordfrom.value && ed_wordto.value) {
-		draw_edw_table(ed_wordfrom.value, ed_wordto.value);
+		edw_refresh_all_ui(ed_wordfrom.value, ed_wordto.value);
 	}
 	else {
 		alert("Invalid input.");
@@ -630,7 +630,31 @@ function explain_single_Step(table, srcword_all, dstword_all, idxsrc, idxdst) {
 	InEle_set_html_by_class(parent, "stepcountDD", stepcountDD);
 }
 
-function draw_edw_table(srcword, dstword) { // todo: rename to edw_refresh_all_ui()
+function Steps_count_each_ops(stepchars) {
+	// Input stepchars sample: ['T', 'd', 'T', 'd', 'D', 'L']
+	var opcounts = { "Delete":0, "Insert":0, "Replace":0 };
+	for(var c of stepchars) {
+//		opcounts[c] = (opcounts[c] || 0) + 1;
+		if(c=='T')
+			opcounts["Delete"]++;
+		else if(c=='L')
+			opcounts["Insert"]++;
+		else if(c=='D')
+			opcounts["Replace"]++;
+		else if(c!='d')
+			alert("Unexpected stepchar ('{0}') in Steps_count_each_ops()".format(c));
+	}
+	return opcounts;
+}
+
+function desc_Stepcount(stepchars) {
+	var opcounts = Steps_count_each_ops(stepchars);
+	var desc = "Delete:{0} Insert:{1} Replace:{2}".format(
+		opcounts["Delete"], opcounts["Insert"], opcounts["Replace"]);
+	return desc;
+}
+
+function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 	
 //	var agcanvas = $(".agcanvas");
 	var srclen = srcword.length;
@@ -680,7 +704,7 @@ function draw_edw_table(srcword, dstword) { // todo: rename to edw_refresh_all_u
 	for(var i=0; i<paths.length; i++) {
 		var opt = document.createElement("option");
 		opt.value = i;
-		opt.textContent = "Path #{0}".format(i+1); // todo: tells howmany L,D,T respectively
+		opt.textContent = "Path #{0} {1}".format(i+1, desc_Stepcount(paths[i]));
 		pathcombo.appendChild(opt);
 	}
 
@@ -770,8 +794,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	ed_wordfrom.value = wordfrom;
 	ed_wordto.value = wordto;
 	
-	draw_edw_table(wordfrom, wordto);
-//	draw_edw_table("Washington", "Wasingdon");
+	edw_refresh_all_ui(wordfrom, wordto);
+//	edw_refresh_all_ui("Washington", "Wasingdon");
 	
 	// Setup [Start] button so that user can refresh with a new pair of words.
 	//

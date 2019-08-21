@@ -193,6 +193,13 @@ body {
 	font-size: 1.24em;
 }
 
+.choosepath {
+	/* Without this 1em, combobox(<select>) font size will be less than 1em, 
+	bcz the combobox border and the text inside will add up to just 1em. */
+	font-size: 1em;
+	box-shadow: 0 0 3px 0px black;
+}
+
 .exprow {
 	display: table-row;
 }
@@ -313,18 +320,22 @@ body {
 	font-weight: bold;
 }
 
+.Step_explain [class*="srcword"],
+.Step_explain [class*="dstword"] {
+	font-family: Consolas, sans-serif;
+	font-weight: bold;
+}
 .Step_explain ._srcword ,
 .Step_explain ._dstword {
-	font-weight: bold;
+/*	font-weight: bold;
+*/
 }
 .Step_explain .srcword_ ,
 .Step_explain .dstword_ {
-	font-weight: bold;
 	text-decoration: underline;
 }
 .Step_explain ._srcword_ ,
 .Step_explain ._dstword_ {
-	font-weight: bold;
 	color: grey;
 }
 
