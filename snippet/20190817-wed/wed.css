@@ -13,9 +13,9 @@
 }
 
 :root {
-	--agtable-fontsize-base: 2.0rem; /* must be in rem, use this as global agcanvas size */
+	--agcanvas-fontsize-base: 2.0em;
 	
-	--agtable-td-size: 1.8em; /* must be in em, not rem */
+	--agtable-td-size: 1.8em;
 	--agtable-hilight2x2: calc(var(--agtable-td-size) * 2 + 2px);
 	
 	--highlight-color: orange;
@@ -39,19 +39,19 @@ body {
 }
 
 .headbar .title {
-	font-size: 1.6rem;
+	font-size: 1.35em;
 	font-weight: bold;
 }
 .headbar .jimmchen {
 	color: gray;
-	font-size: 0.7rem;
+	font-size: 0.56em;
 }
 .jimmchen a {
 	color: inherit;
 }
 
 .userinput {
-	padding: 1rem 0.2rem;
+	padding: 1em 0.2em;
 }
 .userinput input {
 	margin: auto 0.5em;
@@ -67,7 +67,9 @@ body {
 }
 
 .agcanvas {
-	margin: 0.5em 0.8em;
+	margin: 0.2em 0.4em;
+    font-size: var(--agcanvas-fontsize-base);
+
 	flex-grow: 0;
 	flex-shrink: 0; /* so that table cells width/height keep proportional */
 	flex-basis: auto;
@@ -82,9 +84,8 @@ body {
 	instead of wrapping at the diff graph width . */
 	flex-grow: 1; 
 
-	margin: 0.5em 0.8em;
-	padding: 0.5em;
-	flex-basis: 18rem;
+	margin: 0.2em 0.4em;
+	padding: 0.3em;
 	border: 1px dashed;
 }
 
@@ -96,7 +97,6 @@ body {
 	left: 0em;
 	visibility: hidden; /* will show when flashing a Step circle */
 	
-	font-size: var(--agtable-fontsize-base);
 	width: var(--agtable-hilight2x2);
 	height: var(--agtable-hilight2x2);
 	border: 3px var(--highlight-color) solid;
@@ -110,10 +110,7 @@ body {
 }
 
 
-
-
 .agtable {
-    font-size: var(--agtable-fontsize-base);
 /*	border: 1px solid;
 */	border-collapse: collapse;
 }
@@ -418,12 +415,37 @@ body {
 
 .footer {
 	color: grey;
-	font-size: 0.8rem;
+	font-size: 0.8em;
 }
 .footer a {
 	font-weight: bold;
 	color: var(--stepcircle-color);
 }
 .footer > div {
+    border-left: 4px solid;
+    margin: 0.2em 0em;
+    padding-left: 0.3em;
 }
 
+@media (max-width: 480px) /* when window width is small, like on a 4 inch phone */
+{
+	body { 
+		/* Make all things a bit smaller to show more on a small-size screen. */
+		font-size: 0.8em;
+	}
+
+	.userinput input {
+		width: 6em;
+	}
+
+	.userinput #startbtn {
+		width: 4em;
+		padding: 0em;
+		margin: 0em;
+	}
+}
+
+@media (max-width: 360px) /* when window width is small, like on a iPhone 5 */
+{
+	body { font-size: 0.72em; } /* even smaller text/images */
+}

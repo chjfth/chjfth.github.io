@@ -15,7 +15,7 @@ function create_table_skeleton(srcword, dstword) {
 			<col class="lettercells"></col><col class="initvalues"></col>
 		</colgroup>
 		<tr class="lettercells">
-			<td class="corner"></td><td>·</td> <!-- dstlen <td>s later -->
+			<td class="corner" onclick=""></td><td>·</td> <!-- dstlen <td>s later -->
 		</tr>
 		<tr class="initvalues"> <!-- this row for dstword -->
 			<td class="lettercells">·</td> <!-- dstword initvalues <td>s later -->
@@ -821,6 +821,12 @@ document.addEventListener("DOMContentLoaded", function(){
 		startnew_from_editbox();
 	});
 
+	// some debugging code
+	var tdcorner = $1("td.corner");
+	tdcorner.addEventListener("click", function(){ 
+		// Use alert() so that I can easily see it in phone/ipad.
+		alert("window.innerWidth = {0}".format(window.innerWidth));
+	});
 });
 
 
