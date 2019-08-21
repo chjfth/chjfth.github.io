@@ -144,8 +144,9 @@ body {
 
 .agtable td.highlight {
 	color: var(--highlight-color);
-/*	font-weight: bold;
-*/
+}
+.agtable td.Stepbold {
+	font-weight: bold;
 }
 
 .agtable td.corner {

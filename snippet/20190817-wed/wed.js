@@ -231,7 +231,7 @@ function draw_highlight_path(table_ele, stepchars) {
 	// stepchars sample: ['T', 'd', 'T', 'd', 'D', 'L']
 	// It describes the editing steps from (-1,-1) to the end.
 	
-	InEle_remove_matching_class(table_ele, "highlight");
+	InEle_remove_matching_class(table_ele, "highlight", "Stepbold");
 	
 	var idxsrc=-1, idxdst=-1;
 	for(var stepchar of stepchars) {
@@ -247,6 +247,8 @@ function draw_highlight_path(table_ele, stepchars) {
 		
 		var nextcell = get_cell_ele(table_ele, idxsrc, idxdst);
 		nextcell.classList.add("highlight");
+		if(stepchar!='d')
+			nextcell.classList.add("Stepbold");
 		
 		var arrow_ele = nextcell.querySelector(".arrow"+stepchar); // ".arrowL" etc
 		arrow_ele.classList.add("highlight");
