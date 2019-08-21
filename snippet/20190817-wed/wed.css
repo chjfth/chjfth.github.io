@@ -336,6 +336,7 @@ body {
 
 .rightpane .click_hint {
 	color: grey;
+	font-size: 0.85em;
 }
 
 .Step_flashing {

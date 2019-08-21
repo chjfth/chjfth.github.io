@@ -176,6 +176,7 @@
 <hr>
 <div class="maincol footer clearfix">
 	<div>最短编辑距离算法应用在哪里？听“得到 App”吴军讲《Google面试题——如何实现拼写纠错功能和拼写提示功能》（<a href="https://m.igetget.com/rush/course/index/VvdZ8Kq0L9Bmbeg6GDQq0zJXjhlMhJq6seMYzx3EoyN1Np35yRNYJA14lxn7W2Xa">在微信中打开</a>有效）</div>
+	<div>最短编辑距离算法具体代码见于 O'Reilly - Algorithms in a Nutshell, 2nd Edition (2016) p48-52, <a href="https://github.com/heineman/algorithms-nutshell-2ed/blob/master/PythonCode/adk/dynamic.py">dynamic.py</a> （<a href="http://shop.oreilly.com/product/0636920032885.do">官网</a>）</div>
 	<div>维基百科 <a href="https://en.wikipedia.org/wiki/Edit_distance">Edit distance</a> (英文) </div>
 </div>
 
@@ -183,12 +184,11 @@
 
 <script type="text/javascript">
 	// [2019-08-21] It seems I have to place IE checking and banner-warning code at end of html.
-	// If I place it in wed.js, IE11 will fail on wed.js's syntax error and gives no chance to 
+	// If I place it in wed.js, IE11 will fail on wed.js's syntax error and give no chance to 
 	// execute any Javascript code there.
 	(function warn_ie_old_browser() {
 //		alert("Checking IE.");
 		// Detect IE now, using code from: https://stackoverflow.com/a/20411654/151453
-
 		if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
 			var iewarn = document.querySelector(".iewarn"); // ok with IE8
 			iewarn.style.display = "block"; 
