@@ -798,6 +798,7 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 }
 
 function slide_agcanvas_into_view() {
+
 	// When right-pane has more height than left-pane, and user scrolls down halfway,
 	// we'd like to slide agcanvas(inside left-pane) into viewport to keep agcanvas visible.
 	// This is done by adding agcanvas's top-margin.
@@ -806,7 +807,7 @@ function slide_agcanvas_into_view() {
 	var rp = $1(".rightpane");
 	var rpc = $1(".rpcontent");
 	var agcanvas = $1(".agcanvas", lp);
-	var wholepage_scrollpos = document.documentElement.scrollTop;
+	var wholepage_scrollpos = get_scrollTop();
 	
 	if(lp.offsetLeft==rp.offsetLeft) {
 		// right-pane is now wrapped to second row, so no need to slide canvas.
@@ -858,6 +859,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		startnew_from_editbox();
 	});
 
+	console.log("MMMM----");
 	window.addEventListener("scroll", slide_agcanvas_into_view);
 
 	// some debugging code
