@@ -740,7 +740,7 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 	}
 
 	pathcombo.addEventListener("change", function(event) {
-		idxpath = event.target.value;
+		idxpath = parseInt(event.target.value);
 		draw_highlight_path(table, paths[idxpath]);
 		InEle_remove_matching_class(table, "Step_flashing");
 		hide_step_explain();
