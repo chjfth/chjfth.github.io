@@ -66,21 +66,24 @@ body {
 	flex-wrap: wrap;
 }
 
-.agcanvas {
+.leftpane {
 	margin: 0.2em 0.4em;
-    font-size: var(--agcanvas-fontsize-base);
 
 	flex-grow: 0;
 	flex-shrink: 0; /* so that table cells width/height keep proportional */
 	flex-basis: auto;
 /*	border: 1px dashed cyan;
 */
-	position: relative; /* base-frame for highlight2x2 div */
 }
 
-.result {
+.agcanvas {
+	position: relative; /* base-frame for highlight2x2 div */
+    font-size: var(--agcanvas-fontsize-base);
+}
+
+.rightpane {
 	
-	/* Use flex-grow:1 so that text in .result pane extends to right window edge,
+	/* Use flex-grow:1 so that text in .rightpane extends to right window edge,
 	instead of wrapping at the diff graph width . */
 	flex-grow: 1; 
 
@@ -330,7 +333,7 @@ body {
 	transform: translateY(0.11em);
 }
 
-.result .click_hint {
+.rightpane .click_hint {
 	color: grey;
 }
 
