@@ -84,6 +84,19 @@ body {
 	instead of wrapping at the diff graph width . */
 	flex-grow: 1; 
 
+	/* NOTE: A subtle problem here. Under premise of flexbox's `flex-wrap:wrap`, with width:222px here, 
+	it roughly means: If browser window width is 800px, and if flexbox's left-pane exceeds 800-222=578px,
+	the right-pane will be pushed down to next row. 
+	
+	But can we leave `width:auto` here? No. If so, a long enough text line will cause the right-pane to 
+	be pushed to next row -- leaving a possibly very wide blank area on the first row, which is not what I desire.
+	
+	Then how do we determine the value 222px? In this very wed.html case, we have to determine it dynamically.
+	We should check the width of the diff-chart("From: To: chart"), and use that width here. 
+	Of course, this should be dynamically set by Javascript code. 
+	*/
+	width: 222px; /* set it as a casual initial here. */
+
 	margin: 0.2em 0.4em;
 	padding: 0.3em;
 	border: 1px dashed;

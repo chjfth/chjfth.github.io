@@ -379,7 +379,11 @@ function create_diff_chart(arcs) {
 		to_flexbox.appendChild(cell);
 	}
 	
-//	explain_steps_ele.appendChild(div_chart);
+//	console.log("draw_diff.offsetWidth="+draw_diff.offsetWidth); // debug
+	var result_pane = $1(".result");
+	const safe_margin = 60; // px
+	result_pane.style.width = (draw_diff.offsetWidth+safe_margin)+"px"; 
+		// Important! See css .result for reason.
 }
 
 function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
