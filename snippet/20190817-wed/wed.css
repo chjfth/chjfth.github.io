@@ -416,3 +416,14 @@ body {
 }
 
 
+.footer {
+	color: grey;
+	font-size: 0.8rem;
+}
+.footer a {
+	font-weight: bold;
+	color: var(--stepcircle-color);
+}
+.footer > div {
+}
+
