@@ -73,23 +73,26 @@ function get_cell(table, idxsrc, idxdst) {
 	var td_eles = tr_ele.querySelectorAll("td");
 	var td_ele  = td_eles[2+idxdst];
 	
-	return td_ele;
+	var text = td_ele.textContent.trim();
+	
+	var val = text ? parseInt(text) : -1;
+	
+	return {ele:td_ele, val:val};
 }
 
+function get_cell_ele(table, idxsrc, idxdst) {
+	var cell = get_cell(table, idxsrc, idxdst);
+	return cell.ele;
+}
 function cell_value(table, idxsrc, idxdst) {
 	
 	if(idxsrc==-2 || idxdst==-2) {
-		// out-of-bound, we return a very big number for later easy coding
+		// out-of-bound, we return a very big number for later easy coding in run_algorithm()
 		return 10000; 
 	}
 	
-	var td_ele = get_cell(table, idxsrc, idxdst);
-	
-	if(td_ele.textContent.trim()=="")
-		return -1; // as null value
-	
-	var val = parseInt( td_ele.textContent );
-	return val;
+	var cell = get_cell(table, idxsrc, idxdst);
+	return cell.val;
 }
 
 function run_algorithm(table, srcword, dstword) {
@@ -102,7 +105,7 @@ function run_algorithm(table, srcword, dstword) {
 	{	
 		for(var idst=-1; idst<dstlen; idst++)
 		{
-			var td_now = get_cell(table, isrc, idst);
+			var td_now = get_cell_ele(table, isrc, idst);
 
 			if(isrc==-1 && idst==-1) {
 				td_now.textContent = "0";
@@ -198,7 +201,7 @@ function *find_editing_paths(table_ele, idxsrc, idxdst) {
 	// We're at one of the "normal" white cells.
 	// There may be multiple arrows pointing to this cell, so we need to collect them all.
 	
-	var td_ele = get_cell(table_ele, idxsrc, idxdst);
+	var td_ele = get_cell_ele(table_ele, idxsrc, idxdst);
 	var pathchars = td_ele.getAttribute("pathchars");
 	
 	for(var i=0; i<pathchars.length; i++) {
@@ -242,7 +245,7 @@ function draw_highlight_path(table_ele, stepchars) {
 		else
 			alert("stepchar error in draw_highlight_path()");
 		
-		var nextcell = get_cell(table_ele, idxsrc, idxdst);
+		var nextcell = get_cell_ele(table_ele, idxsrc, idxdst);
 		nextcell.classList.add("highlight");
 		
 		var arrow_ele = nextcell.querySelector(".arrow"+stepchar); // ".arrowL" etc
@@ -506,7 +509,7 @@ function find_td_by_idxStep(table_ele, path, idxStep) {
 			advStep++;
 		
 		if(advStep==idxStep) {
-			var td = get_cell(table_ele, idxsrc, idxdst);
+			var td = get_cell_ele(table_ele, idxsrc, idxdst);
 			return { td:td, idxsrc:idxsrc, idxdst:idxdst };
 		}
 	}
@@ -526,8 +529,8 @@ function show_hilight2x2_box(td_ele, idxsrc, idxdst) {
 	var agcanvas = $1(".agcanvas");
 	var posdiff = get_ele_xydiff(agcanvas, td_ele);
 	
-	hibox.style.left = "calc( {0}px - var(--agtable-td-size) )".format(posdiff.x);
-	hibox.style.top = "calc( {0}px - var(--agtable-td-size) )".format(posdiff.y);
+	hibox.style.left = "calc( {0}px - var(--agtable-td-size) - 1px )".format(posdiff.x);
+	hibox.style.top = "calc( {0}px - var(--agtable-td-size) - 1px )".format(posdiff.y);
 	
 	hibox.style.visibility = "visible";
 }
@@ -549,7 +552,7 @@ function hide_trailing_tds(table_ele, srclen, dstlen, idxsrc, idxdst) {
 			if(y<=idxsrc && x<=idxdst)
 				continue;
 				
-			var td = get_cell(table_ele, y, x);
+			var td = get_cell_ele(table_ele, y, x);
 			td.classList.add("hide0");
 		}
 	}
@@ -564,11 +567,16 @@ function show_click_hint(is_show=true) {
 	hint.style.visibility = is_show ? "visible" : "hidden";
 }
 
-function hide_step_explain() {
-	show_click_hint(true);
+function hide_step_explain(is_click_hint=true) {
+	show_click_hint(is_click_hint);
 	
-	var parent = $1(".Step_explain");
-	InEle_remove_matching_class(parent, "expshow");
+	hide_hilight2x2_box();
+	
+	var stepexplain = $1(".Step_explain");
+	InEle_remove_matching_class(stepexplain, "expshow");
+	
+	var agtable = $1(".agtable");
+	InEle_remove_matching_class(agtable, "dashedboxT", "dashedboxL", "dashedboxD");
 }
 
 function explain_single_Step(table, srcword_all, dstword_all, idxsrc, idxdst) {
@@ -587,8 +595,7 @@ function explain_single_Step(table, srcword_all, dstword_all, idxsrc, idxdst) {
 	else
 		expcase = "Diag1";
 	
-	show_click_hint(false);
-	InEle_remove_matching_class(parent, "expshow"); // hide all first.
+	hide_step_explain(false); 
 	
 	// Show matching explain <divs> by expcase.
 	var eles = $("*", parent);
@@ -597,13 +604,27 @@ function explain_single_Step(table, srcword_all, dstword_all, idxsrc, idxdst) {
 			ele.classList.add("expshow");
 	}
 	
-	var stepcount = cell_value(table, idxsrc, idxdst);
-	var stepcountT = cell_value(table, idxsrc-1, idxdst);
+	var curcell = get_cell(table, idxsrc, idxdst);
+	var stepcount = curcell.val;
+	show_hilight2x2_box(curcell.ele, idxsrc, idxdst);
+
+	var cellT = get_cell(table, idxsrc-1, idxdst);
+	var stepcountT = cellT.val;
 	var stepcountTT = stepcountT+1;
-	var stepcountL = cell_value(table, idxsrc, idxdst-1);
+	//
+	var cellL = get_cell(table, idxsrc, idxdst-1);
+	var stepcountL = cellL.val;
 	var stepcountLL = stepcountL+1;
-	var stepcountD = cell_value(table, idxsrc-1, idxdst-1);
+	//
+	var cellD = get_cell(table, idxsrc-1, idxdst-1);
+	var stepcountD = cellD.val;
 	var stepcountDD = stepcountD + (is_same ? 0 : 1);
+	//
+	if(idxsrc>=0 && idxdst>=0) {
+		cellT.ele.classList.add("dashedboxT");
+		cellL.ele.classList.add("dashedboxL");
+		cellD.ele.classList.add("dashedboxD");
+	}
 	
 	var _srcword = srcword_all.substring(0, idxsrc); // srcword except the final letter
 	var srcword_ = srcword_all.substring(idxsrc, idxsrc+1);  // srcword's final letter
@@ -660,7 +681,6 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 	var srclen = srcword.length;
 	var dstlen = dstword.length;
 	
-	hide_hilight2x2_box();
 	hide_step_explain();
 	
 	var table = create_table_skeleton(srcword, dstword); // table is the HTML <table> ele
@@ -672,7 +692,7 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 		td_draw_path_arrows(td);
 	}
 
-	var minsteps = cell_value(table, srclen-1, dstlen-1); // return number
+	var minsteps = cell_value(table, srclen-1, dstlen-1); // return a number
 
 	var paths = [];
 	var pathgen = find_editing_paths(table, srclen-1, dstlen-1);
@@ -712,7 +732,6 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 		idxpath = event.target.value;
 		draw_highlight_path(table, paths[idxpath]);
 		InEle_remove_matching_class(table, "Step_flashing");
-		hide_hilight2x2_box();
 		hide_step_explain();
 		cancel_hide_trailing_tds();
 
@@ -742,7 +761,6 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 			// user clicks it again, it means turning off the flashing, so return
 			td_flashing_prev = null;
 			circle_flashing_prev = null;
-			hide_hilight2x2_box();
 			hide_step_explain();
 			return;
 		}
@@ -755,8 +773,6 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 			
 		var flashing = find_td_by_idxStep(table, paths[idxpath], idxStep);
 		flashing.td.classList.add("Step_flashing");
-		
-		show_hilight2x2_box(flashing.td, flashing.idxsrc, flashing.idxdst);
 		
 		circle_ele.classList.add("Step_flashing");
 		

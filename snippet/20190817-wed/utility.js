@@ -60,11 +60,19 @@ function $1(selector, context) {
     return (context || document).querySelector(selector);
 }
 
-function InEle_remove_matching_class(parent_ele, classname) {
+function InEle_remove_matching_class1(parent_ele, classname) {
 	var childs = $("."+classname, parent_ele);
 	for(var child of childs)
 		child.classList.remove(classname);
 }
+
+function InEle_remove_matching_class(parent_ele, classnames /*...*/) {
+
+	for(var i=1; i<arguments.length; i++) {
+		InEle_remove_matching_class1(parent_ele, arguments[i]);
+	}
+}
+
 
 function InEle_set_html_by_class(parent_ele, classname, html) {
 	var childs = $("."+classname, parent_ele);

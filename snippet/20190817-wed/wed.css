@@ -135,6 +135,25 @@ body {
     background-position: 80% 80%;	
 }
 
+.agtable td[class*="dashedbox"]:before {
+	content: " ";
+	position: absolute;
+	top: 0.2em;
+	bottom: 0.2em;
+	left: 0.2em;
+	right: 0.2em;
+	border: 1px dashed;
+}
+.agtable td.dashedboxT:before {
+	border-color: var(--colorT);
+}
+.agtable td.dashedboxL:before {
+	border-color: var(--colorL);
+}
+.agtable td.dashedboxD:before {
+	border-color: var(--colorD);
+}
+
 .lettercells {
 	background-color: #aaa;
 }
@@ -383,6 +402,7 @@ body {
 .Step_explain div {
     margin: 0.5em 0.2em;
 }
+
 
 /************************ Desktop Web Layout Override  ************************/
 
