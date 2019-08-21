@@ -124,7 +124,12 @@ function run_algorithm(table, srcword, dstword) {
 			
 			// Now we'll pick the minimum ones from the three cost values.
 			// as feasible editing step.
-			var minval = Math.min(leftcost, diagcost, topcost);
+			var minval;
+			if(meet_equal)
+				minval = diagv; // this is a quick optimize
+			else
+				minval = Math.min(leftcost, diagcost, topcost);
+			
 			td_now.textContent = minval;
 			
 			// More than one path can produce the same min value, 
