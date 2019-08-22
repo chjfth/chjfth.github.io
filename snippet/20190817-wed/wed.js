@@ -272,7 +272,9 @@ function startnew_from_editbox() {
 	}
 }
 
-function attach_step_numbering_div(cell, iStep, opcode) {
+function attach_step_numbering_div(cell, iStep, cs) {
+	
+	var opcode=cs.code, oldc=cs.old, newc=cs.cur;
 	
 	// Context:
 	// In UI:
@@ -304,12 +306,19 @@ function attach_step_numbering_div(cell, iStep, opcode) {
 	
 	var opcode_div = document.createElement("div");
 	opcode_div.className = "opcode";
-	if(opcode=="Del")
+	
+	if(opcode=="Del") {
 		opcode_div.classList.add("opcode_Del");
-	else if(opcode=="Rplc")
+		step_circle.title = "Delete letter " + oldc; // mouse-over tooltip
+	}
+	else if(opcode=="Rplc") {
 		opcode_div.classList.add("opcode_Rplc");
-	else if(opcode=="Ins")
+		step_circle.title = "Replace letter {0} with {1}".format(oldc, newc);
+	}
+	else if(opcode=="Ins") {
 		opcode_div.classList.add("opcode_Ins");
+		step_circle.title = "Insert letter " + newc;
+	}
 	gate.appendChild(opcode_div);
 }
 
@@ -365,7 +374,7 @@ function create_diff_chart(arcs) {
 		
 		if(cs.code!="Keep") {
 			iStep++;
-			attach_step_numbering_div(cell, iStep, cs.code);
+			attach_step_numbering_div(cell, iStep, cs);
 		}
 
 		// create flex item(cell) for "To:".
