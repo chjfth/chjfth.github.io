@@ -859,8 +859,12 @@ document.addEventListener("DOMContentLoaded", function(){
 		startnew_from_editbox();
 	});
 
-	console.log("MMMM----");
-	window.addEventListener("scroll", slide_agcanvas_into_view);
+	window.addEventListener("scroll", function(event){ 
+		slide_agcanvas_into_view();
+	});
+	window.addEventListener("resize", function(event){ 
+		slide_agcanvas_into_view();
+	});
 
 	// some debugging code
 	var tdcorner = $1("td.corner");

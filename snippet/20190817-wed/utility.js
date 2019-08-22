@@ -133,7 +133,7 @@ function get_ele_xydiff(from1, to2) {
     var rect1 = from1.getBoundingClientRect();
 	var rect2 = to2.getBoundingClientRect();
 	
-	return { x: rect2.x-rect1.x , y: rect2.y-rect1.y };
+	return { x: rect2.left-rect1.left , y: rect2.top-rect1.top };
 }
 
 // cs: get computed (css) style 
