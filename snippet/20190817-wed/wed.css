@@ -218,12 +218,7 @@ body {
 	transform: rotate(0.25turn);
 }
 
-.arrow svg {
-	/* todo: I don't know why I need this ajustment to cut-off some of the arrow <svg>'s margins. */
-	transform: translateY(-0.22em);
-}
-
-.arrow.highlight svg path {
+svg.arrow.highlight path {
 	fill: var(--highlight-color);
 }
 
