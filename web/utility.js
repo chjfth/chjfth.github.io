@@ -13,12 +13,12 @@ var IsSafari = (function() {
 		isSafari = true;
 	}
 	
-	return () => isSafari;
+	return () => isSafari; // so always return the cached isSafari value.
 })();
 
 function get_scrollTop() { return my_scrollTop(); }
 function set_scrollTop(val) { my_scrollTop(val); }
-
+//
 var my_scrollTop = (function() {
 	
 	// Use this function to work around [Chrome,Firefox] and [iOS/Safari]'s 
