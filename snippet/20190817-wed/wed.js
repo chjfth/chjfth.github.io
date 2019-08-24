@@ -224,7 +224,7 @@ function *find_editing_paths(table_ele, idxsrc, idxdst) {
 			alert("pathchars error!");
 		
 		var pathgen = find_editing_paths(table_ele, idxsrc+offset_src, idxdst+offset_dst);
-		for(let path of pathgen) {
+		for(var path of pathgen) {
 			path.push(pathchar);
 			yield path;
 		}
@@ -422,7 +422,11 @@ function log_Charstates(arcs, _csadv, istep) { // only for debug purpose
 			msg += "[{0}]".format(cur);         // [y]
 		
 		var suffix = i==_csadv ? "*" : ""; // use * to mark current advancing mark into arcs[]
-		msgs.push( (msg+suffix).padEnd(5) );
+		try {
+			msgs.push( (msg+suffix).padEnd(5) );
+		} catch (e) {
+			msgs.push( msg+suffix ); // Firefox 40 does not have .padEnd() yet.
+		}
 	}
 	
 	console.log( "ExplainStep-{0}: ".format(istep) + msgs.join(" ") );
@@ -716,7 +720,7 @@ function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw
 
 	var paths = [];
 	var pathgen = find_editing_paths(table, srclen-1, dstlen-1);
-	for(let path of pathgen) {
+	for(var path of pathgen) {
 //		console.log(path); // debug
 		paths.push(path);
 	}
