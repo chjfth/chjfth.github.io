@@ -84,7 +84,7 @@ function fillArray(value, len) {
 
 // https://css-tricks.com/snippets/javascript/get-url-variables/
 // If the URL ends with ?param=val , get_url_variable("param") will return "val".
-function get_url_variable(variable)
+function get_url_variable(variable, default_val)
 {
 	var query = window.location.search.substring(1);
 	var vars = query.split("&");
@@ -92,7 +92,7 @@ function get_url_variable(variable)
 		var pair = vars[i].split("=");
 		if(pair[0] == variable){return pair[1];}
 	}
-	return(false);
+	return default_val ? default_val : null;
 }
 
 //

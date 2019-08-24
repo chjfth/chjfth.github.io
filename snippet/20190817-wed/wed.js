@@ -695,7 +695,7 @@ function desc_Stepcount(stepchars) {
 	return desc;
 }
 
-function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
+function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw_table()
 	
 //	var agcanvas = $(".agcanvas");
 	var srclen = srcword.length;
@@ -721,7 +721,11 @@ function edw_refresh_all_ui(srcword, dstword) { // old name: draw_edw_table()
 		paths.push(path);
 	}
 
-	var idxpath = 0;
+	if(idxpath>=paths.length) {
+		alert("The path# parameter({0}) from URL exceeds total path count({1}), I'll use path#0 instead.".format(
+			idxpath+1, paths.length));
+		idxpath = 0;
+	}
 
 	draw_highlight_path(table, paths[idxpath]);
 	
@@ -841,23 +845,19 @@ document.addEventListener("DOMContentLoaded", function(){
 
 //	alert("AAA");
 
-	var wordfrom = "GTACC"; // default
-	var wordto = "TCAG"; // default
-
-	var wordfrom_url = get_url_variable("from");
-	var wordto_url = get_url_variable("to");
-	
-	if(wordfrom_url && wordto_url) {
-		wordfrom = wordfrom_url;
-		wordto = wordto_url;
-	}
+	var wordfrom = get_url_variable("from", "GTACC");
+	var wordto = get_url_variable("to", "TCAG");
+	var idxpath = parseInt(get_url_variable("path", "1"));
+	if(!idxpath) // user inputs 0 or some non-number value
+		idxpath = 1;
+	idxpath--; // make it zero-based
 	
 	var ed_wordfrom = document.getElementById("wordfrom");
 	var ed_wordto = document.getElementById("wordto");
 	ed_wordfrom.value = wordfrom;
 	ed_wordto.value = wordto;
 	
-	edw_refresh_all_ui(wordfrom, wordto);
+	edw_refresh_all_ui(wordfrom, wordto, idxpath);
 //	edw_refresh_all_ui("Washington", "Wasingdon");
 	
 	// Setup [Start] button so that user can refresh with a new pair of words.
