@@ -699,6 +699,47 @@ function desc_Stepcount(stepchars) {
 	return desc;
 }
 
+function on_click_step_circle(circle_ele, idxpath, stepchars, prev, ro) {
+
+	var idxStep = parseInt(circle_ele.textContent);
+	if(!idxStep) // should >0
+		alert("Wrong idxStep value in Step circle click listener!");
+
+	console.log("Click on Step circle #{0}-{1}".format(idxpath+1, idxStep));
+
+	if(!circle_ele.classList.contains("step_circle"))
+		return;
+	
+	if(prev.td) {
+		prev.td.classList.remove("Step_flashing");
+	}
+	if(prev.circle) {
+		prev.circle.classList.remove("Step_flashing");
+	}
+	cancel_hide_trailing_tds();
+
+	if(circle_ele==prev.circle) {
+		// user clicks it again, it means turning off the flashing, so return
+		prev.td = null;
+		prev.circle = null;
+		hide_step_explain();
+		return;
+	}
+	
+	var flashing = find_td_by_idxStep(ro.table, stepchars, idxStep);
+	flashing.td.classList.add("Step_flashing");
+	
+	circle_ele.classList.add("Step_flashing");
+	
+	hide_trailing_tds(ro.table, ro.srclen,ro.dstlen, flashing.idxsrc,flashing.idxdst);
+	
+	explain_single_Step(ro.table, ro.srcword,ro.dstword, flashing.idxsrc,flashing.idxdst);
+	
+	////
+	prev.td = flashing.td;
+	prev.circle = circle_ele;
+}
+
 function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw_table()
 	
 //	var agcanvas = $(".agcanvas");
@@ -766,51 +807,19 @@ function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
 	});
 	
+	// Prepare for Step circle highlighting
+//	show_hilight2x2_box(curcell.ele, idxsrc, idxdst);
+	
 	//
 	// Prepare for Step circle clicking.
 	//
-	var td_flashing_prev, circle_flashing_prev;
+	var prevflashing = { td:undefined, circle:undefined }; // td_flashing_prev, circle_flashing_prev;
+	var ro = { table:table, srcword:srcword, dstword:dstword, srclen:srclen, dstlen:dstlen}; // ro: (read-only)
+		// todo: can I pass these easily? as a full closure object?
 	//
 	fromgraph_new.addEventListener("click", function(event) {
-		
 		var circle_ele = event.target;
-		if(!circle_ele.classList.contains("step_circle"))
-			return;
-		
-		if(td_flashing_prev) {
-			td_flashing_prev.classList.remove("Step_flashing");
-		}
-		if(circle_flashing_prev) {
-			circle_flashing_prev.classList.remove("Step_flashing");
-		}
-		cancel_hide_trailing_tds();
-
-		if(circle_ele==circle_flashing_prev) {
-			// user clicks it again, it means turning off the flashing, so return
-			td_flashing_prev = null;
-			circle_flashing_prev = null;
-			hide_step_explain();
-			return;
-		}
-		
-		var idxStep = parseInt(circle_ele.textContent);
-		if(!idxStep) // should >0
-			alert("Wrong idxStep value in Step circle click listener!");
-
-		console.log("Click on Step #{0}-{1}".format(idxpath+1, idxStep));
-			
-		var flashing = find_td_by_idxStep(table, paths[idxpath], idxStep);
-		flashing.td.classList.add("Step_flashing");
-		
-		circle_ele.classList.add("Step_flashing");
-		
-		hide_trailing_tds(table, srclen,dstlen, flashing.idxsrc,flashing.idxdst);
-		
-		explain_single_Step(table, srcword, dstword, flashing.idxsrc,flashing.idxdst);
-		
-		////
-		td_flashing_prev = flashing.td;
-		circle_flashing_prev = circle_ele;
+		on_click_step_circle(circle_ele, idxpath, paths[idxpath], prevflashing, ro);
 	});
 }
 
