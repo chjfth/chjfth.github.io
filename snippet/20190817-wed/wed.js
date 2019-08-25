@@ -27,7 +27,7 @@ function create_table_skeleton(srcword, dstword) {
 	var dstword_tr = table.querySelector("tr.lettercells");
 	for(var i=0; i<dstlen; i++) {
 		var td = document.createElement("td");
-		td.innerText = dstword[i];
+		td.textContent = dstword[i]; // Firefox 40 does not support .innerText, so use .textContent
 		dstword_tr.appendChild(td);
 	}
 	
@@ -35,7 +35,7 @@ function create_table_skeleton(srcword, dstword) {
 	var dstvalue0_tr = table.querySelector("tr.initvalues");
 	for(var i=0; i<=dstlen; i++) {
 		 var td = document.createElement("td");
-		 td.innerText = i;
+//		 td.textContent = i; // this is not required, bcz run_algorithm() will fill them.
 		 dstvalue0_tr.appendChild(td);
 	}
 	
@@ -43,19 +43,15 @@ function create_table_skeleton(srcword, dstword) {
 	for(var i=0; i<srclen; i++) {
 		var tr = document.createElement("tr");
 		
-		var intr = "<td>{0}</td><td>{1}</td>".format(srcword[i], i+1);
-		intr += "<td></td>".repeat(dstlen);
+		var intr = "<td>{0}</td>".format(srcword[i]) + "<td></td>".repeat(dstlen+1);
 		
 		tr.innerHTML = intr;
 		
 		table.appendChild(tr);
 	}
 	
-//	var agcanvas = $1(".agcanvas"); // algorithm canvas
 	var old_table = $1(".agtable");
 	old_table.parentElement.replaceChild(table, old_table);
-								//		agcanvas.innerHTML = ""; // clear canvas
-								// agcanvas.appendChild(table)
 		
 	return table;
 }
