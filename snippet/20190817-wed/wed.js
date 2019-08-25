@@ -699,17 +699,17 @@ function desc_Stepcount(stepchars) {
 	return desc;
 }
 
-function on_click_step_circle(circle_ele, idxpath, stepchars, prev, ro) {
+function on_click_stepcircle(circle_ele, idxpath, stepchars, prev, ro) {
 
+	if(!circle_ele.classList.contains("step_circle"))
+		return;
+	
 	var idxStep = parseInt(circle_ele.textContent);
 	if(!idxStep) // should >0
 		alert("Wrong idxStep value in Step circle click listener!");
 
 	console.log("Click on Step circle #{0}-{1}".format(idxpath+1, idxStep));
 
-	if(!circle_ele.classList.contains("step_circle"))
-		return;
-	
 	if(prev.td) {
 		prev.td.classList.remove("Step_flashing");
 	}
@@ -738,6 +738,26 @@ function on_click_step_circle(circle_ele, idxpath, stepchars, prev, ro) {
 	////
 	prev.td = flashing.td;
 	prev.circle = circle_ele;
+}
+
+function on_hovering_stepcircle(event, table, stepchars) {
+	var circle_ele = event.target;
+	var evttype = event.type;
+//	console.log(">>> "+event.type);
+
+	if(!circle_ele.classList.contains("step_circle"))
+		return;
+
+	var idxStep = parseInt(circle_ele.textContent);
+	var focusing = find_td_by_idxStep(table, stepchars, idxStep);
+	
+	if(evttype=="mouseover") {
+	var curcell = get_cell(table, focusing.idxsrc, focusing.idxdst);
+		show_hilight2x2_box(curcell.ele, focusing.idxsrc, focusing.idxdst);
+	}
+	else if(evttype=="mouseout") {
+		hide_hilight2x2_box();
+	}
 }
 
 function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw_table()
@@ -797,29 +817,39 @@ function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw
 		pathcombo.appendChild(opt);
 	}
 
+	var prevflashing = { td:undefined, circle:undefined }; // td_flashing_prev, circle_flashing_prev;
+
 	pathcombo.addEventListener("change", function(event) {
 		idxpath = parseInt(event.target.value);
 		draw_highlight_path(table, paths[idxpath]);
 		InEle_remove_matching_class(table, "Step_flashing");
 		hide_step_explain();
 		cancel_hide_trailing_tds();
+		
+		prevflashing.td = undefined, prevflashing.circle = undefined;
 
 		explain_edw_steps(srcword, dstword, paths[idxpath]);
 	});
 	
-	// Prepare for Step circle highlighting
-//	show_hilight2x2_box(curcell.ele, idxsrc, idxdst);
-	
 	//
 	// Prepare for Step circle clicking.
 	//
-	var prevflashing = { td:undefined, circle:undefined }; // td_flashing_prev, circle_flashing_prev;
 	var ro = { table:table, srcword:srcword, dstword:dstword, srclen:srclen, dstlen:dstlen}; // ro: (read-only)
 		// todo: can I pass these easily? as a full closure object?
 	//
 	fromgraph_new.addEventListener("click", function(event) {
 		var circle_ele = event.target;
-		on_click_step_circle(circle_ele, idxpath, paths[idxpath], prevflashing, ro);
+		on_click_stepcircle(circle_ele, idxpath, paths[idxpath], prevflashing, ro);
+	});
+
+	// Prepare for Step circle highlighting
+	fromgraph_new.addEventListener("mouseover", function(event) {
+		if(!prevflashing.circle)
+			on_hovering_stepcircle(event, table, paths[idxpath]);
+	});
+	fromgraph_new.addEventListener("mouseout", function(event) {
+		if(!prevflashing.circle)
+			on_hovering_stepcircle(event, table, paths[idxpath]);
 	});
 }
 
