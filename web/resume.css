@@ -743,6 +743,12 @@ quote {
 	background-color: rgb(234, 248, 255);
 }
 
+.duallang.itembrief, 
+.duallang.bounding.itembrief {
+	border-left: 5px solid #668;
+}
+
+
 .imagerow {
 	display: flex;
 	align-items: stretch; /* so to make left-block & right-block same height */
