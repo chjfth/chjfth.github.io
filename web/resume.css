@@ -231,6 +231,7 @@ tt {
 }
 .hx_text {
 	display: inline-block;
+	vertical-align: top;
 	margin: 0px;
 }
 
