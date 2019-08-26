@@ -220,6 +220,20 @@ tt {
 	overflow: hidden; /* Delete this prop may sometimes help diagnose layout problem. */
 }
 
+.hx_corner_secnum { /* Section numbering "1", "3.2" etc before <h1>, <h2> etc. */
+	display: inline-block;
+	color: white;
+	background-color: grey;
+	font-size: 0.7rem;
+	padding: 0rem 0.5rem;
+	border-radius: 0.2rem;
+	vertical-align: top;
+}
+.hx_text {
+	display: inline-block;
+	margin: 0px;
+}
+
 .langsel {
 	display: flex;
 	height: var(--langsel-height);
@@ -913,6 +927,9 @@ quote {
 		width: var(--sidecol-width);
 	}
 
+	.hx_corner_secnum { 
+		display: none; /* Bcz user can check TOC to know current section number. */
+	}
 /*	.portrait {
 		float: none;
 		margin: auto;

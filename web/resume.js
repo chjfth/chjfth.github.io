@@ -657,18 +657,30 @@ function prepare_toc_syncing() {
 		var cssqlang = ".lang-cn0 , .lang-en0";
 		var langs_ele = hele.querySelectorAll(cssqlang);
 		if(langs_ele) {
+
+			// Add small corner numbering to main-content hx.
+			var hx_text_ele = hele.querySelector(".hx_text"); // Use ".hx_text" in html is suggested since 2019-08-26
+			if(hx_text_ele && hx_text_ele.parentElement==hele) {
+				var hx_corner_secnum = document.createElement("div");
+				hx_corner_secnum.className = "hx_corner_secnum";
+				hx_corner_secnum.textContent = seqs_str;
+				hele.insertBefore(hx_corner_secnum, hx_text_ele.nextSibling); // insert after hx_text_ele
+			}
 			
 			//
 			// Make a clone of original hx, and tweak it to be an item in TOC.
 			//
 			
-			var hele_clone = hele.cloneNode(true);
-			var eles = querySelectorAll_directchild(hele_clone, "*");
-								//			var eles = hele_clone.querySelectorAll("*");
+			var hele_clone = hx_text_ele ?  hx_text_ele.cloneNode(true) : hele.cloneNode(true);
+			var lang_eles;
+			if(hx_text_ele)
+				lang_eles = hele_clone.querySelectorAll(".hx_text > *"); 
+			else
+				lang_eles = querySelectorAll_directchild(hele_clone, "*");
 			
 			// remove everything except elements with '.lang-cn0 , .lang-en0'
 			
-			for(var ele of eles) { // note: DO NOT use the live `hele_clone.childNodes`, bcz we'll be removing child from it.
+			for(var ele of lang_eles) { // note: DO NOT use the live `hele_clone.childNodes`, bcz we'll be removing child from it.
 				
 				var ok = false;
 				if(!ele.classList) {
@@ -700,6 +712,11 @@ function prepare_toc_syncing() {
 				
 				// Here, hele_clone updating done.
 			}
+			
+			if(!hele_clone.firstElementChild) {
+				AssertFail("Error Meet lang-tag wrong position on: " + hele.id);
+			}
+			
 			inner = '<div class="">{0}</div>'.format(hele_clone.innerHTML);
 		}
 		else {

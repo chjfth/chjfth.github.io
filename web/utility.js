@@ -124,12 +124,12 @@ function AssertIt(value, errormsg, color) {
 		
 		var csstext = "color:{0}; ".format(color);
 		
-		csstext += "border:1px solid; background-color:#fee;" 
+		csstext += "border:1px solid; background-color:#fee; position:relative; z-index:44";
 		
 		if(g_fixedpos) {
 			// Enable this to have a always visible error-debugging pane.
 			// [2019-07-25] This is useful when I want to debug "scroll" events on an iPad.
-			csstext += "position:fixed; z-index:14; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;"
+			csstext += "position:fixed; left:100px; top:0px; right:0px; bottom:50px; overflow:auto;";
 		}
 		
 		results.style.cssText = csstext;
