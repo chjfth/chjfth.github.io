@@ -638,11 +638,11 @@ function prepare_toc_syncing() {
 	//
 	
 	var hxgen = scan_hx_headings(document.body, 1, 3);
-	for(let hxobj of hxgen) {
+	for(var hxobj of hxgen) {
 
-		var hele = hxobj.hele;
+		var hele = hxobj.hele; // the html element of <h1>, <h2>, <h3> etc
 		var depth = hxobj.seqs.length-1;
-		var seqs_str = hxobj.seqs.join("."); // Sample: "1", "1.2", "1.2.3" ...
+		var seqs_str = hxobj.seqs.join("."); // Sample: "1", "1.2", "1.2.3" etc
 
 		ar_hx_seqs.push(seqs_str);
 		// console.log(">>> "+seqs_str+ " - " + hele.textContent); // debug
@@ -653,7 +653,7 @@ function prepare_toc_syncing() {
 		var inner = "";
 		
 		// `hele` may probably have `<div class="lang-cn0" style="display: block; height: 43px;">...</div>`
-		// in its content. If so, we have to add seqs_str to those child elements.
+		// in its content. If so, we have to add seqs_str to those child elements. (todo: comment fix)
 		var cssqlang = ".lang-cn0 , .lang-en0";
 		var langs_ele = hele.querySelectorAll(cssqlang);
 		if(langs_ele) {
@@ -697,11 +697,13 @@ function prepare_toc_syncing() {
 				else {
 					ele.parentNode.removeChild(ele);
 				}
+				
+				// Here, hele_clone updating done.
 			}
-			inner = '<div class="toc_depth{0}">{1}</div>'.format(depth, hele_clone.innerHTML);
+			inner = '<div class="">{0}</div>'.format(hele_clone.innerHTML);
 		}
 		else {
-			// this case untested (todo)
+			// No dual-lang inside this hele, this case untested (todo)
 			inner = '{0} {1}'.format(seqs_str, hele.innerHTML);
 		}
 		
@@ -712,7 +714,8 @@ function prepare_toc_syncing() {
 			inner);
 		
 		toc_html += div_oneh;
-	}
+	
+	} // for(var hxobj of hxgen)
 
 	var tocdiv = document.querySelector(".toctext");
 	tocdiv.innerHTML = toc_html;
