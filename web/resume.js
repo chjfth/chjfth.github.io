@@ -1171,6 +1171,8 @@ function chj_check_strict_mode() {
 		// var bad_octal = 077; 
 			// SyntaxError in strict mode.
 			// But we can't use this, bcz it throws before this function body is executed.
+			
+		// [2019-08-31] Alternative to try: undefined(); // TypeError: undefined is not a function
 	
 	} catch (e) {
 		// OK. We catch the error, so strict mode is effective.
