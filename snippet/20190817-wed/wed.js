@@ -1,5 +1,7 @@
 "use strict"
 
+var g_msgbar;
+
 const g_svg_right_arrow = '<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(202,202,202)" d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path></svg>'
 
 function create_table_skeleton(srcword, dstword) {
@@ -831,7 +833,7 @@ function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw
 	// Prepare for Step circle clicking.
 	//
 	var ro = { table:table, srcword:srcword, dstword:dstword, srclen:srclen, dstlen:dstlen}; // ro: (read-only)
-		// todo: can I pass these easily? as a full closure object?
+		// TODO: can I pass these easily? as a full closure object?
 	//
 	fromgraph_new.addEventListener("click", function(event) {
 		var circle_ele = event.target;
@@ -890,7 +892,7 @@ function setup_copyurl() {
 		var strfrom = $1("#wordfrom").value;
 		var strto = $1("#wordto").value;
 		if(!strfrom && !strto) {
-			// todo: give user a feedback.
+			g_msgbar.addmsg("From: word and To: word are both empty. Do nothing.", MessageBar.Warn, 2000);
 			return;
 		}
 		
@@ -903,21 +905,33 @@ function setup_copyurl() {
 		ed_urltext.setSelectionRange(0, 99999);
 		try {
 			document.execCommand("copy");
+			g_msgbar.addmsg("URL copied to clipboard: "+fullurl, MessageBar.Info, 2000);
 		}
 		catch(e) {
 			// On firefox 40, this copy operation is not allow by JS engine.
 			// So give user a feed back.
-			alert("Sorry, Copying to URL is not allowed by this web browser.."); 
+			g_msgbar.addmsg("Sorry, Copying to URL is not allowed by this web browser.", MessageBar.Warn); 
 		}
 	});
+}
+
+function setup_messagebar() {
+	// We need to do two things accordingly to make this create_MessageBar work.
+	// (1) Prepare an empty <div id="messagbar></div> element in .html so that the API
+	//     knows where to display that message bar.
+	// (2) It means we should correspondingly prepare css rules .msgbar_error{ ... } etc
+	//     to decorate those different types of messages.
+	g_msgbar = create_MessageBar("messagebar", "msgbar_error", "msgbar_warn", "msgbar_info");
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
+
 document.addEventListener("DOMContentLoaded", function(){
 
 //	alert("AAA");
+	setup_messagebar();
 
 	var wordfrom = get_url_variable("from", "GTACC");
 	var wordto = get_url_variable("to", "TCAG");
@@ -955,7 +969,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	var tdcorner = $1("td.corner");
 	tdcorner.addEventListener("click", function(){ 
 		// Use alert() so that I can easily see it in phone/ipad.
-		alert("window.innerWidth = {0}".format(window.innerWidth));
+		g_msgbar.addmsg("window.innerWidth = {0}".format(window.innerWidth), MessageBar.Info, 3000);
 	});
 });
 

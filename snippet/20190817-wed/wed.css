@@ -84,6 +84,25 @@ body {
 	pointer-events: none;
 }
 
+[class^="msgbar"] {
+	margin: 4px;
+	font-size: 0.8em;
+	border: 1px solid;
+	border-radius: 0.24em;
+	padding: 0.4em;
+}
+.msgbar_error {
+	color: red;
+	background-color: #fdd;
+}
+.msgbar_warn {
+	color: brown;
+	background-color: #ffd;
+}
+.msgbar_info {
+	color: blue;
+	background-color: #dff;
+}
 
 .content {
 	display: flex;

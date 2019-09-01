@@ -157,5 +157,62 @@ function replace_old_ele_by_class(classname, parent_ele) {
 	return new_ele;
 }
 
+////////////////////////////  class MessageBar ///////////////////////////
+// Class-instance implementation using UDJS3 CH5 Object-link pattern.
 
+var MessageBar = // the "class" definition
+{
+	init : function(div_id, cssclass_error, cssclass_warn, cssclass_info)
+	{
+		this.div_id = div_id;
+		this.div = document.getElementById(div_id);
+		if(!this.div)
+			return false;
+		
+		this.cssclasses = [cssclass_error, cssclass_warn, cssclass_info];
+		
+		return true;
+	},
+	
+	addmsg : function(msgtext, msgtype, autoclear_ms)
+	{
+		if(!(msgtype>=0 && msgtype<=2))
+			msgtype = MessageBar.Info;
+		
+		var msgdiv_innerhtml = `<div style="flex-grow:1"></div>
+	<div style="flex-basis:1em; flex-grow:0; flex-shrink:0; cursor:pointer"></div>
+`
+		var crosssvg = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><g><path style="fill:grey;" d="M89.233,21.263L78.737,10.767c-2.484-2.484-6.512-2.484-8.996,0L50,30.508L30.258,10.767 c-2.484-2.484-6.512-2.484-8.996,0L10.767,21.263c-2.484,2.484-2.484,6.512,0,8.996L30.509,50L10.767,69.741 c-2.484,2.484-2.484,6.512,0,8.996l10.496,10.495c2.484,2.484,6.512,2.484,8.996,0L50,69.491l19.742,19.741 c2.484,2.484,6.512,2.484,8.996,0l10.496-10.495c2.484-2.484,2.484-6.512,0-8.996L69.491,50l19.742-19.741 C91.717,27.774,91.717,23.747,89.233,21.263z"/></g></svg>'
+			
+		var msgdiv = document.createElement("div");
+		msgdiv.style.display = "flex";
+		msgdiv.innerHTML = msgdiv_innerhtml;
+		msgdiv.className = this.cssclasses[msgtype];
+		msgdiv.firstElementChild.textContent = msgtext;
+		
+		this.div.appendChild(msgdiv);
+		
+		function msgdiv_remove_self(event) {
+			msgdiv.parentElement.removeChild(msgdiv);
+		}
+		
+		if(autoclear_ms>0) {
+			setTimeout(msgdiv_remove_self, autoclear_ms);
+		}
+		
+		var close_btn = msgdiv.firstElementChild.nextElementSibling;
+		close_btn.innerHTML = crosssvg;
+		close_btn.addEventListener("click", msgdiv_remove_self);
+	},
+	
+	// msgtype enums:
+	Error : 0,
+	Warn : 1,
+	Info : 2,
+};
 
+function create_MessageBar(div_id, cssclass_error, cssclass_warn, cssclass_info) {
+	var msgbar = Object.create(MessageBar);
+	msgbar.init(div_id, cssclass_error, cssclass_warn, cssclass_info);
+	return msgbar;
+}
