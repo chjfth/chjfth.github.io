@@ -877,6 +877,41 @@ function slide_agcanvas_into_view() {
 	agcanvas.style.marginTop = marginpx +"px";
 }
 
+function setup_copyurl() {
+
+	var btn_copy = document.getElementById("copyurl");
+	
+	btn_copy.addEventListener("click", function(event) {
+		event.preventDefault();
+		
+		var baseurl = location.href.split('?');
+
+		// grab text of From: & To: and compose final URL.
+		var strfrom = $1("#wordfrom").value;
+		var strto = $1("#wordto").value;
+		if(!strfrom && !strto) {
+			// todo: give user a feedback.
+			return;
+		}
+		
+		var fullurl = baseurl + "?from={0}&to={1}".format(strfrom, strto);
+		
+		var ed_urltext = document.getElementById("urltext");
+		ed_urltext.value = fullurl;
+		
+		ed_urltext.select();
+		ed_urltext.setSelectionRange(0, 99999);
+		try {
+			document.execCommand("copy");
+		}
+		catch(e) {
+			// On firefox 40, this copy operation is not allow by JS engine.
+			// So give user a feed back.
+			alert("Sorry, Copying to URL is not allowed by this web browser.."); 
+		}
+	});
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Initialization code:
 //////////////////////////////////////////////////////////////////////////////
@@ -913,6 +948,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	window.addEventListener("resize", function(event){ 
 		slide_agcanvas_into_view();
 	});
+
+	setup_copyurl();
 
 	// some debugging code
 	var tdcorner = $1("td.corner");
