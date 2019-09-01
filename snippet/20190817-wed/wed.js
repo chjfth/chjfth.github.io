@@ -773,8 +773,11 @@ function edw_refresh_all_ui(srcword, dstword, idxpath=0) { // old name: draw_edw
 	}
 
 	if(idxpath>=paths.length) {
-		alert("The path# parameter({0}) from URL exceeds total path count({1}), I'll use path#0 instead.".format(
-			idxpath+1, paths.length));
+		g_msgbar.addmsg(
+			"The path# parameter({0}) from URL exceeds total path count({1}), I'll use path#1 instead.".format(
+				idxpath+1, paths.length),
+			MessageBar.Error
+			);
 		idxpath = 0;
 	}
 
@@ -874,7 +877,7 @@ function setup_copyurl() {
 	btn_copy.addEventListener("click", function(event) {
 		event.preventDefault();
 		
-		var baseurl = location.href.split('?');
+		var baseurl = location.href.split('?')[0];
 
 		// grab text of From: & To: and compose final URL.
 		var strfrom = $1("#wordfrom").value;
