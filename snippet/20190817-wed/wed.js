@@ -258,18 +258,6 @@ function draw_highlight_path(table_ele, stepchars) {
 	}
 }
 
-function startnew_from_editbox() {
-	var ed_wordfrom = document.getElementById("wordfrom");
-	var ed_wordto = document.getElementById("wordto");
-	
-	if(ed_wordfrom.value && ed_wordto.value) {
-		edw_refresh_all_ui(ed_wordfrom.value, ed_wordto.value);
-	}
-	else {
-		alert("Invalid input.");
-	}
-}
-
 function attach_step_numbering_div(cell, iStep, cs) {
 	
 	var opcode=cs.code, oldc=cs.old, newc=cs.cur;
@@ -905,7 +893,7 @@ function setup_copyurl() {
 		ed_urltext.setSelectionRange(0, 99999);
 		try {
 			document.execCommand("copy");
-			g_msgbar.addmsg("URL copied to clipboard: "+fullurl, MessageBar.Info, 2000);
+			g_msgbar.addmsg("URL copied to clipboard: "+fullurl, MessageBar.Info, 3000);
 		}
 		catch(e) {
 			// On firefox 40, this copy operation is not allow by JS engine.
@@ -953,7 +941,23 @@ document.addEventListener("DOMContentLoaded", function(){
 	var startbtn = document.getElementById("startbtn");
 	startbtn.addEventListener("click", function(event){
 		event.preventDefault();
-		startnew_from_editbox();
+		
+		var wordfrom_new = $1("#wordfrom").value;
+		var wordto_new = $1("#wordto").value;
+		
+		if(!wordfrom_new && !wordto_new) {
+			g_msgbar.addmsg("Invalid input. Both From and To is empty.", MessageBar.Error, 5000);
+			return;
+		}
+		
+		edw_refresh_all_ui(wordfrom_new, wordto_new);
+		
+		if(wordfrom_new==wordfrom && wordto_new==wordto) {
+			g_msgbar.addmsg("Output refreshed. You can change input words to see different results.", MessageBar.Info, 2000);
+		}
+		
+		wordfrom = wordfrom_new;
+		wordto = wordto_new;
 	});
 
 	window.addEventListener("scroll", function(event){ 
