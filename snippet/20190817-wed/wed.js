@@ -901,7 +901,8 @@ function setup_copyurl() {
 		catch(e) {
 			// On firefox 40, this copy operation is not allow by JS engine.
 			// So give user a feed back.
-			g_msgbar.addmsg("Sorry, Copying to URL is not allowed by this web browser.", MessageBar.Warn); 
+			g_msgbar.addmsg("Sorry, Copying to URL is not allowed by this web browser. But you can copy it manually.", MessageBar.Warn); 
+			g_msgbar.addmsg(fullurl, MessageBar.Info); 
 		}
 	});
 }
