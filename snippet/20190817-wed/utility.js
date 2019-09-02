@@ -193,7 +193,10 @@ var MessageBar = // the "class" definition
 		this.div.appendChild(msgdiv);
 		
 		function msgdiv_remove_self(event) {
-			msgdiv.parentElement.removeChild(msgdiv);
+			if(msgdiv.parentElement) {
+				// If user has manually closed a message box, msgdiv.parentElement may already be null.
+				msgdiv.parentElement.removeChild(msgdiv);
+			}
 		}
 		
 		if(autoclear_ms>0) {
