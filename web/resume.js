@@ -907,8 +907,8 @@ function prepare_toc_popup() {
 	});
 	
 	var floatbar = create_Floatbar(fb_ele,
-		() => fb_ele.classList.remove("hide"),
-		() => fb_ele.classList.add("hide")
+		function(ele){ ele.classList.remove("hide") },
+		function(ele){ ele.classList.add("hide") }
 		);
 	window.addEventListener("scroll", function() {
 		// Mobile layout scrolling action:

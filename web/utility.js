@@ -12,8 +12,9 @@ var IsSafari = (function() {
 		console.log("Chj utility.js: Simulating Safari.");
 		isSafari = true;
 	}
-	
-	return () => isSafari; // so always return the cached isSafari value.
+
+	// return () => isSafari; // so always return the cached isSafari value(ES6 now syntax).
+	return function(){ return isSafari; } // Use pre-ES6 syntax to make it more adaptable.
 })();
 
 function get_scrollTop() { return my_scrollTop(); }
@@ -340,10 +341,11 @@ function do_triggerEvent(target, eventType, eventDetail){
 var FloatbarEnum = 
 {
 	// three states as enum value:
-	Idle : 0,
-	Scrolling : 1 ,
-	Showing : 2,
+	IDLE : 0,
+	SCROLLING : 1 ,
+	SHOWING : 2,
 };
+Object.freeze(FloatbarEnum);
 var Floatbar = 
 {
 	init : function(floatbar_ele, on_show, on_hide)
@@ -352,7 +354,7 @@ var Floatbar =
 		this.on_show = on_show;
 		this.on_hide = on_hide;
 		
-		this.curstate = FloatbarEnum.Idle;
+		this.curstate = this.IDLE;
 		this.starty = -1;
 		this.prevy = -1;
 		this.endy = -1;
@@ -371,7 +373,7 @@ var Floatbar =
 	,
 	FloatbarShow : function() 
 	{
-		this.curstate = FloatbarEnum.Showing;
+		this.curstate = this.SHOWING;
 		
 		if(this.on_show) {
 			//this.fbele.classList.remove("hide"); // test
@@ -384,7 +386,7 @@ var Floatbar =
 	,
 	FloatbarHide : function() 
 	{
-		this.curstate = FloatbarEnum.Idle;
+		this.curstate = this.IDLE;
 		
 		if(this.on_hide) {
 			// this.fbele.classList.add("hide"); // test
@@ -398,7 +400,7 @@ var Floatbar =
 	,
 	timer1Due : function() 
 	{
-		if(this.curstate!=FloatbarEnum.Scrolling) {
+		if(this.curstate!=this.SCROLLING) {
 			this.Log("Got stale timer event when curstate==Scrolling.");
 			return;
 		}
@@ -424,15 +426,15 @@ var Floatbar =
 	,	
 	OnScroll : function(ypos) 
 	{
-		if(this.curstate==FloatbarEnum.Idle) {
-			this.curstate = FloatbarEnum.Scrolling;
+		if(this.curstate==this.IDLE) {
+			this.curstate = this.SCROLLING;
 			this.starty = this.prevy = this.endy = ypos;
 		}
-		else if(this.curstate==FloatbarEnum.Scrolling) {
+		else if(this.curstate==this.SCROLLING) {
 			this.endy = ypos;
 		}
 		
-		if(this.curstate==FloatbarEnum.Idle || this.curstate==FloatbarEnum.Scrolling) {
+		if(this.curstate==this.IDLE || this.curstate==this.SCROLLING) {
 			
 			// Restart timer.
 			clearTimeout(this.timer1);
@@ -443,7 +445,7 @@ var Floatbar =
 			}, this.delay_show_ms, this);
 		}
 		
-		if(this.curstate==FloatbarEnum.Showing) {
+		if(this.curstate==this.SHOWING) {
 			var diffy = ypos - this.prevy;
 			if(diffy>=this.anti_dither_px) {
 				this.Log("Re-scrolling down. Will hide the float-toolbar");
@@ -455,13 +457,15 @@ var Floatbar =
 	}
 	,
 };
-
+Object.setPrototypeOf(Floatbar, FloatbarEnum); // so that this.IDLE etc can be used inside Floatbar member functions.
+//
 function create_Floatbar(floatbar_ele, on_show=null, on_hide=null)
 {
 	var fb = Object.create(Floatbar);
 	fb.init(floatbar_ele, on_show, on_hide);
 	return fb;
 }
+
 
 function isStartsWith(str, substr) {
 	if(str.indexOf(substr)==0)
