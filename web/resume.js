@@ -905,10 +905,14 @@ function prepare_toc_popup() {
 		}
 
 	});
-
+	
+	var floatbar = create_Floatbar(fb_ele,
+		() => fb_ele.classList.remove("hide"),
+		() => fb_ele.classList.add("hide")
+		);
 	window.addEventListener("scroll", function() {
 		// Mobile layout scrolling action:
-		FBRunning.OnScroll(get_scrollTop(), fb_ele);
+		floatbar.OnScroll(get_scrollTop());
 	});
 	
 	toctitle.addEventListener("click", function(event) { // For desktop layout:

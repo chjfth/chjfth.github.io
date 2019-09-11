@@ -335,45 +335,70 @@ function do_triggerEvent(target, eventType, eventDetail){
     target.dispatchEvent(evt);
 }
 
-//////////////// FBRunning (floating toolbar Running state) ////////////////
+//////////////// Floatbar (floating toolbar class) ////////////////
 
-var FBRunning = 
+var FloatbarEnum = 
 {
 	// three states as enum value:
-	Idle : 0, Scrolling : 1 , Showing : 2,
-	
-	// class members:
-	curstate : 0, // default to Idle, how can I write `Idle`?
-	starty : -1,
-	prevy : -1,
-	endy : -1,
-	timer1 : undefined, // the calming interval after last scrolling
-
-	delay_show_ms : 150, // caution: can be 50~500, but cannot be smaller than a OS jiffy(16ms).
-	
-	anti_dither_px : 5, // anti finger dithering when finger leaves the screen. Use 0 and you see problem.
+	Idle : 0,
+	Scrolling : 1 ,
+	Showing : 2,
+};
+var Floatbar = 
+{
+	init : function(floatbar_ele, on_show, on_hide)
+	{
+		this.fbele = floatbar_ele; // the floating toolbar element to show/hide
+		this.on_show = on_show;
+		this.on_hide = on_hide;
 		
-	floatbar : undefined, // the floating toolbar to show/hide
-	
-	Log : function(msg) {
+		this.curstate = FloatbarEnum.Idle;
+		this.starty = -1;
+		this.prevy = -1;
+		this.endy = -1;
+		this.timer1 = undefined; // the calming interval after last scrolling
+
+		this.delay_show_ms = 150; // caution: can be 50~500, but cannot be smaller than a OS jiffy(16ms).
+		
+		this.anti_dither_px = 5; // anti finger dithering when finger leaves the screen. Use 0 and you see problem.
+	}
+	,
+	Log : function(msg) 
+	{
 		// Comment the following line to suppress logging output.
 //		console.log("[{0}] {1}".format(get_millisec(), msg));
-	},
-	
-	FloatbarShow : function() {
-		this.curstate = FBRunning.Showing;
-		this.floatbar.style.display= "block";
-	},
-	
-	FloatbarHide : function() {
-		this.floatbar.style.display= "none";
-			// this.floatbar.style.removeProperty("display"); // This does not cause floatbar to disappear on iPad iOS 12.
-		this.curstate = FBRunning.Idle;
-	},
-
-	timer1Due : function() {
+	}
+	,
+	FloatbarShow : function() 
+	{
+		this.curstate = FloatbarEnum.Showing;
 		
-		if(this.curstate!=FBRunning.Scrolling) {
+		if(this.on_show) {
+			//this.fbele.classList.remove("hide"); // test
+			this.on_show(this.fbele);
+		}
+		else {
+			this.fbele.style.display= "block";
+		}
+	}
+	,
+	FloatbarHide : function() 
+	{
+		this.curstate = FloatbarEnum.Idle;
+		
+		if(this.on_hide) {
+			// this.fbele.classList.add("hide"); // test
+			this.on_hide(this.fbele);
+		}
+		else {
+			this.fbele.style.display= "none";
+			// this.fbele.style.removeProperty("display"); // This does not cause floatbar to disappear on iPad iOS 12.
+		}
+	}
+	,
+	timer1Due : function() 
+	{
+		if(this.curstate!=FloatbarEnum.Scrolling) {
 			this.Log("Got stale timer event when curstate==Scrolling.");
 			return;
 		}
@@ -395,21 +420,19 @@ var FBRunning =
 			this.Log("  No. Go back to idle.");
 			this.FloatbarHide();
 		}
-	},
-		
-	OnScroll : function(ypos, floatbar_ele) {
-		
-		this.floatbar = floatbar_ele;
-		
-		if(this.curstate==FBRunning.Idle) {
-			this.curstate = FBRunning.Scrolling;
+	}
+	,	
+	OnScroll : function(ypos) 
+	{
+		if(this.curstate==FloatbarEnum.Idle) {
+			this.curstate = FloatbarEnum.Scrolling;
 			this.starty = this.prevy = this.endy = ypos;
 		}
-		else if(this.curstate==FBRunning.Scrolling) {
+		else if(this.curstate==FloatbarEnum.Scrolling) {
 			this.endy = ypos;
 		}
 		
-		if(this.curstate==FBRunning.Idle || this.curstate==FBRunning.Scrolling) {
+		if(this.curstate==FloatbarEnum.Idle || this.curstate==FloatbarEnum.Scrolling) {
 			
 			// Restart timer.
 			clearTimeout(this.timer1);
@@ -420,7 +443,7 @@ var FBRunning =
 			}, this.delay_show_ms, this);
 		}
 		
-		if(this.curstate==FBRunning.Showing) {
+		if(this.curstate==FloatbarEnum.Showing) {
 			var diffy = ypos - this.prevy;
 			if(diffy>=this.anti_dither_px) {
 				this.Log("Re-scrolling down. Will hide the float-toolbar");
@@ -429,7 +452,15 @@ var FBRunning =
 		}
 		
 		this.prevy = ypos;
-	},
+	}
+	,
+};
+
+function create_Floatbar(floatbar_ele, on_show=null, on_hide=null)
+{
+	var fb = Object.create(Floatbar);
+	fb.init(floatbar_ele, on_show, on_hide);
+	return fb;
 }
 
 function isStartsWith(str, substr) {

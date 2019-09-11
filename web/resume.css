@@ -783,11 +783,17 @@ quote {
 }
 
 .floatbartray {
-	display: none;
+/*	display: none;
+*/
 	position: fixed;
 	z-index: 3;
 	right: var(--floatbar-corner);
 	bottom: var(--floatbar-corner);
+	
+	transition: bottom 500ms;
+}
+.floatbartray.hide{
+	bottom: calc(0px - var(--floatbar-width));
 }
 
 .floatbarframe {
