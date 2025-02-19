@@ -18,4 +18,4 @@ int _tmain()
 or
 	cl /D greet="""Hello world""" /D UNICODE /D _UNICODE sptestq.cpp
 
-*
+*/
